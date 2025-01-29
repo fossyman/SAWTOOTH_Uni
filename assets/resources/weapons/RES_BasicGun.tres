@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="WeaponResource" load_steps=2 format=3 uid="uid://bu3ine482gilk"]
+
+[ext_resource type="Script" path="res://src/Resources/SCR_WeaponResource.gd" id="1_h1pax"]
+
+[resource]
+script = ExtResource("1_h1pax")
+Damage = 5
+RayCount = 1
+AttackSpeed = 0.3
+Accuracy = 1.0
+ItemName = "Basic Gun"
+ItemDescription = "Basic Dev Gun"

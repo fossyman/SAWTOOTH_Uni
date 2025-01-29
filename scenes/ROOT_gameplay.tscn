@@ -1,0 +1,91 @@
+[gd_scene load_steps=12 format=3 uid="uid://b8cxecvk7546r"]
+
+[ext_resource type="PackedScene" uid="uid://cbvykmjuwvs2b" path="res://scenes/SCN_Player.tscn" id="1_gnqm2"]
+[ext_resource type="PackedScene" uid="uid://bmkd5n53iosgb" path="res://scenes/EnemyBase.tscn" id="2_g555f"]
+[ext_resource type="Script" path="res://src/SCR_CameraManager.gd" id="2_y5f1m"]
+[ext_resource type="Script" path="res://src/SCR_InventoryManager.gd" id="3_q5vs4"]
+[ext_resource type="Resource" uid="uid://bjb4bderi0bs0" path="res://assets/resources/ItemDatabase.tres" id="4_h4vqc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4m2pl"]
+sky_top_color = Color(0, 0.454902, 0.54902, 1)
+sky_horizon_color = Color(0, 0.654902, 0.670588, 1)
+ground_bottom_color = Color(0, 0.168627, 0.133333, 1)
+ground_horizon_color = Color(0, 0.654902, 0.670588, 1)
+
+[sub_resource type="Sky" id="Sky_y07nn"]
+sky_material = SubResource("ProceduralSkyMaterial_4m2pl")
+
+[sub_resource type="Environment" id="Environment_7gvnc"]
+background_mode = 2
+sky = SubResource("Sky_y07nn")
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_anmx7"]
+vertices = PackedVector3Array(-49.5, 0.5, -49.5, -49.5, 0.5, 49.5, 49.5, 0.5, 49.5, 49.5, 0.5, -49.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ghu1b"]
+size = Vector2(100, 100)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_dlcx1"]
+
+[node name="ROOT_Gameplay" type="Node" groups=["scene_root"]]
+
+[node name="Map" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Map"]
+environment = SubResource("Environment_7gvnc")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Map/WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 11, 0)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Map"]
+navigation_mesh = SubResource("NavigationMesh_anmx7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/NavigationRegion3D"]
+mesh = SubResource("PlaneMesh_ghu1b")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Map/NavigationRegion3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/NavigationRegion3D/StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_dlcx1")
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Player" parent="Node" instance=ExtResource("1_gnqm2")]
+unique_name_in_owner = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Node"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Node/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="MainCamera" type="Camera3D" parent="Node/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 8, 8)
+
+[node name="CameraOffset" type="Node3D" parent="Node" node_paths=PackedStringArray("TargetNode")]
+script = ExtResource("2_y5f1m")
+TargetNode = NodePath("../Player/Mesh/CameraOffsetNode")
+
+[node name="CameraOffset" type="RemoteTransform3D" parent="Node/CameraOffset"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 8, 8)
+remote_path = NodePath("../../SubViewportContainer/SubViewport/MainCamera")
+
+[node name="Inventory" type="Node" parent="Node"]
+unique_name_in_owner = true
+script = ExtResource("3_q5vs4")
+ItemDatabase = ExtResource("4_h4vqc")
+
+[node name="EnemyBase" parent="." instance=ExtResource("2_g555f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -3)
+
+[editable path="Node/Player"]

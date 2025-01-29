@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://fibx451nieul"]
+
+[ext_resource type="PackedScene" uid="uid://b8cxecvk7546r" path="res://scenes/ROOT_gameplay.tscn" id="1_fg2w8"]
+
+[node name="main" type="Node"]
+
+[node name="ROOT" type="Node" parent="."]
+
+[node name="ROOT_Gameplay" parent="ROOT" instance=ExtResource("1_fg2w8")]

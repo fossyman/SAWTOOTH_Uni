@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DatabaseResource" load_steps=3 format=3 uid="uid://bjb4bderi0bs0"]
+
+[ext_resource type="Script" path="res://src/Resources/SCR_DatabaseResource.gd" id="1_d7p4s"]
+[ext_resource type="Resource" uid="uid://bu3ine482gilk" path="res://assets/resources/weapons/RES_BasicGun.tres" id="1_iplp5"]
+
+[resource]
+script = ExtResource("1_d7p4s")
+Content = Array[Resource("res://src/Resources/SCR_ItemResource.gd")]([ExtResource("1_iplp5")])

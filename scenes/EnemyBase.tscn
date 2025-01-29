@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://bmkd5n53iosgb"]
+
+[ext_resource type="Script" path="res://src/SCR_BaseEnemy.gd" id="1_og055"]
+[ext_resource type="Script" path="res://src/Components/COMP_Health.gd" id="2_twjwa"]
+[ext_resource type="Script" path="res://src/Components/COMP_Hurtbox.gd" id="3_uxeij"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ubm46"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_15xk4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6wgo"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_76w36"]
+
+[node name="EnemyBase" type="CharacterBody3D" node_paths=PackedStringArray("NavAgent")]
+script = ExtResource("1_og055")
+NavAgent = NodePath("NavigationAgent3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ubm46")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+
+[node name="AIDecisionTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_15xk4")
+surface_material_override/0 = SubResource("StandardMaterial3D_y6wgo")
+
+[node name="COMP_Health" type="Node" parent="."]
+script = ExtResource("2_twjwa")
+MaxHealth = 25
+
+[node name="COMP_Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("HealthComponent")]
+collision_layer = 17
+collision_mask = 17
+script = ExtResource("3_uxeij")
+HealthComponent = NodePath("../COMP_Health")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="COMP_Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_76w36")
+
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_TargetReached"]
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_VelocityComputed"]
+[connection signal="timeout" from="AIDecisionTimer" to="." method="_AITimeout"]
+[connection signal="Damaged" from="COMP_Health" to="." method="_Damaged"]
+[connection signal="Death" from="COMP_Health" to="." method="_Death"]
+[connection signal="Healed" from="COMP_Health" to="." method="_Healed"]

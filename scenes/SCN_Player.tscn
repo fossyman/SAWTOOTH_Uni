@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://cbvykmjuwvs2b"]
+
+[ext_resource type="Script" path="res://src/SCR_PlayerManager.gd" id="1_7064w"]
+[ext_resource type="Script" path="res://src/Components/COMP_Hurtbox.gd" id="2_l23m1"]
+[ext_resource type="Script" path="res://src/Components/COMP_Health.gd" id="3_x4ac8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1qx1k"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1g7sy"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_6da00"]
+radial_segments = 4
+rings = 1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ch7ru"]
+
+[node name="PlayerCharacter" type="CharacterBody3D" node_paths=PackedStringArray("MeshParent", "AttackOrigin")]
+script = ExtResource("1_7064w")
+MeshParent = NodePath("Mesh")
+AttackOrigin = NodePath("Mesh/AttackPoint")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_1qx1k")
+
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_1g7sy")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.3)
+mesh = SubResource("SphereMesh_6da00")
+
+[node name="CameraOffsetNode" type="Node3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="AttackPoint" type="Node3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="COMP_Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("HealthComponent")]
+script = ExtResource("2_l23m1")
+HealthComponent = NodePath("../COMP_Health")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="COMP_Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ch7ru")
+
+[node name="COMP_Health" type="Node" parent="."]
+script = ExtResource("3_x4ac8")
+MaxHealth = 100
