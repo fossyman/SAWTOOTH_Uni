@@ -23,6 +23,10 @@ Globals="*res://src/SCR_Globals.gd"
 
 project/assembly_name="SAWTOOTH_Godot"
 
+[filesystem]
+
+import/fbx/enabled=false
+
 [input]
 
 move_forward={

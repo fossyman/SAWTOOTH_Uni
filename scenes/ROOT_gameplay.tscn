@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://b8cxecvk7546r"]
+[gd_scene load_steps=13 format=3 uid="uid://b8cxecvk7546r"]
 
 [ext_resource type="PackedScene" uid="uid://cbvykmjuwvs2b" path="res://scenes/SCN_Player.tscn" id="1_gnqm2"]
+[ext_resource type="PackedScene" uid="uid://byhaiysu0fqvk" path="res://assets/Models/Minigun.glb" id="2_a7g22"]
 [ext_resource type="PackedScene" uid="uid://bmkd5n53iosgb" path="res://scenes/EnemyBase.tscn" id="2_g555f"]
 [ext_resource type="Script" path="res://src/SCR_CameraManager.gd" id="2_y5f1m"]
 [ext_resource type="Script" path="res://src/SCR_InventoryManager.gd" id="3_q5vs4"]
@@ -54,6 +55,9 @@ shape = SubResource("WorldBoundaryShape3D_dlcx1")
 
 [node name="Player" parent="Node" instance=ExtResource("1_gnqm2")]
 unique_name_in_owner = true
+
+[node name="Minigun" parent="Node/Player/Mesh" index="4" instance=ExtResource("2_a7g22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.316674, 0.772932, -0.889722)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Node"]
 anchors_preset = 15
