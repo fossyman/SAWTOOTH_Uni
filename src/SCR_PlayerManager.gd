@@ -10,14 +10,37 @@ var RayEnd
 @export var MeshParent:Node3D
 @export var AttackOrigin:Node3D
 
+@export var DebugLineMesh:MeshInstance3D
+@export var DebugLineMat:StandardMaterial3D
+
+@export var MeshAnimationTree:AnimationTree
+var MovementVector:Vector2
+var DesiredMovementVector:Vector2
+
 var DesiredLookRotation:Vector3
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var CanAttack:bool = true
 
+var CachedRaycaseQuery:PhysicsRayQueryParameters3D
 
+func _ready():
+	CachedRaycaseQuery = PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO,8388608)
+	CachedRaycaseQuery.collide_with_areas = true
 func _process(delta):
+	var direction:Vector3 = CalculateVelocity(delta)
+
+	move_and_slide()
+	
+	MovementRotationCalculator(direction,delta)
+	
+	
+	
+func _physics_process(delta):
+	CalculateLookDirection()
+
+func CalculateVelocity(delta:float):
 	print(CanAttack)
 	if Input.is_action_pressed("attack") and CanAttack:
 		if is_instance_valid(Globals.Inventory.CurrentWeapon):
@@ -41,24 +64,38 @@ func _process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
+	return direction
 
-	move_and_slide()
-	
-func _physics_process(delta):
-	CalculateLookDirection()
-	
+func MovementRotationCalculator(direction:Vector3,delta):
+	var Forward = -MeshParent.global_transform.basis.z
+	var Sides = -MeshParent.global_transform.basis.x
+	var FB = Forward.dot(direction)
+	var LR = Sides.dot(direction)
+	print(str(LR))
+	if direction:
+		DesiredMovementVector = Vector2(-LR,FB)
+		pass
+	else:
+		DesiredMovementVector = Vector2.ZERO
+		pass
+	MovementVector = lerp(MovementVector,DesiredMovementVector,15*delta)
+	MeshAnimationTree["parameters/MovementBlend/blend_position"] = MovementVector
+
 func CalculateLookDirection():
 	var SpaceState = get_world_3d().direct_space_state
 	var MousePos = get_viewport().get_mouse_position()
 	RayOrigin = Globals.MainCamera.project_ray_origin(MousePos)
 	RayEnd = RayOrigin + Globals.MainCamera.project_ray_normal(MousePos) * 2000
+
+	CachedRaycaseQuery.from = RayOrigin
+	CachedRaycaseQuery.to = RayEnd
 	
-	var query = PhysicsRayQueryParameters3D.create(RayOrigin, RayEnd)
-	var Intersection = SpaceState.intersect_ray(query)
+	var Intersection = SpaceState.intersect_ray(CachedRaycaseQuery)
 	
 	if !Intersection.is_empty():
 		DesiredLookRotation = to_local(Intersection.position)
-
+	
+	
 
 func AttackManagement():
 	CanAttack = false
@@ -69,8 +106,10 @@ func AttackManagement():
 		query.collide_with_areas = true
 		query.exclude = [self]
 		var result = space_state.intersect_ray(query)
-		if result.values()[4] is COMP_Hurtbox:
-			(result.values()[4] as COMP_Hurtbox).HealthComponent.Damage(Globals.Inventory.CurrentWeapon.Damage)
-		
+		if !result.is_empty():
+			DebugLineMesh.global_position = result.position
+			if result.values()[4] is COMP_Hurtbox:
+				(result.values()[4] as COMP_Hurtbox).HealthComponent.Damage(Globals.Inventory.CurrentWeapon.Damage)
+				
 	await get_tree().create_timer(Globals.Inventory.CurrentWeapon.AttackSpeed).timeout
 	CanAttack = true

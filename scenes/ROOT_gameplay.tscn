@@ -1,7 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://b8cxecvk7546r"]
+[gd_scene load_steps=14 format=3 uid="uid://b8cxecvk7546r"]
 
 [ext_resource type="PackedScene" uid="uid://cbvykmjuwvs2b" path="res://scenes/SCN_Player.tscn" id="1_gnqm2"]
-[ext_resource type="PackedScene" uid="uid://byhaiysu0fqvk" path="res://assets/Models/Minigun.glb" id="2_a7g22"]
 [ext_resource type="PackedScene" uid="uid://bmkd5n53iosgb" path="res://scenes/EnemyBase.tscn" id="2_g555f"]
 [ext_resource type="Script" path="res://src/SCR_CameraManager.gd" id="2_y5f1m"]
 [ext_resource type="Script" path="res://src/SCR_InventoryManager.gd" id="3_q5vs4"]
@@ -29,6 +28,11 @@ size = Vector2(100, 100)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_dlcx1"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_4w1os"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_5cb18"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
 [node name="ROOT_Gameplay" type="Node" groups=["scene_root"]]
 
 [node name="Map" type="Node" parent="."]
@@ -51,15 +55,22 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/NavigationRegion3D/StaticBody3D"]
 shape = SubResource("WorldBoundaryShape3D_dlcx1")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map"]
+transform = Transform3D(28.1574, 0, 0, 0, 5.8046, 0, 0, 0, 1, 0, 2.46765, -5.22777)
+mesh = SubResource("BoxMesh_4w1os")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Map/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_5cb18")
+
 [node name="Node" type="Node" parent="."]
 
 [node name="Player" parent="Node" instance=ExtResource("1_gnqm2")]
 unique_name_in_owner = true
 
-[node name="Minigun" parent="Node/Player/Mesh" index="4" instance=ExtResource("2_a7g22")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.316674, 0.772932, -0.889722)
-
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Node"]
+texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -75,6 +86,9 @@ render_target_update_mode = 4
 [node name="MainCamera" type="Camera3D" parent="Node/SubViewportContainer/SubViewport"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 8, 8)
+projection = 1
+fov = 60.0
+size = 9.0
 
 [node name="CameraOffset" type="Node3D" parent="Node" node_paths=PackedStringArray("TargetNode")]
 script = ExtResource("2_y5f1m")
@@ -91,5 +105,3 @@ ItemDatabase = ExtResource("4_h4vqc")
 
 [node name="EnemyBase" parent="." instance=ExtResource("2_g555f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -3)
-
-[editable path="Node/Player"]

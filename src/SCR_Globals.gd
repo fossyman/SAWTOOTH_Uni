@@ -9,6 +9,8 @@ var MainCamera:Camera3D
 var Player:PlayerManager
 var Inventory:InventoryManager
 
+var delta
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	MainNode = get_tree().root.find_child("main",true,false)
@@ -18,3 +20,6 @@ func _ready():
 	Player = CurrentRoot.get_node("%Player") as PlayerManager
 	Inventory = CurrentRoot.get_node("%Inventory") as InventoryManager
 	pass # Replace with function body.
+
+func _process(delta):
+	delta = delta

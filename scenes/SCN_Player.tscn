@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cbvykmjuwvs2b"]
+[gd_scene load_steps=23 format=3 uid="uid://cbvykmjuwvs2b"]
 
 [ext_resource type="Script" path="res://src/SCR_PlayerManager.gd" id="1_7064w"]
+[ext_resource type="PackedScene" uid="uid://p4qr4n7m8yg0" path="res://assets/Models/Holland.glb" id="2_0tq5b"]
 [ext_resource type="Script" path="res://src/Components/COMP_Hurtbox.gd" id="2_l23m1"]
+[ext_resource type="AnimationLibrary" uid="uid://b4u4pbpxa5p6w" path="res://assets/Animations/Characters/Holland/Holland_MovementLibrary.res" id="3_rtptl"]
 [ext_resource type="Script" path="res://src/Components/COMP_Health.gd" id="3_x4ac8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1qx1k"]
@@ -12,12 +14,74 @@
 radial_segments = 4
 rings = 1
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_adlvq"]
+animation = &"Holland_Movement/TPose"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_c31h5"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_adlvq")
+blend_point_0/pos = 0.0
+min_space = 0.0
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_tnyy3"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:Hand.L", "Armature/Skeleton3D:Hand.R", "Armature/Skeleton3D:Head", "Armature/Skeleton3D:Index0.L", "Armature/Skeleton3D:Index0.R", "Armature/Skeleton3D:Index1.L", "Armature/Skeleton3D:Index1.R", "Armature/Skeleton3D:Index2.L", "Armature/Skeleton3D:Index2.R", "Armature/Skeleton3D:LowerArm.L", "Armature/Skeleton3D:LowerArm.R", "Armature/Skeleton3D:Middle0.L", "Armature/Skeleton3D:Middle0.R", "Armature/Skeleton3D:Middle1.L", "Armature/Skeleton3D:Middle1.R", "Armature/Skeleton3D:Middle2.L", "Armature/Skeleton3D:Middle2.R", "Armature/Skeleton3D:Pinky0.L", "Armature/Skeleton3D:Pinky0.R", "Armature/Skeleton3D:Pinky1.L", "Armature/Skeleton3D:Pinky1.R", "Armature/Skeleton3D:Pinky2.L", "Armature/Skeleton3D:Pinky2.R", "Armature/Skeleton3D:Ring0.L", "Armature/Skeleton3D:Ring0.R", "Armature/Skeleton3D:Ring1.L", "Armature/Skeleton3D:Ring1.R", "Armature/Skeleton3D:Ring2.L", "Armature/Skeleton3D:Ring2.R", "Armature/Skeleton3D:Spine0", "Armature/Skeleton3D:Spine1", "Armature/Skeleton3D:Thumb0.L", "Armature/Skeleton3D:Thumb0.R", "Armature/Skeleton3D:Thumb1.L", "Armature/Skeleton3D:Thumb1.R", "Armature/Skeleton3D:Thumb2.L", "Armature/Skeleton3D:Thumb2.R", "Armature/Skeleton3D:UpperArm.L", "Armature/Skeleton3D:UpperArm.R"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5drdr"]
+animation = &"Holland_Movement/Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nl8e1"]
+animation = &"Holland_Movement/MoveF"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nh34j"]
+animation = &"Holland_Movement/MoveL"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fvm5e"]
+animation = &"Holland_Movement/MoveR"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ie3ru"]
+animation = &"Holland_Movement/MoveB"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_g8siu"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_5drdr")
+blend_point_0/pos = Vector2(0, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_nl8e1")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_nh34j")
+blend_point_2/pos = Vector2(-1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_fvm5e")
+blend_point_3/pos = Vector2(1, 0)
+blend_point_4/node = SubResource("AnimationNodeAnimation_ie3ru")
+blend_point_4/pos = Vector2(0, -1)
+snap = Vector2(0.5, 0.5)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_1kg37"]
+graph_offset = Vector2(-131, 302)
+nodes/AimBlend/node = SubResource("AnimationNodeBlendSpace1D_c31h5")
+nodes/AimBlend/position = Vector2(-40, 300)
+nodes/EquippedBlend/node = SubResource("AnimationNodeBlend2_tnyy3")
+nodes/EquippedBlend/position = Vector2(240, 300)
+nodes/MovementBlend/node = SubResource("AnimationNodeBlendSpace2D_g8siu")
+nodes/MovementBlend/position = Vector2(-40, 520)
+nodes/output/position = Vector2(520, 320)
+node_connections = [&"EquippedBlend", 0, &"MovementBlend", &"EquippedBlend", 1, &"AimBlend", &"output", 0, &"EquippedBlend"]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ch7ru"]
 
-[node name="PlayerCharacter" type="CharacterBody3D" node_paths=PackedStringArray("MeshParent", "AttackOrigin")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trmu4"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qo0go"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6vbb3"]
+size = Vector3(100, 0.1, 100)
+
+[node name="PlayerCharacter" type="CharacterBody3D" node_paths=PackedStringArray("MeshParent", "AttackOrigin", "DebugLineMesh", "MeshAnimationTree")]
 script = ExtResource("1_7064w")
 MeshParent = NodePath("Mesh")
 AttackOrigin = NodePath("Mesh/AttackPoint")
+DebugLineMesh = NodePath("MeshInstance3D")
+MeshAnimationTree = NodePath("Mesh/Holland/AnimationTree")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -27,6 +91,7 @@ shape = SubResource("CapsuleShape3D_1qx1k")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 mesh = SubResource("CapsuleMesh_1g7sy")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Mesh"]
@@ -35,10 +100,94 @@ visible = false
 mesh = SubResource("SphereMesh_6da00")
 
 [node name="CameraOffsetNode" type="Node3D" parent="Mesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 
 [node name="AttackPoint" type="Node3D" parent="Mesh"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Holland" parent="Mesh" instance=ExtResource("2_0tq5b")]
+
+[node name="Skeleton3D" parent="Mesh/Holland/Armature" index="0"]
+bones/0/rotation = Quaternion(0, 0.707107, 0.707107, 0)
+bones/1/position = Vector3(-0.0105663, -0.0334137, 0.05)
+bones/1/rotation = Quaternion(0.5, 0.5, 0.5, 0.5)
+bones/2/rotation = Quaternion(0.445515, 0.549105, 0.445515, -0.549105)
+bones/3/rotation = Quaternion(-0.281416, -1.52509e-08, -4.47262e-09, 0.959586)
+bones/5/rotation = Quaternion(0.233044, -0.00911081, -1.20068e-09, 0.972423)
+bones/6/rotation = Quaternion(0.415316, 0.596247, 0.596247, -0.34131)
+bones/6/scale = Vector3(1, 1, 1)
+bones/7/rotation = Quaternion(-0.556662, -0.281843, 0.364964, 0.691009)
+bones/8/rotation = Quaternion(0.287706, 0.043876, 0.32615, 0.899404)
+bones/9/rotation = Quaternion(-0.20394, 0.239773, -0.248, 0.916195)
+bones/10/rotation = Quaternion(-0.156891, -0.156891, 0.261648, 0.939314)
+bones/10/scale = Vector3(1, 1, 1)
+bones/12/rotation = Quaternion(0.0479999, 0.0478551, -0.0814318, 0.994372)
+bones/12/scale = Vector3(1, 1, 1)
+bones/13/rotation = Quaternion(-2.30843e-09, 9.72033e-10, 0.0473492, 0.998878)
+bones/15/rotation = Quaternion(-2.68911e-11, 1.73508e-11, 0.00139994, 0.999999)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/rotation = Quaternion(-3.11247e-10, -3.38697e-10, -0.0268033, 0.999641)
+bones/20/scale = Vector3(1, 1, 1)
+bones/23/scale = Vector3(1, 1, 1)
+bones/25/rotation = Quaternion(-0.415316, 0.596247, 0.596247, 0.34131)
+bones/25/scale = Vector3(1, 1, 1)
+bones/26/rotation = Quaternion(-0.57632, 0.281215, -0.362009, 0.676552)
+bones/27/rotation = Quaternion(0.295757, -0.0435846, -0.335277, 0.89343)
+bones/28/rotation = Quaternion(-0.192244, -0.223714, 0.259817, 0.919505)
+bones/29/rotation = Quaternion(-0.156891, 0.156891, -0.261648, 0.939314)
+bones/29/scale = Vector3(1, 1, 1)
+bones/31/rotation = Quaternion(0.0479999, -0.0478551, 0.0814318, 0.994372)
+bones/31/scale = Vector3(1, 1, 1)
+bones/32/rotation = Quaternion(-2.30843e-09, -9.72033e-10, -0.0473492, 0.998878)
+bones/34/rotation = Quaternion(-2.68911e-11, -1.73508e-11, -0.00139994, 0.999999)
+bones/35/scale = Vector3(1, 1, 1)
+bones/36/rotation = Quaternion(-3.11247e-10, 3.38697e-10, 0.0268033, 0.999641)
+bones/39/scale = Vector3(1, 1, 1)
+bones/42/scale = Vector3(1, 1, 1)
+bones/44/rotation = Quaternion(0.568244, 0.0769754, 0.568244, 0.590146)
+bones/45/rotation = Quaternion(-0.167206, -0.276642, 0.297836, 0.898223)
+bones/45/scale = Vector3(1, 1, 1)
+bones/46/rotation = Quaternion(-0.315443, -0.0474326, 0.0979666, 0.942682)
+bones/46/scale = Vector3(1, 1, 1)
+bones/47/rotation = Quaternion(0.170678, 0.00227846, -0.0206778, 0.985107)
+bones/48/rotation = Quaternion(0.298771, 0.0023218, -0.0023218, 0.954319)
+bones/48/scale = Vector3(1, 1, 1)
+bones/49/scale = Vector3(1, 1, 1)
+bones/50/rotation = Quaternion(-0.568244, 0.590146, -0.568244, 0.0769754)
+bones/50/scale = Vector3(1, 1, 1)
+bones/51/rotation = Quaternion(-0.166941, 0.282442, -0.317929, 0.889538)
+bones/51/scale = Vector3(1, 1, 1)
+bones/52/rotation = Quaternion(-0.320279, 0.0473428, -0.0994687, 0.940896)
+bones/53/rotation = Quaternion(0.174511, -0.0211921, 0.0345571, 0.98382)
+bones/54/rotation = Quaternion(0.298771, -0.0023218, 0.0023218, 0.954319)
+bones/54/scale = Vector3(1, 1, 1)
+bones/55/scale = Vector3(1, 1, 1)
+bones/56/position = Vector3(0.352758, -0.000257313, 0.0448604)
+bones/56/rotation = Quaternion(0.707107, -1.19209e-07, 0.707107, 1.19209e-07)
+bones/58/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+bones/60/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+bones/61/rotation = Quaternion(0, 0.707107, 0.707107, 0)
+bones/62/position = Vector3(-0.352758, -0.000257313, 0.0448604)
+bones/62/rotation = Quaternion(0.707107, 1.19209e-07, -0.707107, 1.19209e-07)
+
+[node name="Cube_001" parent="Mesh/Holland/Armature/Skeleton3D" index="1"]
+visible = false
+
+[node name="AnimationTree" type="AnimationTree" parent="Mesh/Holland"]
+libraries = {
+"Holland_Movement": ExtResource("3_rtptl")
+}
+tree_root = SubResource("AnimationNodeBlendTree_1kg37")
+anim_player = NodePath("AnimationPlayer")
+parameters/AimBlend/blend_position = 1.0
+parameters/EquippedBlend/blend_amount = 0.0
+parameters/MovementBlend/blend_position = Vector2(0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Mesh/Holland/AnimationTree"]
+root_node = NodePath("../..")
+libraries = {
+"Holland_Movement": ExtResource("3_rtptl")
+}
 
 [node name="COMP_Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("HealthComponent")]
 script = ExtResource("2_l23m1")
@@ -51,3 +200,16 @@ shape = SubResource("CapsuleShape3D_ch7ru")
 [node name="COMP_Health" type="Node" parent="."]
 script = ExtResource("3_x4ac8")
 MaxHealth = 100
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_trmu4")
+mesh = SubResource("BoxMesh_qo0go")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 8388608
+collision_mask = 0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_6vbb3")
+
+[editable path="Mesh/Holland"]
