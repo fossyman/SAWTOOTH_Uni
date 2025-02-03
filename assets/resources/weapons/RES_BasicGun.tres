@@ -6,7 +6,7 @@
 script = ExtResource("1_h1pax")
 Damage = 5
 RayCount = 1
-AttackSpeed = 0.3
+AttackSpeed = 0.08
 Accuracy = 1.0
 ItemName = "Basic Gun"
 ItemDescription = "Basic Dev Gun"

@@ -99,7 +99,8 @@ func CalculateLookDirection():
 
 func AttackManagement():
 	CanAttack = false
-	
+	MeshAnimationTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT
+	MeshAnimationTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
 	for i in Globals.Inventory.CurrentWeapon.RayCount:
 		var space_state = get_world_3d().direct_space_state
 		var query = PhysicsRayQueryParameters3D.create(AttackOrigin.global_position, (MeshParent.global_transform.basis.z).normalized() * -999)
@@ -112,4 +113,5 @@ func AttackManagement():
 				(result.values()[4] as COMP_Hurtbox).HealthComponent.Damage(Globals.Inventory.CurrentWeapon.Damage)
 				
 	await get_tree().create_timer(Globals.Inventory.CurrentWeapon.AttackSpeed).timeout
+	MeshAnimationTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT
 	CanAttack = true
