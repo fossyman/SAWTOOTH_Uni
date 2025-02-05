@@ -5,9 +5,10 @@
 
 [sub_resource type="Gradient" id="Gradient_elvd3"]
 offsets = PackedFloat32Array(0.554945, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.197937, 0.197937, 0.197937, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0562916, 0.0562916, 0.0562916, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_j7c43"]
+noise_type = 0
 fractal_gain = 5.0
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_56wrp"]

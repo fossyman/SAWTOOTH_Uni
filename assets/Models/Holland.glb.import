@@ -33,7 +33,7 @@ _subresources={
 "materials": {
 "Material": {
 "use_external/enabled": true,
-"use_external/path": "res://assets/MAT_Holland.tres"
+"use_external/path": "res://assets/Materials/MAT_Holland.tres"
 }
 }
 }

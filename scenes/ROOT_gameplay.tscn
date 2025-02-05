@@ -1,10 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://b8cxecvk7546r"]
+[gd_scene load_steps=18 format=3 uid="uid://b8cxecvk7546r"]
 
 [ext_resource type="PackedScene" uid="uid://cbvykmjuwvs2b" path="res://scenes/SCN_Player.tscn" id="1_gnqm2"]
+[ext_resource type="Script" path="res://src/SCR_MapGenerator.gd" id="1_pnehp"]
 [ext_resource type="Material" uid="uid://20e6na8no1fe" path="res://assets/Materials/MAT_SKYBox.tres" id="1_vstcw"]
+[ext_resource type="PackedScene" uid="uid://cj46x7p41yjv4" path="res://scenes/MapSegments/Openers/TestOpener.tscn" id="2_d2gna"]
 [ext_resource type="PackedScene" uid="uid://bmkd5n53iosgb" path="res://scenes/EnemyBase.tscn" id="2_g555f"]
 [ext_resource type="Script" path="res://src/SCR_CameraManager.gd" id="2_y5f1m"]
+[ext_resource type="PackedScene" uid="uid://u1ae45pfnsd4" path="res://scenes/MapSegments/Closers/TestCloser.tscn" id="3_ncxtp"]
 [ext_resource type="Script" path="res://src/SCR_InventoryManager.gd" id="3_q5vs4"]
+[ext_resource type="PackedScene" uid="uid://c2knq6ee8pjgq" path="res://scenes/MapSegments/Rooms/RoomTest.tscn" id="4_gwgf0"]
 [ext_resource type="Resource" uid="uid://bjb4bderi0bs0" path="res://assets/resources/ItemDatabase.tres" id="4_h4vqc"]
 
 [sub_resource type="Sky" id="Sky_m2tdj"]
@@ -12,7 +16,13 @@ sky_material = ExtResource("1_vstcw")
 
 [sub_resource type="Environment" id="Environment_xvmvp"]
 background_mode = 2
+background_energy_multiplier = 1.5
 sky = SubResource("Sky_m2tdj")
+ambient_light_source = 3
+reflected_light_source = 1
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 0.0521
+fog_sky_affect = 0.0
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_anmx7"]
 vertices = PackedVector3Array(-49.5, 0.5, -49.5, -49.5, 0.5, 49.5, 49.5, 0.5, 49.5, 49.5, 0.5, -49.5)
@@ -30,7 +40,12 @@ points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5
 
 [node name="ROOT_Gameplay" type="Node" groups=["scene_root"]]
 
-[node name="Map" type="Node" parent="."]
+[node name="Map" type="Node" parent="." node_paths=PackedStringArray("MapContainer")]
+script = ExtResource("1_pnehp")
+MapContainer = NodePath("MapContainer")
+Openers = Array[PackedScene]([ExtResource("2_d2gna")])
+Closers = Array[PackedScene]([ExtResource("3_ncxtp")])
+Rooms = Array[PackedScene]([ExtResource("4_gwgf0")])
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Map"]
 environment = SubResource("Environment_xvmvp")
@@ -59,6 +74,10 @@ mesh = SubResource("BoxMesh_4w1os")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_5cb18")
 
+[node name="MapContainer" type="Node3D" parent="Map"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/MapContainer"]
+
 [node name="Node" type="Node" parent="."]
 
 [node name="Player" parent="Node" instance=ExtResource("1_gnqm2")]
@@ -75,6 +94,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="Node/SubViewportContainer"]
 handle_input_locally = false
+debug_draw = 3
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 

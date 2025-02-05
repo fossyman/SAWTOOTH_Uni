@@ -33,7 +33,7 @@ _subresources={
 "materials": {
 "Material": {
 "use_external/enabled": true,
-"use_external/path": "res://assets/MAT_Minigun.tres"
+"use_external/path": "res://assets/Materials/MAT_Minigun.tres"
 }
 }
 }
