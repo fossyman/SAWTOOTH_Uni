@@ -1,7 +1,7 @@
 extends CharacterBody3D
 class_name PlayerManager
 
-const SPEED = 5.0
+@export var SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
 var RayOrigin
@@ -41,7 +41,6 @@ func _physics_process(delta):
 	CalculateLookDirection()
 
 func CalculateVelocity(delta:float):
-	print(CanAttack)
 	if Input.is_action_pressed("attack") and CanAttack:
 		if is_instance_valid(Globals.Inventory.CurrentWeapon):
 			CanAttack = false
@@ -50,9 +49,6 @@ func CalculateVelocity(delta:float):
 	
 	
 	MeshParent.rotation.y = lerp_angle(MeshParent.rotation.y,atan2(-DesiredLookRotation.x,-DesiredLookRotation.z),25*delta)
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -71,7 +67,6 @@ func MovementRotationCalculator(direction:Vector3,delta):
 	var Sides = -MeshParent.global_transform.basis.x
 	var FB = Forward.dot(direction)
 	var LR = Sides.dot(direction)
-	print(str(LR))
 	if direction:
 		DesiredMovementVector = Vector2(-LR,FB)
 		pass
