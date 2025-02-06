@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cirql2qbhbga6"]
+
+[ext_resource type="PackedScene" uid="uid://6b01m4vrus82" path="res://assets/Models/LevelSets/BasicSet/Corner1.glb" id="1_uqx83"]
+[ext_resource type="Script" path="res://src/Components/COMP_MapChunk.gd" id="2_mgiw3"]
+
+[node name="Corner1" node_paths=PackedStringArray("Back") instance=ExtResource("1_uqx83")]
+script = ExtResource("2_mgiw3")
+Back = NodePath("ConnectorU")
+
+[node name="Corner" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 1)
+
+[node name="ConnectorR" type="Node3D" parent="." index="1" groups=["Connector"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6, 0, 6)
+
+[node name="ConnectorU" type="Node3D" parent="." index="2" groups=["Connector"]]
+transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 5, 0, 0)

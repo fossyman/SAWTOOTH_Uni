@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://blnngdm0jh6cy"]
+
+[ext_resource type="PackedScene" uid="uid://c6iju2rjq3pk1" path="res://assets/Models/LevelSets/BasicSet/Hallway1.glb" id="1_1jrok"]
+[ext_resource type="Script" path="res://src/Components/COMP_MapChunk.gd" id="2_5qcix"]
+
+[node name="Hallway1" node_paths=PackedStringArray("Back") instance=ExtResource("1_1jrok")]
+script = ExtResource("2_5qcix")
+Back = NodePath("ConnectorF")
+
+[node name="Hallway" parent="." index="0"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 0, 2.18557e-07)
+
+[node name="ConnectorF" type="Node3D" parent="." index="1" groups=["Connector"]]
+transform = Transform3D(-1, 0, -1.90739e-07, 0, 1, 0, 1.90739e-07, 0, -1, 5, 0, -5.1658e-07)
+
+[node name="ConnectorF2" type="Node3D" parent="." index="2" groups=["Connector"]]
+transform = Transform3D(1, 0, 2.78162e-07, 0, 1, 0, -2.78162e-07, 0, 1, 2.8611e-06, 0, 20)
