@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://src/Components/COMP_Hurtbox.gd" id="3_uxeij"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ubm46"]
+radius = 0.339985
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_15xk4"]
 
@@ -29,7 +30,7 @@ wait_time = 0.1
 autostart = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_15xk4")
 surface_material_override/0 = SubResource("StandardMaterial3D_y6wgo")
 

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cmjsxx0j0cxx7"
-path="res://.godot/imported/LevelTransitionStaircase.glb-0a5e9384187bafc420cd75c8eab83c2a.scn"
+uid="uid://bganytuib3878"
+path="res://.godot/imported/Door.glb-abe20c4613e8b6bac56a6a8870c8665d.scn"
 
 [deps]
 
-source_file="res://assets/Models/LevelSets/LevelTransitionStaircase.glb"
-dest_files=["res://.godot/imported/LevelTransitionStaircase.glb-0a5e9384187bafc420cd75c8eab83c2a.scn"]
+source_file="res://assets/Models/LevelSets/Set1/Door.glb"
+dest_files=["res://.godot/imported/Door.glb-abe20c4613e8b6bac56a6a8870c8665d.scn"]
 
 [params]
 

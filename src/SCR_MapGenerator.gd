@@ -1,11 +1,9 @@
 extends Node
 
 @export var MapContainer:Node3D
-@export var Openers: Array[PackedScene]
-@export var Closers: Array[PackedScene]
-@export var Hallways: Array[PackedScene]
-@export var Corners:Array[PackedScene]
-@export var Connectors:Array[PackedScene]
+@export var MapFiles:Array[PackedScene]
+@export var TransitionStairs:PackedScene
+@export var NavRegion:NavigationRegion3D
 var Directions:Array[Vector3] = [Vector3.FORWARD,Vector3.LEFT,Vector3.BACK,Vector3.RIGHT]
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,49 +14,57 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
-		GenerateMap(100,5,100)
+		GenerateMap(3,5)
 	pass
 
 
-func GenerateMap(HallwayCount:int,RoomCount:int,MaxDistanceFromCenter:int,IncludeBossArea:bool = false):
-	var CurrentConnector:Node3D
-	var NextChunkIndex = 0
-	for i in MapContainer.get_child_count():
+func GenerateMap(MinimumRoomCount:int,Maximum:int):
+	var MapInstance:PackedScene = MapFiles.pick_random() as PackedScene
+	var RoomCount:int = 0
+	var chance:int = 1
+	
+	for i in MapContainer.get_children().size():
 		MapContainer.get_child(i).queue_free()
-	for i in HallwayCount:
-		var SelectedChunk:PackedScene
-		match NextChunkIndex:
-			0:
-				SelectedChunk = Hallways.pick_random()
-				NextChunkIndex = 1
-				pass
-			1:
-				SelectedChunk = Connectors.pick_random()
-				NextChunkIndex = 0
-				pass
-		if is_instance_valid(CurrentConnector):
-			var instance = SelectedChunk.instantiate() as COMP_MapChunk
+		
+	var SpawnedMap = MapInstance.instantiate()
+	MapContainer.add_child(SpawnedMap)
+	var ValidRooms:Array[Node3D]
+	
+	for i in SpawnedMap.get_child_count():
+		if SpawnedMap.get_child(i).is_in_group("room"):
+			ValidRooms.append(SpawnedMap.get_child(i))
 			
-			
-			print( "SPAWNING: " + instance.name + " AT " + CurrentConnector.name + CurrentConnector.owner.name)
-			
-			MapContainer.add_child(instance)
-			instance.global_transform = CurrentConnector.global_transform
-			instance.Back.queue_free()
-			CurrentConnector = find_children_in_group(instance,"Connector").pick_random()
-			while CurrentConnector == instance.Back:
-				CurrentConnector = find_children_in_group(instance,"Connector").pick_random()
-			pass
+	print("VALID ROOMS: " + str(ValidRooms.size()))
+	for i in ValidRooms.size():
+		if RoomCount >= Maximum:
+			print("STOPPING HERE")
+			break
 		else:
-			print("No Connectors")
-			var instance = SelectedChunk.instantiate()
-			var Connectors:Array[Node3D]
-			var Selected:Node3D
-			MapContainer.add_child(instance,true)
-			print("SPAWNING ROOT " + instance.name)
-			CurrentConnector = find_children_in_group(instance,"Connector").pick_random()
-		await get_tree().create_timer(0.01).timeout
+			randomize()
+			chance = randi_range(0,100)
+			print("CHANCE: " + str(chance) + " FOR ROOM: " + str(i))
+			if chance < 50:
+				print("REMOVING " + str(i))
+				ValidRooms[i].get_child(0).reparent(MapContainer)
+				ValidRooms[i].queue_free()
+				ValidRooms.remove_at(i)
+			RoomCount+=1
+	for i in ValidRooms.size():
+		print("REMOVING WALL")
+		ValidRooms[i].get_child(0).queue_free()
+	for i in SpawnedMap.find_child("TRANSITIONERS",true,false).get_child_count():
+		var Transitioner:Node3D = TransitionStairs.instantiate()
+		MapContainer.add_child(Transitioner)
+		Transitioner.transform = SpawnedMap.find_child("TRANSITIONERS",true,false).get_child(i).transform
+		
 	pass
+	
+	
+	
+	var PossibleRotations = [0,90,180,270]
+	MapContainer.rotation_degrees.y = PossibleRotations.pick_random()
+	
+	NavRegion.bake_navigation_mesh()
 	
 	
 	
