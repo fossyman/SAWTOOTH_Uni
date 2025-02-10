@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://blnngdm0jh6cy"]
+[gd_scene load_steps=4 format=3 uid="uid://blnngdm0jh6cy"]
 
 [ext_resource type="PackedScene" uid="uid://c6iju2rjq3pk1" path="res://assets/Models/LevelSets/BasicSet/Hallway1.glb" id="1_1jrok"]
 [ext_resource type="Script" path="res://src/Components/COMP_MapChunk.gd" id="2_5qcix"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_fs1u7"]
 
 [node name="Hallway1" node_paths=PackedStringArray("Back") instance=ExtResource("1_1jrok")]
 script = ExtResource("2_5qcix")
@@ -15,3 +17,7 @@ transform = Transform3D(-1, 0, -1.90739e-07, 0, 1, 0, 1.90739e-07, 0, -1, 5, 0, 
 
 [node name="ConnectorF2" type="Node3D" parent="." index="2" groups=["Connector"]]
 transform = Transform3D(1, 0, 2.78162e-07, 0, 1, 0, -2.78162e-07, 0, 1, 2.8611e-06, 0, 20)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="3"]
+transform = Transform3D(2, 0, 0, 0, -1.00536e-07, -0.2, 0, 2.3, -8.74228e-09, 2.4, 0.604041, 3)
+mesh = SubResource("PrismMesh_fs1u7")

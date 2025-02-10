@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dtfdccig1uk5u" path="res://assets/Models/LevelSets/BasicSet/4way1.glb" id="1_gbuel"]
 [ext_resource type="Script" path="res://src/Components/COMP_MapChunk.gd" id="2_wahjk"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_734r0"]
+[sub_resource type="PrismMesh" id="PrismMesh_s74o7"]
 
 [node name="4way1" node_paths=PackedStringArray("Back") instance=ExtResource("1_gbuel")]
 script = ExtResource("2_wahjk")
@@ -15,9 +15,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 1)
 [node name="ConnectorF" type="Node3D" parent="." index="1" groups=["Connector"]]
 transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 5, 0, 2.62268e-07)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ConnectorF" index="0"]
-mesh = SubResource("BoxMesh_734r0")
-
 [node name="ConnectorB" type="Node3D" parent="." index="2" groups=["Connector"]]
 transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 0, 7)
 
@@ -26,3 +23,7 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -1, 0, 1
 
 [node name="ConnectorR" type="Node3D" parent="." index="4" groups=["Connector"]]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6, 0, 6)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="5"]
+transform = Transform3D(2, 0, 0, 0, -1.00536e-07, -0.2, 0, 2.3, -8.74228e-09, 2.4, 0.436856, 3)
+mesh = SubResource("PrismMesh_s74o7")

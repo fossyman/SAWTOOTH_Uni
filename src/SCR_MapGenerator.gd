@@ -16,7 +16,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
-		GenerateMap(3,5,100)
+		GenerateMap(100,5,100)
 	pass
 
 
@@ -38,22 +38,26 @@ func GenerateMap(HallwayCount:int,RoomCount:int,MaxDistanceFromCenter:int,Includ
 				pass
 		if is_instance_valid(CurrentConnector):
 			var instance = SelectedChunk.instantiate() as COMP_MapChunk
-			print("Connector: " + CurrentConnector.name + " OldNode: " + CurrentConnector.owner.name + " NewNode: " + instance.name)
+			
+			
+			print( "SPAWNING: " + instance.name + " AT " + CurrentConnector.name + CurrentConnector.owner.name)
+			
 			MapContainer.add_child(instance)
 			instance.global_transform = CurrentConnector.global_transform
 			instance.Back.queue_free()
-			CurrentConnector.queue_free()
 			CurrentConnector = find_children_in_group(instance,"Connector").pick_random()
+			while CurrentConnector == instance.Back:
+				CurrentConnector = find_children_in_group(instance,"Connector").pick_random()
 			pass
 		else:
 			print("No Connectors")
 			var instance = SelectedChunk.instantiate()
 			var Connectors:Array[Node3D]
 			var Selected:Node3D
-			MapContainer.add_child(instance)
-			print(find_children_in_group(instance,"Connector"))
+			MapContainer.add_child(instance,true)
+			print("SPAWNING ROOT " + instance.name)
 			CurrentConnector = find_children_in_group(instance,"Connector").pick_random()
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.01).timeout
 	pass
 	
 	

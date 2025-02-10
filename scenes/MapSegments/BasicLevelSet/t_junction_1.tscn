@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://be0daafrbbtvt"]
+[gd_scene load_steps=4 format=3 uid="uid://be0daafrbbtvt"]
 
 [ext_resource type="PackedScene" uid="uid://bap82n4km8f3n" path="res://assets/Models/LevelSets/BasicSet/TJunction1.glb" id="1_lfh65"]
 [ext_resource type="Script" path="res://src/Components/COMP_MapChunk.gd" id="2_qr4du"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_gjebh"]
 
 [node name="TJunction1" node_paths=PackedStringArray("Back") instance=ExtResource("1_lfh65")]
 script = ExtResource("2_qr4du")
@@ -18,3 +20,7 @@ transform = Transform3D(-3.21873e-07, 0, 1, 0, 1, 0, -1, 0, -3.21873e-07, 6, 0, 
 
 [node name="ConnectorR" type="Node3D" parent="." index="3" groups=["Connector"]]
 transform = Transform3D(-1, 0, -1.90739e-07, 0, 1, 0, 1.90739e-07, 0, -1, 5, 0, 3.31403e-06)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="4"]
+transform = Transform3D(2, 0, 0, 0, -1.00536e-07, -0.2, 0, 2.3, -8.74228e-09, 2.4, 0.445277, 3)
+mesh = SubResource("PrismMesh_gjebh")

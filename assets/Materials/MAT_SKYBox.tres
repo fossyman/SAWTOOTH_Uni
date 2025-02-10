@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://20e6na8no1fe"]
+[gd_resource type="ShaderMaterial" load_steps=8 format=3 uid="uid://20e6na8no1fe"]
 
 [ext_resource type="Shader" path="res://src/shaders/RainbowSkybox.gdshader" id="1_a0ku1"]
 [ext_resource type="Texture2D" uid="uid://cbakv0stwahu0" path="res://assets/Textures/SkyboxEffectColours.png" id="2_uowng"]
@@ -15,7 +15,17 @@ fractal_gain = 5.0
 color_ramp = SubResource("Gradient_elvd3")
 noise = SubResource("FastNoiseLite_j7c43")
 
+[sub_resource type="Gradient" id="Gradient_mp7dl"]
+colors = PackedColorArray(0.0430392, 0.0430392, 0.0430392, 1, 0.0295066, 0.0295066, 0.0295066, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7alld"]
+gradient = SubResource("Gradient_mp7dl")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
 [resource]
 shader = ExtResource("1_a0ku1")
+shader_parameter/Brightness = 0.025
 shader_parameter/Colors = ExtResource("2_uowng")
 shader_parameter/Static = SubResource("NoiseTexture2D_56wrp")
+shader_parameter/gradient = SubResource("GradientTexture2D_7alld")

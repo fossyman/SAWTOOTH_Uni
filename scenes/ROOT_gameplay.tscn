@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b8cxecvk7546r"]
+[gd_scene load_steps=21 format=3 uid="uid://b8cxecvk7546r"]
 
 [ext_resource type="PackedScene" uid="uid://cbvykmjuwvs2b" path="res://scenes/SCN_Player.tscn" id="1_gnqm2"]
 [ext_resource type="Script" path="res://src/SCR_MapGenerator.gd" id="1_pnehp"]
@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://cirql2qbhbga6" path="res://scenes/MapSegments/BasicLevelSet/corner_1.tscn" id="5_lhngw"]
 [ext_resource type="PackedScene" uid="uid://c43dt27bxg3sm" path="res://scenes/MapSegments/BasicLevelSet/4_way_1.tscn" id="6_ymj2v"]
 [ext_resource type="PackedScene" uid="uid://be0daafrbbtvt" path="res://scenes/MapSegments/BasicLevelSet/t_junction_1.tscn" id="7_kvnuu"]
+[ext_resource type="PackedScene" uid="uid://c4ei208cyxnl4" path="res://assets/Models/LevelSets/Set1/FloorLayout1.glb" id="9_3e5gf"]
+[ext_resource type="PackedScene" uid="uid://c1vx530asrxbw" path="res://assets/Models/LevelSets/LevelTransitionStaircase.glb" id="15_slw5h"]
 
 [sub_resource type="Sky" id="Sky_m2tdj"]
 sky_material = ExtResource("1_vstcw")
@@ -70,6 +72,8 @@ shape = SubResource("WorldBoundaryShape3D_dlcx1")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Map/MapContainer"]
 
+[node name="FloorLayout1" parent="Map/MapContainer" instance=ExtResource("9_3e5gf")]
+
 [node name="Node" type="Node" parent="."]
 
 [node name="Player" parent="Node" instance=ExtResource("1_gnqm2")]
@@ -86,24 +90,20 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="Node/SubViewportContainer"]
 handle_input_locally = false
-debug_draw = 3
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="MainCamera" type="Camera3D" parent="Node/SubViewportContainer/SubViewport"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 41.234, 41.234)
-projection = 1
-fov = 90.0
-size = 50.0
-near = 0.001
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 6.22917, 6.22917)
+size = 10.0
 
 [node name="CameraOffset" type="Node3D" parent="Node" node_paths=PackedStringArray("TargetNode")]
 script = ExtResource("2_y5f1m")
 TargetNode = NodePath("../Player/Mesh/CameraOffsetNode")
 
 [node name="CameraOffset" type="RemoteTransform3D" parent="Node/CameraOffset"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 41.234, 41.234)
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 6.22917, 6.22917)
 remote_path = NodePath("../../SubViewportContainer/SubViewport/MainCamera")
 
 [node name="Inventory" type="Node" parent="Node"]
@@ -113,3 +113,6 @@ ItemDatabase = ExtResource("4_h4vqc")
 
 [node name="EnemyBase" parent="." instance=ExtResource("2_g555f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -3)
+
+[node name="LevelTransitionStaircase" parent="." instance=ExtResource("15_slw5h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, -22, 10)
