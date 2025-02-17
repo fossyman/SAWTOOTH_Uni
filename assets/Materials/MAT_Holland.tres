@@ -46,7 +46,7 @@ void fragment() {
 render_priority = -1
 shader = SubResource("Shader_iotoc")
 shader_parameter/outline_color = null
-shader_parameter/outline_width = 3.0
+shader_parameter/outline_width = 2.41
 shader_parameter/fade_start = 100.0
 shader_parameter/fade_end = 100.0
 

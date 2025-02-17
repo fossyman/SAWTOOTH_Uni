@@ -1,0 +1,39 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://cuv8gb6gpwrlu"
+path="res://.godot/imported/Gontserrat-BlackItalic.ttf-e108064e64f2cb9670546d3b4f9ffb4f.fontdata"
+
+[deps]
+
+source_file="res://assets/Fonts/gontserrat/Gontserrat-BlackItalic.ttf"
+dest_files=["res://.godot/imported/Gontserrat-BlackItalic.ttf-e108064e64f2cb9670546d3b4f9ffb4f.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+hinting=2
+subpixel_positioning=1
+oversampling=0.5
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "New Configuration",
+"size": Vector2i(16, 0),
+"variation_embolden": 0.0
+}]
+language_support={}
+script_support={}
+opentype_features={}

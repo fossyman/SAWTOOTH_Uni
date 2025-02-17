@@ -46,7 +46,8 @@ func CalculateVelocity(delta:float):
 			CanAttack = false
 			AttackManagement()
 	
-	
+	if !is_on_floor():
+		velocity.y += -gravity * delta
 	
 	MeshParent.rotation.y = lerp_angle(MeshParent.rotation.y,atan2(-DesiredLookRotation.x,-DesiredLookRotation.z),25*delta)
 
@@ -60,6 +61,7 @@ func CalculateVelocity(delta:float):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
+		
 	return direction
 
 func MovementRotationCalculator(direction:Vector3,delta):
