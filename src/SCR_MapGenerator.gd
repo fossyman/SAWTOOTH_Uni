@@ -1,9 +1,16 @@
 extends Node
 
 @export var MapContainer:Node3D
+@export var MapTransformer:Node3D
 @export var MapFiles:Array[PackedScene]
-@export var TransitionStairs:PackedScene
+@export var IntroStairs:PackedScene
+@export var OutroStairs:PackedScene
 @export var NavRegion:NavigationRegion3D
+
+@export var EnemyScenes:Array[PackedScene]
+
+@export var EnemyContainer:Node3D
+
 var Directions:Array[Vector3] = [Vector3.FORWARD,Vector3.LEFT,Vector3.BACK,Vector3.RIGHT]
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -52,17 +59,36 @@ func GenerateMap(MinimumRoomCount:int,Maximum:int):
 	for i in ValidRooms.size():
 		print("REMOVING WALL")
 		ValidRooms[i].get_child(0).queue_free()
+	
+	for i in ValidRooms.size():
+		var Spawners = ValidRooms[i].find_child("SPAWNERS")
+		if is_instance_valid(Spawners):
+			for x in Spawners.get_child_count():
+				var RandomEnemy = randi_range(0,EnemyScenes.size()-1)
+				var Enemy = EnemyScenes[RandomEnemy].instantiate()
+				EnemyContainer.add_child(Enemy)
+				Enemy.global_transform = Spawners.get_child(x).global_transform
+		pass
+	
 	for i in SpawnedMap.find_child("TRANSITIONERS",true,false).get_child_count():
-		var Transitioner:Node3D = TransitionStairs.instantiate()
-		MapContainer.add_child(Transitioner)
-		Transitioner.transform = SpawnedMap.find_child("TRANSITIONERS",true,false).get_child(i).transform
+		match i:
+			0:
+				var Transitioner:Node3D = IntroStairs.instantiate()
+				MapContainer.add_child(Transitioner)
+				Transitioner.transform = SpawnedMap.find_child("TRANSITIONERS",true,false).get_child(i).transform
+				pass
+			_:
+				var Transitioner:Node3D = OutroStairs.instantiate()
+				MapContainer.add_child(Transitioner)
+				Transitioner.transform = SpawnedMap.find_child("TRANSITIONERS",true,false).get_child(i).transform
+				pass
 		
 	pass
 	
 	
 	
 	var PossibleRotations = [0,90,180,270]
-	MapContainer.rotation_degrees.y = PossibleRotations.pick_random()
+	MapTransformer.rotation_degrees.y = PossibleRotations.pick_random()
 	
 	NavRegion.bake_navigation_mesh()
 	

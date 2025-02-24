@@ -1,13 +1,14 @@
-[gd_scene load_steps=29 format=3 uid="uid://b8cxecvk7546r"]
+[gd_scene load_steps=30 format=3 uid="uid://b8cxecvk7546r"]
 
 [ext_resource type="PackedScene" uid="uid://cbvykmjuwvs2b" path="res://scenes/SCN_Player.tscn" id="1_gnqm2"]
 [ext_resource type="Script" path="res://src/SCR_MapGenerator.gd" id="1_pnehp"]
 [ext_resource type="Material" uid="uid://20e6na8no1fe" path="res://assets/Materials/MAT_SKYBox.tres" id="1_vstcw"]
-[ext_resource type="PackedScene" uid="uid://dfa4eq3xug6cx" path="res://scenes/MapSegments/level_transition_staircase.tscn" id="2_08dm3"]
 [ext_resource type="PackedScene" uid="uid://do3ft222ko2s" path="res://scenes/MapSegments/floor_layout_1.tscn" id="2_fga2f"]
 [ext_resource type="PackedScene" uid="uid://bmkd5n53iosgb" path="res://scenes/EnemyBase.tscn" id="2_g555f"]
 [ext_resource type="Script" path="res://src/SCR_CameraManager.gd" id="2_y5f1m"]
+[ext_resource type="PackedScene" uid="uid://dfa4eq3xug6cx" path="res://scenes/MapSegments/level_Intro_staircase.tscn" id="3_fjnbm"]
 [ext_resource type="Script" path="res://src/SCR_InventoryManager.gd" id="3_q5vs4"]
+[ext_resource type="PackedScene" uid="uid://bj72ujbbayeyl" path="res://scenes/MapSegments/level_Outro_staircase.tscn" id="4_f6c57"]
 [ext_resource type="Resource" uid="uid://bjb4bderi0bs0" path="res://assets/resources/ItemDatabase.tres" id="4_h4vqc"]
 [ext_resource type="Shader" path="res://src/shaders/StaticVignette.gdshader" id="10_n02wc"]
 [ext_resource type="Script" path="res://src/PauseMenuManager.gd" id="10_su25v"]
@@ -71,12 +72,16 @@ bg_color = Color(0, 0, 0, 1)
 
 [node name="ROOT_Gameplay" type="Node" groups=["scene_root"]]
 
-[node name="Map" type="Node" parent="." node_paths=PackedStringArray("MapContainer", "NavRegion")]
+[node name="Map" type="Node" parent="." node_paths=PackedStringArray("MapContainer", "MapTransformer", "NavRegion", "EnemyContainer")]
 script = ExtResource("1_pnehp")
-MapContainer = NodePath("NavigationRegion3D/MapContainer")
+MapContainer = NodePath("OVERALL MAP TRANSFORM/NavigationRegion3D/MapContainer")
+MapTransformer = NodePath("OVERALL MAP TRANSFORM")
 MapFiles = Array[PackedScene]([ExtResource("2_fga2f")])
-TransitionStairs = ExtResource("2_08dm3")
-NavRegion = NodePath("NavigationRegion3D")
+IntroStairs = ExtResource("3_fjnbm")
+OutroStairs = ExtResource("4_f6c57")
+NavRegion = NodePath("OVERALL MAP TRANSFORM/NavigationRegion3D")
+EnemyScenes = Array[PackedScene]([ExtResource("2_g555f")])
+EnemyContainer = NodePath("OVERALL MAP TRANSFORM/EnemyContainer")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Map"]
 environment = SubResource("Environment_xvmvp")
@@ -84,22 +89,26 @@ environment = SubResource("Environment_xvmvp")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Map/WorldEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 11, 0)
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Map"]
+[node name="OVERALL MAP TRANSFORM" type="Node3D" parent="Map"]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Map/OVERALL MAP TRANSFORM"]
 navigation_mesh = SubResource("NavigationMesh_7msfh")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/NavigationRegion3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D"]
 visible = false
 mesh = SubResource("PlaneMesh_ghu1b")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Map/NavigationRegion3D"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/NavigationRegion3D/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 shape = SubResource("BoxShape3D_hwx5y")
 
-[node name="MapContainer" type="Node3D" parent="Map/NavigationRegion3D"]
+[node name="MapContainer" type="Node3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3)
+
+[node name="EnemyContainer" type="Node3D" parent="Map/OVERALL MAP TRANSFORM"]
 
 [node name="Node" type="Node" parent="."]
 
@@ -142,6 +151,8 @@ ItemDatabase = ExtResource("4_h4vqc")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -3)
 
 [node name="PAUSE MENU" type="Control" parent="." node_paths=PackedStringArray("NewsText")]
+process_mode = 3
+visible = false
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -182,7 +193,7 @@ theme_override_fonts/normal_font = ExtResource("12_ropxi")
 theme_override_font_sizes/normal_font_size = 42
 theme_override_font_sizes/italics_font_size = 100
 bbcode_enabled = true
-text = "BREAKING: KTCRS Member, 'Holland', traversing Lotarik Tower in search of Infamous crimelord 'Tarmac'."
+text = "[shake level=20]BREAKING:[/shake] KTCRS Member, 'Holland', traversing Lotarik Tower in search of Infamous crimelord 'Tarmac'."
 fit_content = true
 scroll_active = false
 autowrap_mode = 0

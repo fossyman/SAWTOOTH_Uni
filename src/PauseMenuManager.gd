@@ -2,6 +2,7 @@ extends Control
 
 @export var NewsText:RichTextLabel
 
+var IsActive:bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -9,7 +10,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	MoveNewsText()
+	if Input.is_action_just_pressed("pause"):
+		IsActive = !IsActive
+		visible = IsActive
+		get_tree().paused = IsActive
+		
+	if IsActive:
+		MoveNewsText()
 	pass
 
 

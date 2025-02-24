@@ -100,7 +100,7 @@ func AttackManagement():
 	MeshAnimationTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
 	for i in Globals.Inventory.CurrentWeapon.RayCount:
 		var space_state = get_world_3d().direct_space_state
-		var query = PhysicsRayQueryParameters3D.create(AttackOrigin.global_position, (MeshParent.global_transform.basis.z).normalized() * -999)
+		var query = PhysicsRayQueryParameters3D.create(AttackOrigin.global_position, (MeshParent.global_transform.basis.z) * -999)
 		query.collide_with_areas = true
 		query.exclude = [self]
 		var result = space_state.intersect_ray(query)

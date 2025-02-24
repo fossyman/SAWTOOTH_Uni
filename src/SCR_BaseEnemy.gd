@@ -5,6 +5,9 @@ const SPEED = 5.0
 
 @export var NavAgent:NavigationAgent3D
 
+enum TARGETSTATES{WANDERING,CHASING}
+var CurrentState:TARGETSTATES = TARGETSTATES.WANDERING
+
 func _process(delta):
 
 	var CurrentPosition:Vector3 = global_transform.origin
@@ -12,9 +15,23 @@ func _process(delta):
 	var NewVelocity:Vector3 = (NextLocation - CurrentPosition).normalized() * SPEED
 	
 	NavAgent.velocity = NewVelocity
+	
+	match CurrentState:
+		TARGETSTATES.WANDERING:
+			
+			pass
+		TARGETSTATES.CHASING:
+			pass
 
 
 func _TargetReached():
+	print("TARGET REACHED")
+	match CurrentState:
+		TARGETSTATES.WANDERING:
+			rotate_y(deg_to_rad(90))
+			pass
+		TARGETSTATES.CHASING:
+			pass
 	pass # Replace with function body.
 
 
@@ -23,16 +40,40 @@ func _VelocityComputed(safe_velocity):
 	move_and_slide()
 	pass # Replace with function body.
 
-func SetTarget(newtarget:Node3D):
+func SetTarget(newtarget:Vector3):
 	if newtarget == null:
 		return
 		
-	NavAgent.target_position = newtarget.global_position
+	NavAgent.target_position = newtarget
 
 func _AITimeout():
-	SetTarget(Globals.Player)
+	match CurrentState:
+		TARGETSTATES.WANDERING:
+			var space = get_world_3d().direct_space_state
+			var Wallquery = PhysicsRayQueryParameters3D.create(global_position,global_position - transform.basis.z * 999)
+			var Wallcollision = space.intersect_ray(Wallquery)
+			if Wallcollision:
+				var Floorquery = PhysicsRayQueryParameters3D.create(global_position,global_position - transform.basis.z * 999)
+				var FloorCollision = space.intersect_ray(Floorquery)
+				if FloorCollision:
+					var NewPos = FloorCollision.values()[0];
+					SetTarget(NewPos)
+			CanSeePlayer()
+		TARGETSTATES.CHASING:
+			SetTarget(Globals.Player.global_position)
+			pass
 	pass # Replace with function body.
 
+func CanSeePlayer():
+	var PlayerDot = global_transform.basis.z.normalized().dot(Globals.Player.global_transform.origin.normalized())
+	if global_position.distance_to(Globals.Player.global_position) <= 10.0 && PlayerDot > 0:
+		var space = get_world_3d().direct_space_state
+		var Playerquery = PhysicsRayQueryParameters3D.create(global_position,global_position - Globals.Player.global_position)
+		var Collision = space.intersect_ray(Playerquery)
+		if Collision:
+			if Collision.values()[4] == Globals.Player:
+				CurrentState = TARGETSTATES.CHASING
+		pass
 
 func _Damaged():
 	print("ARGHHH!")
