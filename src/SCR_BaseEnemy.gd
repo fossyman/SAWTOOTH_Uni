@@ -47,6 +47,7 @@ func SetTarget(newtarget:Vector3):
 	NavAgent.target_position = newtarget
 
 func _AITimeout():
+	CanSeePlayer()
 	match CurrentState:
 		TARGETSTATES.WANDERING:
 			var space = get_world_3d().direct_space_state
@@ -58,17 +59,17 @@ func _AITimeout():
 				if FloorCollision:
 					var NewPos = FloorCollision.values()[0];
 					SetTarget(NewPos)
-			CanSeePlayer()
 		TARGETSTATES.CHASING:
 			SetTarget(Globals.Player.global_position)
 			pass
 	pass # Replace with function body.
 
 func CanSeePlayer():
-	var PlayerDot = global_transform.basis.z.normalized().dot(Globals.Player.global_transform.origin.normalized())
-	if global_position.distance_to(Globals.Player.global_position) <= 10.0 && PlayerDot > 0:
+	var PlayerDot = global_transform.basis.z.dot(Globals.Player.global_transform.origin)
+	if global_position.distance_to(Globals.Player.global_position) <= 100.0:
 		var space = get_world_3d().direct_space_state
-		var Playerquery = PhysicsRayQueryParameters3D.create(global_position,global_position - Globals.Player.global_position)
+		var Playerquery = PhysicsRayQueryParameters3D.create(global_position, Globals.Player.global_position)
+		
 		var Collision = space.intersect_ray(Playerquery)
 		if Collision:
 			if Collision.values()[4] == Globals.Player:
