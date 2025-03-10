@@ -14,6 +14,9 @@ var RayEnd
 @export var DebugLineMat:StandardMaterial3D
 
 @export var MeshAnimationTree:AnimationTree
+
+@export var GunAnimationTree:AnimationTree
+
 var MovementVector:Vector2
 var DesiredMovementVector:Vector2
 
@@ -98,6 +101,7 @@ func AttackManagement():
 	CanAttack = false
 	MeshAnimationTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT
 	MeshAnimationTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
+	GunAnimationTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
 	for i in Globals.Inventory.CurrentWeapon.RayCount:
 		var space_state = get_world_3d().direct_space_state
 		var query = PhysicsRayQueryParameters3D.create(AttackOrigin.global_position, (MeshParent.global_transform.basis.z) * -999)
@@ -105,10 +109,10 @@ func AttackManagement():
 		query.exclude = [self]
 		var result = space_state.intersect_ray(query)
 		if !result.is_empty():
-			DebugLineMesh.global_position = result.position
 			if result.values()[4] is COMP_Hurtbox:
 				(result.values()[4] as COMP_Hurtbox).HealthComponent.Damage(Globals.Inventory.CurrentWeapon.Damage)
 				
 	await get_tree().create_timer(Globals.Inventory.CurrentWeapon.AttackSpeed).timeout
 	MeshAnimationTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT
+	GunAnimationTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT
 	CanAttack = true

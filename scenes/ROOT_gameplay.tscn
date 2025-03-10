@@ -1,15 +1,16 @@
-[gd_scene load_steps=30 format=3 uid="uid://b8cxecvk7546r"]
+[gd_scene load_steps=31 format=3 uid="uid://b8cxecvk7546r"]
 
 [ext_resource type="PackedScene" uid="uid://cbvykmjuwvs2b" path="res://scenes/SCN_Player.tscn" id="1_gnqm2"]
 [ext_resource type="Script" path="res://src/SCR_MapGenerator.gd" id="1_pnehp"]
 [ext_resource type="Material" uid="uid://20e6na8no1fe" path="res://assets/Materials/MAT_SKYBox.tres" id="1_vstcw"]
 [ext_resource type="PackedScene" uid="uid://do3ft222ko2s" path="res://scenes/MapSegments/floor_layout_1.tscn" id="2_fga2f"]
-[ext_resource type="PackedScene" uid="uid://bmkd5n53iosgb" path="res://scenes/EnemyBase.tscn" id="2_g555f"]
 [ext_resource type="Script" path="res://src/SCR_CameraManager.gd" id="2_y5f1m"]
+[ext_resource type="PackedScene" uid="uid://d1txlh7qdyymg" path="res://scenes/MapSegments/ChallengeRoom1.tscn" id="3_6dn74"]
 [ext_resource type="PackedScene" uid="uid://dfa4eq3xug6cx" path="res://scenes/MapSegments/level_Intro_staircase.tscn" id="3_fjnbm"]
 [ext_resource type="Script" path="res://src/SCR_InventoryManager.gd" id="3_q5vs4"]
 [ext_resource type="PackedScene" uid="uid://bj72ujbbayeyl" path="res://scenes/MapSegments/level_Outro_staircase.tscn" id="4_f6c57"]
 [ext_resource type="Resource" uid="uid://bjb4bderi0bs0" path="res://assets/resources/ItemDatabase.tres" id="4_h4vqc"]
+[ext_resource type="PackedScene" uid="uid://bmkd5n53iosgb" path="res://scenes/Enemy.tscn" id="6_y3fdh"]
 [ext_resource type="Shader" path="res://src/shaders/StaticVignette.gdshader" id="10_n02wc"]
 [ext_resource type="Script" path="res://src/PauseMenuManager.gd" id="10_su25v"]
 [ext_resource type="FontFile" uid="uid://bqybq0v5tllu4" path="res://assets/Fonts/gontserrat/Gontserrat-Black.ttf" id="11_hpbmx"]
@@ -77,10 +78,11 @@ script = ExtResource("1_pnehp")
 MapContainer = NodePath("OVERALL MAP TRANSFORM/NavigationRegion3D/MapContainer")
 MapTransformer = NodePath("OVERALL MAP TRANSFORM")
 MapFiles = Array[PackedScene]([ExtResource("2_fga2f")])
+ChallengeMapFiles = Array[PackedScene]([ExtResource("3_6dn74")])
 IntroStairs = ExtResource("3_fjnbm")
 OutroStairs = ExtResource("4_f6c57")
 NavRegion = NodePath("OVERALL MAP TRANSFORM/NavigationRegion3D")
-EnemyScenes = Array[PackedScene]([ExtResource("2_g555f")])
+EnemyScenes = Array[PackedScene]([ExtResource("6_y3fdh")])
 EnemyContainer = NodePath("OVERALL MAP TRANSFORM/EnemyContainer")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Map"]
@@ -102,11 +104,10 @@ skeleton = NodePath("../../..")
 [node name="StaticBody3D" type="StaticBody3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_hwx5y")
 
 [node name="MapContainer" type="Node3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3)
 
 [node name="EnemyContainer" type="Node3D" parent="Map/OVERALL MAP TRANSFORM"]
 
@@ -116,6 +117,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -3)
 unique_name_in_owner = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Node"]
+texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -145,9 +147,6 @@ remote_path = NodePath("../../SubViewportContainer/SubViewport/MainCamera")
 unique_name_in_owner = true
 script = ExtResource("3_q5vs4")
 ItemDatabase = ExtResource("4_h4vqc")
-
-[node name="EnemyBase" parent="." instance=ExtResource("2_g555f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -3)
 
 [node name="PAUSE MENU" type="Control" parent="." node_paths=PackedStringArray("NewsText")]
 process_mode = 3
