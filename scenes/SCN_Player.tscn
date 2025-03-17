@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cbvykmjuwvs2b"]
+[gd_scene load_steps=56 format=3 uid="uid://cbvykmjuwvs2b"]
 
 [ext_resource type="Script" path="res://src/SCR_PlayerManager.gd" id="1_7064w"]
 [ext_resource type="PackedScene" uid="uid://p4qr4n7m8yg0" path="res://assets/Models/Holland.glb" id="2_0tq5b"]
@@ -91,13 +91,160 @@ nodes/Attack/node = SubResource("AnimationNodeOneShot_5yexh")
 nodes/Attack/position = Vector2(93.3333, 133.333)
 node_connections = [&"Attack", 0, &"Animation 2", &"Attack", 1, &"Animation", &"output", 0, &"Attack"]
 
+[sub_resource type="Curve" id="Curve_dhgxe"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.513716, 0.520827), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_nfqks"]
+texture_mode = 1
+curve = SubResource("Curve_dhgxe")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_817rv"]
+angle_min = -50.0
+angle_max = 50.0
+direction = Vector3(1, 0.5, 0)
+spread = 0.0
+initial_velocity_min = 1.0
+initial_velocity_max = 5.0
+alpha_curve = SubResource("CurveTexture_nfqks")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bpq8f"]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 1, 0, 1)
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PrismMesh" id="PrismMesh_m25m8"]
+material = SubResource("StandardMaterial3D_bpq8f")
+size = Vector3(0.05, 0.05, 0.05)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gk0ii"]
+cull_mode = 2
+shading_mode = 0
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_kpppl"]
+
+[sub_resource type="Curve" id="Curve_ih4gj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.281796, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_f0ilh"]
+curve = SubResource("Curve_ih4gj")
+
+[sub_resource type="Curve" id="Curve_3v0c3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.493766, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_vgcex"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_fsxsf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_gx6gd"]
+curve_x = SubResource("Curve_3v0c3")
+curve_y = SubResource("Curve_vgcex")
+curve_z = SubResource("Curve_fsxsf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xq8j2"]
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveXYZTexture_gx6gd")
+color = Color(1, 1, 1, 0.682353)
+alpha_curve = SubResource("CurveTexture_f0ilh")
+
+[sub_resource type="Gradient" id="Gradient_407yl"]
+offsets = PackedFloat32Array(0, 0.798365, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vnogn"]
+gradient = SubResource("Gradient_407yl")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5fp2x"]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = SubResource("GradientTexture2D_vnogn")
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hjokb"]
+material = SubResource("StandardMaterial3D_5fp2x")
+size = Vector2(0.04, 3)
+center_offset = Vector3(0, 0, -1.515)
+
+[sub_resource type="Curve" id="Curve_eqny7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rk8xi"]
+curve = SubResource("Curve_eqny7")
+
+[sub_resource type="Gradient" id="Gradient_3gxjc"]
+offsets = PackedFloat32Array(0, 0.171745, 1)
+colors = PackedColorArray(1, 1, 0, 1, 1, 0.380392, 0.176471, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qkigr"]
+gradient = SubResource("Gradient_3gxjc")
+
+[sub_resource type="Curve" id="Curve_a2141"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.493766, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_xouyq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_wt504"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_w8un3"]
+curve_x = SubResource("Curve_a2141")
+curve_y = SubResource("Curve_xouyq")
+curve_z = SubResource("Curve_wt504")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l8ifo"]
+direction = Vector3(0, 0, -1)
+spread = 7.297
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+angular_velocity_min = 15.0
+angular_velocity_max = 25.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveXYZTexture_w8un3")
+color = Color(1, 1, 1, 0.682353)
+color_ramp = SubResource("GradientTexture1D_qkigr")
+alpha_curve = SubResource("CurveTexture_rk8xi")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ctxs"]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 1, 0, 1)
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_01o3t"]
+material = SubResource("StandardMaterial3D_2ctxs")
+size = Vector2(0.05, 0.1)
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ch7ru"]
 radius = 0.419313
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6vbb3"]
 size = Vector3(100, 0.1, 100)
 
-[node name="PlayerCharacter" type="CharacterBody3D" node_paths=PackedStringArray("MeshParent", "AttackOrigin", "MeshAnimationTree", "GunAnimationTree")]
+[node name="PlayerCharacter" type="CharacterBody3D" node_paths=PackedStringArray("MeshParent", "AttackOrigin", "MeshAnimationTree", "GunAnimationTree", "MinigunGeo", "GunTraceParticle", "ShellParticle", "BulletsParticle")]
 wall_min_slide_angle = 0.0
 floor_constant_speed = true
 floor_block_on_wall = false
@@ -109,6 +256,10 @@ MeshParent = NodePath("Mesh")
 AttackOrigin = NodePath("Mesh/AttackPoint")
 MeshAnimationTree = NodePath("Mesh/Holland/AnimationTree")
 GunAnimationTree = NodePath("Mesh/Holland/BoneAttachment3D/Minigun/AnimationPlayer/AnimationTree")
+MinigunGeo = NodePath("Mesh/Holland/BoneAttachment3D/Minigun/MeshInstance3D")
+GunTraceParticle = NodePath("Mesh/Holland/BoneAttachment3D/Minigun/GPUParticles3D2")
+ShellParticle = NodePath("Mesh/Holland/BoneAttachment3D/Minigun/GPUParticles3D")
+BulletsParticle = NodePath("Mesh/Holland/BoneAttachment3D/Minigun/Bullet")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -136,16 +287,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="Skeleton3D" parent="Mesh/Holland/Armature" index="0"]
 bones/0/rotation = Quaternion(0, 0.707107, 0.707107, 0)
-bones/1/position = Vector3(-0.0135562, -0.042869, 0.05)
+bones/1/position = Vector3(-9.9857e-05, -0.000315786, 0.05)
 bones/1/rotation = Quaternion(0.5, 0.5, 0.5, 0.5)
 bones/2/rotation = Quaternion(0.5, 0.5, 0.5, -0.5)
 bones/3/rotation = Quaternion(1.86542e-15, -0.52507, 3.02357e-15, 0.851059)
 bones/5/rotation = Quaternion(-0.00335439, 0.528448, -2.05691e-10, 0.848959)
 bones/6/rotation = Quaternion(0.415316, 0.596247, 0.596247, -0.34131)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(0.00923301, -0.471234, 0.758233, 0.450485)
-bones/8/rotation = Quaternion(0.460054, 0.0350132, 0.521527, 0.717729)
-bones/9/rotation = Quaternion(-0.00927571, 0.600544, -0.440662, 0.667142)
+bones/7/rotation = Quaternion(0.00858132, -0.481011, 0.758881, 0.438923)
+bones/8/rotation = Quaternion(0.465216, 0.0346412, 0.52738, 0.710102)
+bones/9/rotation = Quaternion(0.0150176, 0.588654, -0.454385, 0.668427)
 bones/10/position = Vector3(-0.0219696, 0.076446, -0.00230959)
 bones/10/rotation = Quaternion(-0.373475, -0.214044, 0.217393, 0.876037)
 bones/10/scale = Vector3(1, 1, 1)
@@ -169,9 +320,9 @@ bones/23/scale = Vector3(1, 1, 1)
 bones/24/rotation = Quaternion(-0.677386, 0.0079666, -0.0086504, 0.735534)
 bones/25/rotation = Quaternion(-0.415316, 0.596247, 0.596247, 0.34131)
 bones/25/scale = Vector3(1, 1, 1)
-bones/26/rotation = Quaternion(-0.320161, 0.360693, -0.411004, 0.773611)
-bones/27/rotation = Quaternion(0.36369, -0.0407011, -0.412287, 0.834321)
-bones/28/rotation = Quaternion(0.14519, -0.00353856, 0.426432, 0.892784)
+bones/26/rotation = Quaternion(-0.317938, 0.357675, -0.412477, 0.775143)
+bones/27/rotation = Quaternion(0.350697, -0.0413151, -0.397558, 0.846908)
+bones/28/rotation = Quaternion(0.157311, -0.0147288, 0.401619, 0.902074)
 bones/29/rotation = Quaternion(-0.27861, -0.0678377, -0.121277, 0.950298)
 bones/29/scale = Vector3(1, 1, 1)
 bones/30/rotation = Quaternion(0.0804791, -0.116145, 0.356838, 0.923418)
@@ -193,20 +344,20 @@ bones/42/rotation = Quaternion(-0.69908, 0.0318277, -0.0324886, 0.713595)
 bones/42/scale = Vector3(1, 1, 1)
 bones/43/rotation = Quaternion(-0.699756, -0.00822965, 0.00840045, 0.714285)
 bones/44/rotation = Quaternion(0.568244, 0.0769754, 0.568244, 0.590146)
-bones/45/rotation = Quaternion(-0.149889, -0.271064, 0.294993, 0.903901)
+bones/45/rotation = Quaternion(-0.254256, -0.303099, 0.303649, 0.866765)
 bones/45/scale = Vector3(1, 1, 1)
-bones/46/rotation = Quaternion(-0.348834, -0.0467806, 0.108337, 0.929726)
+bones/46/rotation = Quaternion(-0.137705, -0.0497279, 0.0427668, 0.988299)
 bones/46/scale = Vector3(1, 1, 1)
-bones/47/rotation = Quaternion(0.188285, -0.00189754, -0.0249197, 0.981796)
+bones/47/rotation = Quaternion(0.0784896, 0.0165497, 0.00410861, 0.996769)
 bones/48/rotation = Quaternion(0.298771, 0.0023218, -0.0023218, 0.954319)
 bones/48/scale = Vector3(1, 1, 1)
 bones/49/scale = Vector3(1, 1, 1)
 bones/50/rotation = Quaternion(-0.568244, 0.590146, -0.568244, 0.0769754)
 bones/50/scale = Vector3(1, 1, 1)
-bones/51/rotation = Quaternion(-0.150037, 0.278245, -0.321309, 0.892653)
+bones/51/rotation = Quaternion(-0.254222, 0.303161, -0.303825, 0.866692)
 bones/51/scale = Vector3(1, 1, 1)
-bones/52/rotation = Quaternion(-0.354441, 0.0466638, -0.110078, 0.927403)
-bones/53/rotation = Quaternion(0.193111, -0.0230196, 0.0424048, 0.97999)
+bones/52/rotation = Quaternion(-0.137805, 0.0497271, -0.0427981, 0.988284)
+bones/53/rotation = Quaternion(0.0785468, -0.0167078, -0.0039583, 0.996763)
 bones/54/rotation = Quaternion(0.298771, -0.0023218, 0.0023218, 0.954319)
 bones/54/scale = Vector3(1, 1, 1)
 bones/55/scale = Vector3(1, 1, 1)
@@ -237,7 +388,7 @@ libraries = {
 }
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Mesh/Holland"]
-transform = Transform3D(-0.190986, 0.363935, 0.911634, -0.820737, -0.568647, 0.055067, 0.538438, -0.737694, 0.407298, 0.272554, 1.26534, 0.0271958)
+transform = Transform3D(-0.189247, 0.38407, 0.903702, -0.826029, -0.559871, 0.0649613, 0.530906, -0.73419, 0.423207, 0.272645, 1.30411, 0.0275112)
 bone_name = "Hand.R"
 bone_idx = 9
 use_external_skeleton = true
@@ -253,6 +404,32 @@ anim_player = NodePath("..")
 parameters/Attack/active = false
 parameters/Attack/internal_active = false
 parameters/Attack/request = 0
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Mesh/Holland/BoneAttachment3D/Minigun"]
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_817rv")
+draw_pass_1 = SubResource("PrismMesh_m25m8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh/Holland/BoneAttachment3D/Minigun"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0206451, 0.0706104, -1.03905)
+visible = false
+material_override = SubResource("StandardMaterial3D_gk0ii")
+mesh = SubResource("ImmediateMesh_kpppl")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="Mesh/Holland/BoneAttachment3D/Minigun"]
+transform = Transform3D(0.999993, 0.000869809, 0.00360221, -0.000869246, 1, -0.000167917, -0.0036023, 0.000164479, 0.999994, 0.00645235, 0.0198455, -1.0056)
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_xq8j2")
+draw_pass_1 = SubResource("PlaneMesh_hjokb")
+
+[node name="Bullet" type="GPUParticles3D" parent="Mesh/Holland/BoneAttachment3D/Minigun"]
+transform = Transform3D(0.999993, 0.000869809, 0.00360221, -0.000869246, 1, -0.000167917, -0.0036023, 0.000164479, 0.999994, 0.00645235, 0.0198455, -1.0056)
+emitting = false
+amount = 50
+sub_emitter = NodePath(".")
+process_material = SubResource("ParticleProcessMaterial_l8ifo")
+draw_pass_1 = SubResource("PlaneMesh_01o3t")
 
 [node name="COMP_Hurtbox" type="Area3D" parent="." node_paths=PackedStringArray("HealthComponent")]
 script = ExtResource("2_l23m1")

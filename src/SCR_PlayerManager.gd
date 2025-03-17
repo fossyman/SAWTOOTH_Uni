@@ -17,6 +17,13 @@ var RayEnd
 
 @export var GunAnimationTree:AnimationTree
 
+@export var MinigunGeo:MeshInstance3D
+@export var MinigunGeoMesh:ImmediateMesh
+@export var GunTraceParticle:GPUParticles3D
+@export var ShellParticle:GPUParticles3D
+@export var BulletsParticle:GPUParticles3D
+var LinemeshVerts=[]
+
 var MovementVector:Vector2
 var DesiredMovementVector:Vector2
 
@@ -31,6 +38,17 @@ var CachedRaycaseQuery:PhysicsRayQueryParameters3D
 func _ready():
 	CachedRaycaseQuery = PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO,8388608)
 	CachedRaycaseQuery.collide_with_areas = true
+	
+	MinigunGeoMesh = (MinigunGeo.mesh as ImmediateMesh)
+	
+		# Begin draw.
+	MinigunGeoMesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
+	LinemeshVerts = [Vector3(0, 0, 0),Vector3(0.1,0, -10),Vector3(-0.1,0, -10)]
+	for i in LinemeshVerts.size():
+		MinigunGeoMesh.surface_add_vertex(LinemeshVerts[i])
+	# End drawing.
+	MinigunGeoMesh.surface_end()
+	
 func _process(delta):
 	var direction:Vector3 = CalculateVelocity(delta)
 
@@ -111,8 +129,17 @@ func AttackManagement():
 		if !result.is_empty():
 			if result.values()[4] is COMP_Hurtbox:
 				(result.values()[4] as COMP_Hurtbox).HealthComponent.Damage(Globals.Inventory.CurrentWeapon.Damage)
-				
+			MinigunGeoMesh.ARRAY_VERTEX
+	ShellParticle.emitting = true
+	GunTraceParticle.emitting = true
+	BulletsParticle.emitting = true
+	GunTraceParticle.rotation_degrees.x = randf_range(-15.0,15.0)
+	GunTraceParticle.rotation_degrees.y = randf_range(-15.0,15.0)
 	await get_tree().create_timer(Globals.Inventory.CurrentWeapon.AttackSpeed).timeout
 	MeshAnimationTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT
 	GunAnimationTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT
 	CanAttack = true
+	GunTraceParticle.emitting = false;
+	ShellParticle.emitting = false
+	BulletsParticle.emitting = false
+	

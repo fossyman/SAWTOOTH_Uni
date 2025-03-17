@@ -38,6 +38,7 @@ geometry_source_group_name = &"NAVMESH"
 size = Vector2(100, 100)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hwx5y"]
+size = Vector3(12.5152, 1, 11.6744)
 
 [sub_resource type="Gradient" id="Gradient_q2pvn"]
 offsets = PackedFloat32Array(0, 0.132787, 0.870492, 1)
@@ -102,9 +103,10 @@ mesh = SubResource("PlaneMesh_ghu1b")
 skeleton = NodePath("../../..")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.11588, -0.5, 0.404144)
 shape = SubResource("BoxShape3D_hwx5y")
 
 [node name="MapContainer" type="Node3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D"]
@@ -115,6 +117,7 @@ shape = SubResource("BoxShape3D_hwx5y")
 
 [node name="Player" parent="Node" instance=ExtResource("1_gnqm2")]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="Node"]
 texture_filter = 1
