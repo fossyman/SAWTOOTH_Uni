@@ -1233,6 +1233,12 @@ shape = SubResource("ConcavePolygonShape3D_q77dl")
 
 [node name="SPAWNERS" type="Node3D" parent="A" groups=["spawngroup"]]
 
+[node name="SpawnPoint3" type="Node3D" parent="A/SPAWNERS"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -2.51919, 0, -11.3974)
+
+[node name="SpawnPoint4" type="Node3D" parent="A/SPAWNERS"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -18.5934, 0, -29.3974)
+
 [node name="B" type="Node3D" parent="." groups=["room"]]
 
 [node name="Room_B1_WallHoles" type="MeshInstance3D" parent="B"]
@@ -1266,6 +1272,12 @@ skeleton = NodePath("")
 shape = SubResource("ConcavePolygonShape3D_5sa1t")
 
 [node name="SPAWNERS" type="Node3D" parent="B" groups=["spawngroup"]]
+
+[node name="SpawnPoint5" type="Node3D" parent="B/SPAWNERS"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 19.4066, 0, -25.3974)
+
+[node name="SpawnPoint6" type="Node3D" parent="B/SPAWNERS"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 6.40659, 0, -16.3974)
 
 [node name="C" type="Node3D" parent="." groups=["room"]]
 
@@ -1302,7 +1314,10 @@ shape = SubResource("ConcavePolygonShape3D_mpvtg")
 [node name="SPAWNERS" type="Node3D" parent="C" groups=["spawngroup"]]
 
 [node name="SpawnPoint" type="Node3D" parent="C/SPAWNERS"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 11.1282, 0, -4.04614)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 6.73336, 0, -7.58608)
+
+[node name="SpawnPoint2" type="Node3D" parent="C/SPAWNERS"]
+transform = Transform3D(1, 0, 3.55644e-07, 0, 1, 0, -3.55644e-07, 0, 1, 20.6904, 0, 1.4695)
 
 [node name="D" type="Node3D" parent="." groups=["room"]]
 
@@ -1337,6 +1352,13 @@ skeleton = NodePath("")
 shape = SubResource("ConcavePolygonShape3D_soy08")
 
 [node name="SPAWNERS" type="Node3D" parent="D" groups=["spawngroup"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0296202, -0.0126648, 0.00691795)
+
+[node name="SpawnPoint7" type="Node3D" parent="D/SPAWNERS"]
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 15.4066, 0, -34.3974)
+
+[node name="SpawnPoint8" type="Node3D" parent="D/SPAWNERS"]
+transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 2.40658, 0, -43.3974)
 
 [node name="E" type="Node3D" parent="." groups=["room"]]
 
@@ -1372,6 +1394,12 @@ shape = SubResource("ConcavePolygonShape3D_2koun")
 
 [node name="SPAWNERS" type="Node3D" parent="E" groups=["spawngroup"]]
 
+[node name="SpawnPoint9" type="Node3D" parent="E/SPAWNERS"]
+transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 26.989, -0.0126648, -43.3905)
+
+[node name="SpawnPoint10" type="Node3D" parent="E/SPAWNERS"]
+transform = Transform3D(1, 0, 3.49691e-07, 0, 1, 0, -3.49691e-07, 0, 1, 39.1675, -0.0126648, -34.6392)
+
 [node name="F" type="Node3D" parent="." groups=["room"]]
 
 [node name="Room_F1_WallHole" type="MeshInstance3D" parent="F"]
@@ -1405,6 +1433,12 @@ skeleton = NodePath("")
 shape = SubResource("ConcavePolygonShape3D_fgxd5")
 
 [node name="SPAWNERS" type="Node3D" parent="F" groups=["spawngroup"]]
+
+[node name="SpawnPoint11" type="Node3D" parent="F/SPAWNERS"]
+transform = Transform3D(1, 0, 3.49691e-07, 0, 1, 0, -3.49691e-07, 0, 1, 41.8675, -0.0126648, -16.6392)
+
+[node name="SpawnPoint12" type="Node3D" parent="F/SPAWNERS"]
+transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 28.2506, -0.0126648, -25.315)
 
 [node name="G" type="Node3D" parent="." groups=["room"]]
 
@@ -1440,6 +1474,12 @@ shape = SubResource("ConcavePolygonShape3D_63brd")
 
 [node name="SPAWNERS" type="Node3D" parent="G" groups=["spawngroup"]]
 
+[node name="SpawnPoint13" type="Node3D" parent="G/SPAWNERS"]
+transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, 48.3687, -0.0126648, -49.5806)
+
+[node name="SpawnPoint14" type="Node3D" parent="G/SPAWNERS"]
+transform = Transform3D(1, 0, 3.49691e-07, 0, 1, 0, -3.49691e-07, 0, 1, 57.8779, -0.0126648, -36.0968)
+
 [node name="H" type="Node3D" parent="." groups=["room"]]
 
 [node name="Room_H1_WallHole" type="MeshInstance3D" parent="H"]
@@ -1473,6 +1513,12 @@ skeleton = NodePath("")
 shape = SubResource("ConcavePolygonShape3D_fskl6")
 
 [node name="SPAWNERS" type="Node3D" parent="H" groups=["spawngroup"]]
+
+[node name="SpawnPoint15" type="Node3D" parent="H/SPAWNERS"]
+transform = Transform3D(1, 0, 3.49691e-07, 0, 1, 0, -3.49691e-07, 0, 1, 62.0621, -0.0126648, -40.0968)
+
+[node name="SpawnPoint16" type="Node3D" parent="H/SPAWNERS"]
+transform = Transform3D(-1, 0, -4.37114e-07, 0, 1, 0, 4.37114e-07, 0, -1, 74.5837, -0.0126648, -50.0138)
 
 [node name="I" type="Node3D" parent="." groups=["room"]]
 
@@ -1508,6 +1554,12 @@ shape = SubResource("ConcavePolygonShape3D_wwb3a")
 
 [node name="SPAWNERS" type="Node3D" parent="I" groups=["spawngroup"]]
 
+[node name="SpawnPoint17" type="Node3D" parent="I/SPAWNERS"]
+transform = Transform3D(-1, 0, -4.37114e-07, 0, 1, 0, 4.37114e-07, 0, -1, 67.5837, -0.0126648, -67.0138)
+
+[node name="SpawnPoint18" type="Node3D" parent="I/SPAWNERS"]
+transform = Transform3D(1, 0, 3.49691e-07, 0, 1, 0, -3.49691e-07, 0, 1, 54.5837, -0.0126648, -58.4138)
+
 [node name="J" type="Node3D" parent="." groups=["room"]]
 
 [node name="Room_J1_WallHole" type="MeshInstance3D" parent="J"]
@@ -1542,10 +1594,17 @@ shape = SubResource("ConcavePolygonShape3D_hnvh7")
 
 [node name="SPAWNERS" type="Node3D" parent="J" groups=["spawngroup"]]
 
+[node name="SpawnPoint19" type="Node3D" parent="J/SPAWNERS"]
+transform = Transform3D(1, 0, 3.49691e-07, 0, 1, 0, -3.49691e-07, 0, 1, 22.5837, -0.0126648, -62.4138)
+
+[node name="SpawnPoint20" type="Node3D" parent="J/SPAWNERS"]
+transform = Transform3D(-1, 0, -4.37114e-07, 0, 1, 0, 4.37114e-07, 0, -1, 35.5837, -0.0126648, -71.4138)
+
 [node name="Door" parent="." instance=ExtResource("1_cktig")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.99266, 0, -32.6767)
 
 [node name="NAV" type="MeshInstance3D" parent="." groups=["NAVMESH"]]
+visible = false
 mesh = SubResource("ArrayMesh_vb5jj")
 skeleton = NodePath("")
 

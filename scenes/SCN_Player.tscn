@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://cbvykmjuwvs2b"]
+[gd_scene load_steps=56 format=3 uid="uid://cbvykmjuwvs2b"]
 
 [ext_resource type="Script" path="res://src/SCR_PlayerManager.gd" id="1_7064w"]
 [ext_resource type="PackedScene" uid="uid://p4qr4n7m8yg0" path="res://assets/Models/Holland.glb" id="2_0tq5b"]
@@ -72,34 +72,6 @@ nodes/MovementBlend/node = SubResource("AnimationNodeBlendSpace2D_g8siu")
 nodes/MovementBlend/position = Vector2(-26.6667, 293.333)
 nodes/output/position = Vector2(840, 320)
 node_connections = [&"Attack", 0, &"EquippedBlend", &"Attack", 1, &"Animation 2", &"EquippedBlend", 0, &"MovementBlend", &"EquippedBlend", 1, &"Animation", &"output", 0, &"Attack"]
-
-[sub_resource type="Animation" id="Animation_ypull"]
-resource_name = "GUN_Attack"
-length = 0.333333
-tracks/0/type = "rotation_3d"
-tracks/0/imported = true
-tracks/0/enabled = true
-tracks/0/path = NodePath("Armature/Skeleton3D:Barrels")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, -0.707107, 0, 0, 0.707107, 0.0333333, 1, -0.701646, -0.0877058, 0.0877058, 0.701646, 0.0666667, 1, -0.632456, -0.316228, 0.316228, 0.632456, 0.1, 1, -0.441726, -0.552158, 0.552158, 0.441726, 0.133333, 1, -0.194257, -0.6799, 0.6799, 0.194257, 0.166667, 1, -3.09086e-08, -0.707107, 0.707107, 3.09086e-08, 0.2, 1, -0.171499, 0.685994, -0.685994, 0.171499, 0.233333, 1, -0.392232, 0.588349, -0.588348, 0.392232, 0.266667, 1, -0.588348, 0.392232, -0.392232, 0.588348, 0.3, 1, -0.685994, 0.171499, -0.171499, 0.685994, 0.333333, 1, -0.707107, 6.18172e-08, -6.18172e-08, 0.707107)
-
-[sub_resource type="Animation" id="Animation_2um2j"]
-resource_name = "GUN_Idle"
-length = 0.0166667
-tracks/0/type = "rotation_3d"
-tracks/0/imported = true
-tracks/0/enabled = true
-tracks/0/path = NodePath("Armature/Skeleton3D:Barrels")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, -0.707107, 0, 0, 0.707107)
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ikyjl"]
-_data = {
-"GUN_Attack": SubResource("Animation_ypull"),
-"GUN_Idle": SubResource("Animation_2um2j")
-}
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w7ylw"]
 animation = &"GUN_Idle"
@@ -272,11 +244,11 @@ radius = 0.419313
 [sub_resource type="BoxShape3D" id="BoxShape3D_6vbb3"]
 size = Vector3(100, 0.1, 100)
 
-[node name="PlayerCharacter" type="CharacterBody3D" node_paths=PackedStringArray("MeshParent", "AttackOrigin", "MeshAnimationTree", "GunAnimationTree", "MinigunGeo", "GunTraceParticle", "ShellParticle", "BulletsParticle")]
+[node name="PlayerCharacter" type="CharacterBody3D" node_paths=PackedStringArray("MeshParent", "AttackOrigin", "MeshAnimationTree", "GunAnimationTree", "MinigunGeo", "GunTraceParticle", "ShellParticle", "BulletsParticle", "HealthComponent")]
 wall_min_slide_angle = 0.0
 floor_constant_speed = true
 floor_block_on_wall = false
-floor_max_angle = 1.22173
+floor_max_angle = 1.48353
 floor_snap_length = 1.0
 script = ExtResource("1_7064w")
 SPEED = 8.0
@@ -288,6 +260,7 @@ MinigunGeo = NodePath("Mesh/Holland/BoneAttachment3D/Minigun/MeshInstance3D")
 GunTraceParticle = NodePath("Mesh/Holland/BoneAttachment3D/Minigun/GPUParticles3D2")
 ShellParticle = NodePath("Mesh/Holland/BoneAttachment3D/Minigun/GPUParticles3D")
 BulletsParticle = NodePath("Mesh/Holland/BoneAttachment3D/Minigun/Bullet")
+HealthComponent = NodePath("COMP_Health")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -315,16 +288,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="Skeleton3D" parent="Mesh/Holland/Armature" index="0"]
 bones/0/rotation = Quaternion(0, 0.707107, 0.707107, 0)
-bones/1/position = Vector3(-9.9857e-05, -0.000315786, 0.05)
+bones/1/position = Vector3(-0.000430688, -0.00136197, 0.05)
 bones/1/rotation = Quaternion(0.5, 0.5, 0.5, 0.5)
 bones/2/rotation = Quaternion(0.5, 0.5, 0.5, -0.5)
 bones/3/rotation = Quaternion(1.86542e-15, -0.52507, 3.02357e-15, 0.851059)
 bones/5/rotation = Quaternion(-0.00335439, 0.528448, -2.05691e-10, 0.848959)
 bones/6/rotation = Quaternion(0.415316, 0.596247, 0.596247, -0.34131)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(0.00858132, -0.481011, 0.758881, 0.438923)
-bones/8/rotation = Quaternion(0.465216, 0.0346412, 0.52738, 0.710102)
-bones/9/rotation = Quaternion(0.0150176, 0.588654, -0.454385, 0.668427)
+bones/7/rotation = Quaternion(0.00845769, -0.480557, 0.759156, 0.438948)
+bones/8/rotation = Quaternion(0.465457, 0.0346236, 0.527653, 0.709742)
+bones/9/rotation = Quaternion(0.0145987, 0.588933, -0.455659, 0.667323)
 bones/10/position = Vector3(-0.0219696, 0.076446, -0.00230959)
 bones/10/rotation = Quaternion(-0.373475, -0.214044, 0.217393, 0.876037)
 bones/10/scale = Vector3(1, 1, 1)
@@ -348,9 +321,9 @@ bones/23/scale = Vector3(1, 1, 1)
 bones/24/rotation = Quaternion(-0.677386, 0.0079666, -0.0086504, 0.735534)
 bones/25/rotation = Quaternion(-0.415316, 0.596247, 0.596247, 0.34131)
 bones/25/scale = Vector3(1, 1, 1)
-bones/26/rotation = Quaternion(-0.317938, 0.357675, -0.412477, 0.775143)
-bones/27/rotation = Quaternion(0.350697, -0.0413151, -0.397558, 0.846908)
-bones/28/rotation = Quaternion(0.157311, -0.0147288, 0.401619, 0.902074)
+bones/26/rotation = Quaternion(-0.317219, 0.357557, -0.412569, 0.775443)
+bones/27/rotation = Quaternion(0.351086, -0.0412972, -0.397999, 0.84654)
+bones/28/rotation = Quaternion(0.155599, -0.0142359, 0.402254, 0.902096)
 bones/29/rotation = Quaternion(-0.27861, -0.0678377, -0.121277, 0.950298)
 bones/29/scale = Vector3(1, 1, 1)
 bones/30/rotation = Quaternion(0.0804791, -0.116145, 0.356838, 0.923418)
@@ -372,20 +345,20 @@ bones/42/rotation = Quaternion(-0.69908, 0.0318277, -0.0324886, 0.713595)
 bones/42/scale = Vector3(1, 1, 1)
 bones/43/rotation = Quaternion(-0.699756, -0.00822965, 0.00840045, 0.714285)
 bones/44/rotation = Quaternion(0.568244, 0.0769754, 0.568244, 0.590146)
-bones/45/rotation = Quaternion(-0.254256, -0.303099, 0.303649, 0.866765)
+bones/45/rotation = Quaternion(-0.249948, -0.301873, 0.303672, 0.868437)
 bones/45/scale = Vector3(1, 1, 1)
-bones/46/rotation = Quaternion(-0.137705, -0.0497279, 0.0427668, 0.988299)
+bones/46/rotation = Quaternion(-0.146833, -0.0496555, 0.0456019, 0.986861)
 bones/46/scale = Vector3(1, 1, 1)
-bones/47/rotation = Quaternion(0.0784896, 0.0165497, 0.00410861, 0.996769)
+bones/47/rotation = Quaternion(0.0831747, 0.0160801, 0.00273594, 0.996401)
 bones/48/rotation = Quaternion(0.298771, 0.0023218, -0.0023218, 0.954319)
 bones/48/scale = Vector3(1, 1, 1)
 bones/49/scale = Vector3(1, 1, 1)
 bones/50/rotation = Quaternion(-0.568244, 0.590146, -0.568244, 0.0769754)
 bones/50/scale = Vector3(1, 1, 1)
-bones/51/rotation = Quaternion(-0.254222, 0.303161, -0.303825, 0.866692)
+bones/51/rotation = Quaternion(-0.249807, 0.302137, -0.304433, 0.868119)
 bones/51/scale = Vector3(1, 1, 1)
-bones/52/rotation = Quaternion(-0.137805, 0.0497271, -0.0427981, 0.988284)
-bones/53/rotation = Quaternion(0.0785468, -0.0167078, -0.0039583, 0.996763)
+bones/52/rotation = Quaternion(-0.147252, 0.0496521, -0.0457318, 0.986793)
+bones/53/rotation = Quaternion(0.0834151, -0.016766, -0.00209253, 0.996372)
 bones/54/rotation = Quaternion(0.298771, -0.0023218, 0.0023218, 0.954319)
 bones/54/scale = Vector3(1, 1, 1)
 bones/55/scale = Vector3(1, 1, 1)
@@ -401,9 +374,6 @@ bones/62/rotation = Quaternion(0, 0, 0, -1)
 visible = false
 
 [node name="AnimationTree" type="AnimationTree" parent="Mesh/Holland"]
-libraries = {
-"Holland_Movement": ExtResource("3_rtptl")
-}
 tree_root = SubResource("AnimationNodeBlendTree_1kg37")
 anim_player = NodePath("AnimationPlayer")
 parameters/Attack/active = false
@@ -419,7 +389,7 @@ libraries = {
 }
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Mesh/Holland"]
-transform = Transform3D(-0.189248, 0.384069, 0.903702, -0.826028, -0.559873, 0.0649613, 0.530907, -0.734189, 0.423207, 0.272645, 0.304109, 0.0275112)
+transform = Transform3D(-0.191154, 0.383735, 0.903442, -0.825334, -0.561043, 0.0636746, 0.531304, -0.733469, 0.423955, 0.272239, 1.30358, 0.0272838)
 bone_name = "Hand.R"
 bone_idx = 9
 use_external_skeleton = true
@@ -430,9 +400,6 @@ transform = Transform3D(-0.31601, -0.804799, 0.502431, 0.275841, -0.584629, -0.7
 
 [node name="AnimationTree" type="AnimationTree" parent="Mesh/Holland/BoneAttachment3D/Minigun/AnimationPlayer" index="0"]
 root_node = NodePath("../..")
-libraries = {
-"": SubResource("AnimationLibrary_ikyjl")
-}
 tree_root = SubResource("AnimationNodeBlendTree_3wshb")
 anim_player = NodePath("..")
 parameters/Attack/active = false
@@ -440,6 +407,7 @@ parameters/Attack/internal_active = false
 parameters/Attack/request = 0
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Mesh/Holland/BoneAttachment3D/Minigun"]
+emitting = false
 amount = 30
 process_material = SubResource("ParticleProcessMaterial_817rv")
 draw_pass_1 = SubResource("PrismMesh_m25m8")

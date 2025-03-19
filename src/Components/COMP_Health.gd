@@ -8,6 +8,9 @@ signal Damaged
 signal Death
 signal Healed
 
+func _ready():
+	CurrentHealth = MaxHealth
+
 func Damage(amount:int):
 	if CurrentHealth - amount <= 0:
 		Death.emit()

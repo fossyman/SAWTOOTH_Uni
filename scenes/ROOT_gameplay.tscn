@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://b8cxecvk7546r"]
+[gd_scene load_steps=35 format=3 uid="uid://b8cxecvk7546r"]
 
 [ext_resource type="PackedScene" uid="uid://cbvykmjuwvs2b" path="res://scenes/SCN_Player.tscn" id="1_gnqm2"]
 [ext_resource type="Script" path="res://src/SCR_MapGenerator.gd" id="1_pnehp"]
@@ -14,8 +14,11 @@
 [ext_resource type="Shader" path="res://src/shaders/StaticVignette.gdshader" id="10_n02wc"]
 [ext_resource type="Script" path="res://src/PauseMenuManager.gd" id="10_su25v"]
 [ext_resource type="FontFile" uid="uid://bqybq0v5tllu4" path="res://assets/Fonts/gontserrat/Gontserrat-Black.ttf" id="11_hpbmx"]
+[ext_resource type="Texture2D" uid="uid://bo1nv3f0ow6ti" path="res://assets/Sprites/Healthbar_Container.png" id="12_150so"]
+[ext_resource type="Script" path="res://scenes/HUDManager.gd" id="12_qstf1"]
 [ext_resource type="FontFile" uid="uid://cuv8gb6gpwrlu" path="res://assets/Fonts/gontserrat/Gontserrat-BlackItalic.ttf" id="12_ropxi"]
 [ext_resource type="FontFile" uid="uid://vuoewqpy81fa" path="res://assets/Fonts/gontserrat/Gontserrat-Regular.ttf" id="13_1x87n"]
+[ext_resource type="Texture2D" uid="uid://dume3lkw0s5vb" path="res://assets/Sprites/Healthbar_Visual.png" id="13_34324"]
 
 [sub_resource type="Sky" id="Sky_m2tdj"]
 sky_material = ExtResource("1_vstcw")
@@ -31,12 +34,22 @@ fog_density = 0.0521
 fog_sky_affect = 0.0
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_dhx0j"]
+geometry_source_geometry_mode = 2
+geometry_source_group_name = &"NAVMESH"
+agent_radius = 0.1
+filter_low_hanging_obstacles = true
+filter_ledge_spans = true
+filter_walkable_low_height_spans = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ghu1b"]
 size = Vector2(100, 100)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_hwx5y"]
-size = Vector3(12.5152, 1, 11.6744)
+[sub_resource type="Gradient" id="Gradient_6rxyf"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_j7k24"]
+gradient = SubResource("Gradient_6rxyf")
+width = 100
 
 [sub_resource type="Gradient" id="Gradient_q2pvn"]
 offsets = PackedFloat32Array(0, 0.132787, 0.870492, 1)
@@ -100,13 +113,6 @@ visible = false
 mesh = SubResource("PlaneMesh_ghu1b")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.11588, -0.5, 0.404144)
-shape = SubResource("BoxShape3D_hwx5y")
-
 [node name="MapContainer" type="Node3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D"]
 
 [node name="EnemyContainer" type="Node3D" parent="Map/OVERALL MAP TRANSFORM"]
@@ -148,6 +154,50 @@ remote_path = NodePath("../../SubViewportContainer/SubViewport/MainCamera")
 unique_name_in_owner = true
 script = ExtResource("3_q5vs4")
 ItemDatabase = ExtResource("4_h4vqc")
+
+[node name="HUD" type="Control" parent="Node" node_paths=PackedStringArray("FadeRect", "Healthbar")]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_qstf1")
+FadeRect = NodePath("FADEOUT")
+Healthbar = NodePath("TextureRect/TextureProgressBar")
+HealthColours = SubResource("GradientTexture1D_j7k24")
+
+[node name="TextureRect" type="TextureRect" parent="Node/HUD"]
+layout_mode = 0
+offset_top = 31.0
+offset_right = 570.0
+offset_bottom = 121.0
+texture = ExtResource("12_150so")
+stretch_mode = 4
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Node/HUD/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 100.0
+nine_patch_stretch = true
+texture_under = ExtResource("13_34324")
+texture_progress = ExtResource("13_34324")
+tint_under = Color(0.18359, 0.18359, 0.18359, 1)
+
+[node name="FADEOUT" type="ColorRect" parent="Node/HUD"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="PAUSE MENU" type="Control" parent="." node_paths=PackedStringArray("NewsText")]
 process_mode = 3

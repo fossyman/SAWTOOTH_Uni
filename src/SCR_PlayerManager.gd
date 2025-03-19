@@ -35,6 +35,9 @@ var CanAttack:bool = true
 
 var CachedRaycaseQuery:PhysicsRayQueryParameters3D
 
+
+@export var HealthComponent:COMP_Health
+
 func _ready():
 	CachedRaycaseQuery = PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO,8388608)
 	CachedRaycaseQuery.collide_with_areas = true
@@ -142,4 +145,8 @@ func AttackManagement():
 	GunTraceParticle.emitting = false;
 	ShellParticle.emitting = false
 	BulletsParticle.emitting = false
-	
+
+func Damage(Amt:int):
+	HealthComponent.Damage(Amt)
+	HUDManager.instance.Healthbar.value = HealthComponent.CurrentHealth
+	HUDManager.instance.Healthbar.tint_progress = Color.WHITE.lerp(Color.RED, float((HealthComponent.CurrentHealth / HealthComponent.MaxHealth)))

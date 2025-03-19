@@ -8,6 +8,9 @@ extends Node
 @export var OutroStairs:PackedScene
 @export var NavRegion:NavigationRegion3D
 
+var IntroTransitioner:Node3D
+var SpawnPoint:Node3D
+
 @export var EnemyScenes:Array[PackedScene]
 
 @export var EnemyContainer:Node3D
@@ -26,6 +29,7 @@ func _ready():
 func _process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		GenerateMap(FLOORSTYLES.NORMAL,3,5)
+		HUDManager.instance.FadeIn(1)
 	pass
 
 
@@ -87,6 +91,8 @@ func GenerateMap(Floortype:FLOORSTYLES = FLOORSTYLES.NORMAL, MinimumRoomCount:in
 						var Transitioner:Node3D = IntroStairs.instantiate()
 						MapContainer.add_child(Transitioner)
 						Transitioner.transform = SpawnedMap.find_child("TRANSITIONERS",true,false).get_child(i).transform
+						IntroTransitioner = Transitioner
+						SpawnPoint = IntroTransitioner.get_node('%SPAWNPOINT')
 						pass
 					_:
 						var Transitioner:Node3D = OutroStairs.instantiate()
@@ -127,7 +133,8 @@ func GenerateMap(Floortype:FLOORSTYLES = FLOORSTYLES.NORMAL, MinimumRoomCount:in
 			pass
 		_:
 			print("HELOOOOOOOOOOO")
-	
+			
+	Globals.Player.global_position = SpawnPoint.global_position
 	
 	
 # FOUND HERE https://forum.godotengine.org/t/is-there-a-way-to-get-any-offspring-that-belongs-in-a-certain-group-directly/14265/4
