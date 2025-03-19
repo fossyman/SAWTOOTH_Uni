@@ -1546,7 +1546,6 @@ shape = SubResource("ConcavePolygonShape3D_hnvh7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.99266, 0, -32.6767)
 
 [node name="NAV" type="MeshInstance3D" parent="." groups=["NAVMESH"]]
-visible = false
 mesh = SubResource("ArrayMesh_vb5jj")
 skeleton = NodePath("")
 

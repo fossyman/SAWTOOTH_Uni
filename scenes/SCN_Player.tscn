@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://cbvykmjuwvs2b"]
+[gd_scene load_steps=59 format=3 uid="uid://cbvykmjuwvs2b"]
 
 [ext_resource type="Script" path="res://src/SCR_PlayerManager.gd" id="1_7064w"]
 [ext_resource type="PackedScene" uid="uid://p4qr4n7m8yg0" path="res://assets/Models/Holland.glb" id="2_0tq5b"]
@@ -72,6 +72,34 @@ nodes/MovementBlend/node = SubResource("AnimationNodeBlendSpace2D_g8siu")
 nodes/MovementBlend/position = Vector2(-26.6667, 293.333)
 nodes/output/position = Vector2(840, 320)
 node_connections = [&"Attack", 0, &"EquippedBlend", &"Attack", 1, &"Animation 2", &"EquippedBlend", 0, &"MovementBlend", &"EquippedBlend", 1, &"Animation", &"output", 0, &"Attack"]
+
+[sub_resource type="Animation" id="Animation_ypull"]
+resource_name = "GUN_Attack"
+length = 0.333333
+tracks/0/type = "rotation_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("Armature/Skeleton3D:Barrels")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.707107, 0, 0, 0.707107, 0.0333333, 1, -0.701646, -0.0877058, 0.0877058, 0.701646, 0.0666667, 1, -0.632456, -0.316228, 0.316228, 0.632456, 0.1, 1, -0.441726, -0.552158, 0.552158, 0.441726, 0.133333, 1, -0.194257, -0.6799, 0.6799, 0.194257, 0.166667, 1, -3.09086e-08, -0.707107, 0.707107, 3.09086e-08, 0.2, 1, -0.171499, 0.685994, -0.685994, 0.171499, 0.233333, 1, -0.392232, 0.588349, -0.588348, 0.392232, 0.266667, 1, -0.588348, 0.392232, -0.392232, 0.588348, 0.3, 1, -0.685994, 0.171499, -0.171499, 0.685994, 0.333333, 1, -0.707107, 6.18172e-08, -6.18172e-08, 0.707107)
+
+[sub_resource type="Animation" id="Animation_2um2j"]
+resource_name = "GUN_Idle"
+length = 0.0166667
+tracks/0/type = "rotation_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("Armature/Skeleton3D:Barrels")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.707107, 0, 0, 0.707107)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ikyjl"]
+_data = {
+"GUN_Attack": SubResource("Animation_ypull"),
+"GUN_Idle": SubResource("Animation_2um2j")
+}
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w7ylw"]
 animation = &"GUN_Idle"
@@ -373,6 +401,9 @@ bones/62/rotation = Quaternion(0, 0, 0, -1)
 visible = false
 
 [node name="AnimationTree" type="AnimationTree" parent="Mesh/Holland"]
+libraries = {
+"Holland_Movement": ExtResource("3_rtptl")
+}
 tree_root = SubResource("AnimationNodeBlendTree_1kg37")
 anim_player = NodePath("AnimationPlayer")
 parameters/Attack/active = false
@@ -388,7 +419,7 @@ libraries = {
 }
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Mesh/Holland"]
-transform = Transform3D(-0.189247, 0.38407, 0.903702, -0.826029, -0.559871, 0.0649613, 0.530906, -0.73419, 0.423207, 0.272645, 1.30411, 0.0275112)
+transform = Transform3D(-0.189248, 0.384069, 0.903702, -0.826028, -0.559873, 0.0649613, 0.530907, -0.734189, 0.423207, 0.272645, 0.304109, 0.0275112)
 bone_name = "Hand.R"
 bone_idx = 9
 use_external_skeleton = true
@@ -399,6 +430,9 @@ transform = Transform3D(-0.31601, -0.804799, 0.502431, 0.275841, -0.584629, -0.7
 
 [node name="AnimationTree" type="AnimationTree" parent="Mesh/Holland/BoneAttachment3D/Minigun/AnimationPlayer" index="0"]
 root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_ikyjl")
+}
 tree_root = SubResource("AnimationNodeBlendTree_3wshb")
 anim_player = NodePath("..")
 parameters/Attack/active = false

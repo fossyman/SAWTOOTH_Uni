@@ -30,9 +30,7 @@ fog_light_color = Color(0, 0, 0, 1)
 fog_density = 0.0521
 fog_sky_affect = 0.0
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_7msfh"]
-geometry_source_geometry_mode = 2
-geometry_source_group_name = &"NAVMESH"
+[sub_resource type="NavigationMesh" id="NavigationMesh_dhx0j"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ghu1b"]
 size = Vector2(100, 100)
@@ -95,7 +93,7 @@ transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 11, 0)
 [node name="OVERALL MAP TRANSFORM" type="Node3D" parent="Map"]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="Map/OVERALL MAP TRANSFORM"]
-navigation_mesh = SubResource("NavigationMesh_7msfh")
+navigation_mesh = SubResource("NavigationMesh_dhx0j")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Map/OVERALL MAP TRANSFORM/NavigationRegion3D"]
 visible = false

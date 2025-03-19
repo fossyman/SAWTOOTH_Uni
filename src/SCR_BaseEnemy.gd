@@ -20,9 +20,10 @@ func _process(delta):
 	var NewVelocity:Vector3 = (NextLocation - CurrentPosition).normalized() * SPEED
 	
 	NavAgent.velocity = NewVelocity
-
-	var dir = global_position.direction_to(NavAgent.get_next_path_position())
-	CharacterMesh.rotation.y = lerp_angle(rotation.y,atan2(dir.x,dir.z),5*delta)
+	match CurrentState:
+		TARGETSTATES.CHASING:
+			var dir = -global_position.direction_to(NavAgent.get_next_path_position())
+			CharacterMesh.rotation.y = lerp_angle(CharacterMesh.rotation.y,atan2(dir.x,dir.z),5*delta)
 
 
 func _TargetReached():
@@ -37,7 +38,7 @@ func _TargetReached():
 
 
 func _VelocityComputed(safe_velocity):
-	velocity = velocity.move_toward(safe_velocity, 0.25)
+	velocity = safe_velocity
 	AnimTree["parameters/Movement/blend_position"] = Vector2(velocity.x,velocity.z)
 	move_and_slide()
 	pass # Replace with function body.
@@ -58,18 +59,17 @@ func _AITimeout():
 	match CurrentState:
 		TARGETSTATES.WANDERING:
 			var space = get_world_3d().direct_space_state
-			var Wallquery = PhysicsRayQueryParameters3D.create(global_position,-global_transform.basis.z * 999)
-			
+			var Wallquery = PhysicsRayQueryParameters3D.create(WallHit.global_position,-global_transform.basis.z * 999)
 			var Wallcollision = space.intersect_ray(Wallquery)
 			if Wallcollision:
-				WallHit.global_position = Wallcollision.values()[0]
-				print(Wallcollision)
-				var Floorquery = PhysicsRayQueryParameters3D.create(Wallcollision.values()[0],Vector3.DOWN * 999)
+
+				var Floorquery = PhysicsRayQueryParameters3D.create(Wallcollision.values()[0],Wallcollision.values()[0] + (Vector3.DOWN * 999))
 				var FloorCollision = space.intersect_ray(Floorquery)
 				if FloorCollision:
-					FloorHit = FloorCollision.values()[0]
+					FloorHit.global_position = FloorCollision.values()[0]
 					var NewPos = FloorCollision.values()[0];
 					SetTargetPosition(NewPos)
+				print("WALL: " + str(Wallcollision) + " || " + "Floor " + str(FloorCollision))
 		TARGETSTATES.CHASING:
 			SetTarget(Globals.Player)
 			pass
