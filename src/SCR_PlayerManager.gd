@@ -52,17 +52,20 @@ func _ready():
 	# End drawing.
 	MinigunGeoMesh.surface_end()
 	
+	HealthComponent.Death.connect(Death)
+	
 func _process(delta):
-	var direction:Vector3 = CalculateVelocity(delta)
 
 	move_and_slide()
-	
-	MovementRotationCalculator(direction,delta)
+	if !HealthComponent.IsDead:
+		var direction:Vector3 = CalculateVelocity(delta)
+		MovementRotationCalculator(direction,delta)
 	
 	
 	
 func _physics_process(delta):
-	CalculateLookDirection()
+	if !HealthComponent.IsDead:
+		CalculateLookDirection()
 
 func CalculateVelocity(delta:float):
 	if Input.is_action_pressed("attack") and CanAttack:
@@ -147,6 +150,25 @@ func AttackManagement():
 	BulletsParticle.emitting = false
 
 func Damage(Amt:int):
-	HealthComponent.Damage(Amt)
+	if !HealthComponent.IsDead:
+		HealthComponent.Damage(Amt)
+		HUDManager.instance.Healthbar.value = HealthComponent.CurrentHealth
+
+
+func Death():
+	MeshAnimationTree["parameters/Death/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
+	await get_tree().create_timer(0.5).timeout
+	HUDManager.instance.DeathScreen.visible = true
+	MeshAnimationTree.active = false
+	get_tree().paused = true
+	pass
+	
+func Respawn():
+	HUDManager.instance.DeathScreen.visible = false
+	HUDManager.instance.DeathCrack.visible = false
+	HealthComponent.IsDead = false
+	MeshAnimationTree["parameters/Death/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_ABORT
+	HealthComponent.Heal(100)
+	MeshAnimationTree.active = true
 	HUDManager.instance.Healthbar.value = HealthComponent.CurrentHealth
-	HUDManager.instance.Healthbar.tint_progress = Color.WHITE.lerp(Color.RED, float((HealthComponent.CurrentHealth / HealthComponent.MaxHealth)))
+	HUDManager.instance.Healthbar.tint_progress = Color.WHITE

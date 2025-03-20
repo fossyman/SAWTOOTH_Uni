@@ -1,5 +1,5 @@
 extends Node
-
+class_name MapManager
 @export var MapContainer:Node3D
 @export var MapTransformer:Node3D
 @export var MapFiles:Array[PackedScene]
@@ -7,6 +7,8 @@ extends Node
 @export var IntroStairs:PackedScene
 @export var OutroStairs:PackedScene
 @export var NavRegion:NavigationRegion3D
+@export var DirectionalLight:DirectionalLight3D
+@export var WorldEnv:WorldEnvironment
 
 var IntroTransitioner:Node3D
 var SpawnPoint:Node3D
@@ -19,6 +21,8 @@ var Directions:Array[Vector3] = [Vector3.FORWARD,Vector3.LEFT,Vector3.BACK,Vecto
 
 enum FLOORSTYLES{NORMAL=0,CHALLENGE=1}
 
+var MapID:int = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -28,8 +32,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
-		GenerateMap(FLOORSTYLES.NORMAL,3,5)
-		HUDManager.instance.FadeIn(1)
+		ProgressFloor()
 	pass
 
 
@@ -110,6 +113,7 @@ func GenerateMap(Floortype:FLOORSTYLES = FLOORSTYLES.NORMAL, MinimumRoomCount:in
 			NavRegion.bake_navigation_mesh()
 			
 		FLOORSTYLES.CHALLENGE:
+			MapTransformer.rotation_degrees.y = 0
 			print("HELOOOOOOOOOOO")
 			var MapInstance:PackedScene = ChallengeMapFiles.pick_random() as PackedScene
 			var SpawnedMap = MapInstance.instantiate()
@@ -121,6 +125,7 @@ func GenerateMap(Floortype:FLOORSTYLES = FLOORSTYLES.NORMAL, MinimumRoomCount:in
 						var Transitioner:Node3D = IntroStairs.instantiate()
 						MapContainer.add_child(Transitioner)
 						Transitioner.transform = SpawnedMap.find_child("TRANSITIONERS",true,false).get_child(i).transform
+						SpawnPoint = Transitioner.get_node('%SPAWNPOINT')
 						pass
 					_:
 						var Transitioner:Node3D = OutroStairs.instantiate()
@@ -134,7 +139,6 @@ func GenerateMap(Floortype:FLOORSTYLES = FLOORSTYLES.NORMAL, MinimumRoomCount:in
 		_:
 			print("HELOOOOOOOOOOO")
 			
-	Globals.Player.global_position = SpawnPoint.global_position
 	
 	
 # FOUND HERE https://forum.godotengine.org/t/is-there-a-way-to-get-any-offspring-that-belongs-in-a-certain-group-directly/14265/4
@@ -149,3 +153,23 @@ static func find_children_in_group(parent: Node, group: String, recursive: bool 
 			for recursive_child in recursive_output :
 				output.append(recursive_child)
 	return output
+	
+	
+func RestartGame():
+		GenerateMap(FLOORSTYLES.NORMAL,3,5)
+		HUDManager.instance.FadeIn(1)
+		Globals.Player.velocity = Vector3.ZERO
+		Globals.Player.global_position = SpawnPoint.global_position
+		Globals.Player.Respawn()
+		get_tree().paused = false
+		
+func ProgressFloor():
+		MapID+=1
+		if MapID == 1:
+			GenerateMap(FLOORSTYLES.NORMAL,3,5)
+		else:
+			GenerateMap(FLOORSTYLES.CHALLENGE,3,5)
+		HUDManager.instance.FadeIn(1)
+		Globals.Player.velocity = Vector3.ZERO
+		Globals.Player.global_position = SpawnPoint.global_position
+		get_tree().paused = false

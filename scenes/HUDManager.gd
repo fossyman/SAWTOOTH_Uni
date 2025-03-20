@@ -9,6 +9,9 @@ var FadeTween:Tween
 
 @export var HealthColours:GradientTexture1D
 
+@export var DeathScreen:Control
+@export var DeathCrack:Control
+
 func _enter_tree():
 	if !instance:
 		instance = self

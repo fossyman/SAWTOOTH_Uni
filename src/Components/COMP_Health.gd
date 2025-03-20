@@ -4,6 +4,8 @@ class_name COMP_Health
 @export var MaxHealth:int
 var CurrentHealth:int
 
+var IsDead:bool = false
+
 signal Damaged
 signal Death
 signal Healed
@@ -13,6 +15,8 @@ func _ready():
 
 func Damage(amount:int):
 	if CurrentHealth - amount <= 0:
+		CurrentHealth = 0
+		IsDead = true
 		Death.emit()
 	else:
 		Damaged.emit()

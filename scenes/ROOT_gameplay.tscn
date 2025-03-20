@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://b8cxecvk7546r"]
+[gd_scene load_steps=42 format=3 uid="uid://b8cxecvk7546r"]
 
 [ext_resource type="PackedScene" uid="uid://cbvykmjuwvs2b" path="res://scenes/SCN_Player.tscn" id="1_gnqm2"]
 [ext_resource type="Script" path="res://src/SCR_MapGenerator.gd" id="1_pnehp"]
@@ -19,6 +19,8 @@
 [ext_resource type="FontFile" uid="uid://cuv8gb6gpwrlu" path="res://assets/Fonts/gontserrat/Gontserrat-BlackItalic.ttf" id="12_ropxi"]
 [ext_resource type="FontFile" uid="uid://vuoewqpy81fa" path="res://assets/Fonts/gontserrat/Gontserrat-Regular.ttf" id="13_1x87n"]
 [ext_resource type="Texture2D" uid="uid://dume3lkw0s5vb" path="res://assets/Sprites/Healthbar_Visual.png" id="13_34324"]
+[ext_resource type="Texture2D" uid="uid://bx03si8u6cjip" path="res://icon.svg" id="15_sun70"]
+[ext_resource type="Texture2D" uid="uid://cmywtnenj6380" path="res://assets/RGB.png" id="16_bbg5q"]
 
 [sub_resource type="Sky" id="Sky_m2tdj"]
 sky_material = ExtResource("1_vstcw")
@@ -50,6 +52,181 @@ colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_j7k24"]
 gradient = SubResource("Gradient_6rxyf")
 width = 100
+
+[sub_resource type="Shader" id="Shader_8iuef"]
+code = "shader_type canvas_item;
+
+// Crack generation
+uniform float crack_depth : hint_range(0.0, 10.0) = 2.236;
+uniform float crack_scale : hint_range(1.0, 10.0) = 4.0;
+uniform float crack_zebra_scale : hint_range(0.0, 10.0) = 2.67;
+uniform float crack_zebra_amp : hint_range(0.0, 10.0) = 1.3;
+uniform float crack_profile : hint_range(0.0, 10.0) = 1.0;
+uniform float crack_slope : hint_range(0.0, 50.0) = 45.8;
+uniform float crack_width : hint_range(0.0, 1.0) = 0.001;
+
+const vec4 background_color = vec4(0.0, 0.0, 0.0, 0.0);
+const vec4 crack_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+// Glass effect
+uniform vec2 refraction_offset = vec2(25.0,25.0);
+uniform vec2 reflection_offset = vec2(1.0,1.0);
+uniform vec4 reflection_color : source_color = vec4(0.588,0.588,0.588,0.5);
+uniform sampler2D reflection_Texture:repeat_enable,filter_nearest;
+
+uniform sampler2D TransparentNoise:repeat_enable,filter_nearest;
+
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture,filter_nearest;
+
+uniform float Opacity;
+
+vec2 hash(vec2 p) {
+    p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+    return fract(sin(p) * 43758.5453123);
+}
+
+float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f);
+    return mix(mix(dot(hash(i + vec2(0.0, 0.0)), f - vec2(0.0, 0.0)),
+                   dot(hash(i + vec2(1.0, 0.0)), f - vec2(1.0, 0.0)), f.x),
+               mix(dot(hash(i + vec2(0.0, 1.0)), f - vec2(0.0, 1.0)),
+                   dot(hash(i + vec2(1.0, 1.0)), f - vec2(1.0, 1.0)), f.x), f.y);
+}
+
+vec3 voronoi(vec2 u) {
+    vec2 p = floor(u);
+    vec2 f = fract(u);
+    float res = 8.0;
+    vec2 b = vec2(0.0);
+    for (int j = -1; j <= 1; j++) {
+        for (int i = -1; i <= 1; i++) {
+            vec2 g = vec2(float(i), float(j));
+            vec2 o = hash(p + g);
+            vec2 r = g - f + o;
+            float d = dot(r, r);
+            if (d < res) {
+                res = d;
+                b = r;
+            }
+        }
+    }
+    return vec3(sqrt(res), b);
+}
+
+vec3 voronoiB(vec2 u) {
+    vec2 p = floor(u);
+    vec2 f = fract(u);
+    float res = 8.0;
+    vec2 C = vec2(0.0);
+    vec2 P = vec2(0.0);
+    for (int j = -1; j <= 1; j++) {
+        for (int i = -1; i <= 1; i++) {
+            vec2 g = vec2(float(i), float(j));
+            vec2 o = hash(p + g);
+            vec2 r = g - f + o;
+            float d = dot(r, r);
+            if (d < res) {
+                res = d;
+                C = g;
+                P = r;
+            }
+        }
+    }
+    res = 8.0;
+    for (int j = -2; j <= 2; j++) {
+        for (int i = -2; i <= 2; i++) {
+            vec2 g = C + vec2(float(i), float(j));
+            vec2 o = hash(p + g);
+            vec2 r = g - f + o;
+            if (dot(P - r, P - r) > 1e-5) {
+                res = min(res, 0.5 * dot((P + r), normalize(r - P)));
+            }
+        }
+    }
+    return vec3(res, P + f);
+}
+
+float fbm(vec2 n) {
+    float total = 0.0, amp = 1.0;
+    for (int i = 0; i < 7; i++) {
+        total += noise(n) * amp;
+        n += n;
+        amp *= 0.5;
+    }
+    return total;
+}
+
+vec4 generate_cracks(vec2 uv) {
+	vec2 U = uv * crack_scale;
+    vec2 I = floor(U / 2.0);
+    bool vert = mod(I.x + I.y, 2.0) == 0.0;
+    vec3 H0;
+    vec4 color = background_color;
+    for (float i = 0.0; i < crack_depth; i++) {
+        vec2 V = U;
+        vec2 D = vec2(crack_zebra_amp * fbm(U / crack_zebra_scale) * crack_zebra_scale);
+        vec3 H = voronoiB(V + D);
+        float d = H.x;
+        d = min(1.0, crack_slope * pow(max(0.0, d - crack_width), crack_profile));
+        color += vec4(1.0 - d) / exp2(i);
+        U *= 1.5;
+    }
+    color *= crack_color;
+	
+	return color;
+}
+
+
+void fragment() {	
+	COLOR =  generate_cracks(UV);
+	vec4 orig_color = COLOR;
+	vec4 adjacent_color = generate_cracks(UV + TEXTURE_PIXEL_SIZE * reflection_offset);
+	vec4 tex = texture(reflection_Texture,SCREEN_UV * 200.0f);
+	vec4 trans = texture(TransparentNoise,UV * vec2(2,2) + (TIME * 2.0f));
+	if (adjacent_color.a >= 1.0) {
+		COLOR =  reflection_color * tex * trans;
+	} else {
+		COLOR = texture(SCREEN_TEXTURE, SCREEN_UV + COLOR.a*(SCREEN_PIXEL_SIZE * refraction_offset));
+		
+	}
+	COLOR *= Opacity;
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3wcl8"]
+noise_type = 0
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ayri1"]
+width = 32
+height = 32
+generate_mipmaps = false
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_3wcl8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7sbed"]
+shader = SubResource("Shader_8iuef")
+shader_parameter/crack_depth = 2.236
+shader_parameter/crack_scale = 2.169
+shader_parameter/crack_zebra_scale = 2.67
+shader_parameter/crack_zebra_amp = 2.079
+shader_parameter/crack_profile = 1.0
+shader_parameter/crack_slope = 11.168
+shader_parameter/crack_width = 0.023
+shader_parameter/refraction_offset = Vector2(25, 25)
+shader_parameter/reflection_offset = Vector2(1, 1)
+shader_parameter/reflection_color = Color(1, 1, 1, 1)
+shader_parameter/Opacity = 1.0
+shader_parameter/reflection_Texture = ExtResource("16_bbg5q")
+shader_parameter/TransparentNoise = SubResource("NoiseTexture2D_ayri1")
+
+[sub_resource type="SystemFont" id="SystemFont_kcmti"]
+font_names = PackedStringArray("Arial")
+font_weight = 700
+hinting = 2
 
 [sub_resource type="Gradient" id="Gradient_q2pvn"]
 offsets = PackedFloat32Array(0, 0.132787, 0.870492, 1)
@@ -85,7 +262,7 @@ bg_color = Color(0, 0, 0, 1)
 
 [node name="ROOT_Gameplay" type="Node" groups=["scene_root"]]
 
-[node name="Map" type="Node" parent="." node_paths=PackedStringArray("MapContainer", "MapTransformer", "NavRegion", "EnemyContainer")]
+[node name="Map" type="Node" parent="." node_paths=PackedStringArray("MapContainer", "MapTransformer", "NavRegion", "DirectionalLight", "WorldEnv", "EnemyContainer")]
 script = ExtResource("1_pnehp")
 MapContainer = NodePath("OVERALL MAP TRANSFORM/NavigationRegion3D/MapContainer")
 MapTransformer = NodePath("OVERALL MAP TRANSFORM")
@@ -94,6 +271,8 @@ ChallengeMapFiles = Array[PackedScene]([ExtResource("3_6dn74")])
 IntroStairs = ExtResource("3_fjnbm")
 OutroStairs = ExtResource("4_f6c57")
 NavRegion = NodePath("OVERALL MAP TRANSFORM/NavigationRegion3D")
+DirectionalLight = NodePath("WorldEnvironment/DirectionalLight3D")
+WorldEnv = NodePath("WorldEnvironment")
 EnemyScenes = Array[PackedScene]([ExtResource("6_y3fdh")])
 EnemyContainer = NodePath("OVERALL MAP TRANSFORM/EnemyContainer")
 
@@ -155,7 +334,7 @@ unique_name_in_owner = true
 script = ExtResource("3_q5vs4")
 ItemDatabase = ExtResource("4_h4vqc")
 
-[node name="HUD" type="Control" parent="Node" node_paths=PackedStringArray("FadeRect", "Healthbar")]
+[node name="HUD" type="Control" parent="Node" node_paths=PackedStringArray("FadeRect", "Healthbar", "DeathScreen", "DeathCrack")]
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -167,6 +346,8 @@ script = ExtResource("12_qstf1")
 FadeRect = NodePath("FADEOUT")
 Healthbar = NodePath("TextureRect/TextureProgressBar")
 HealthColours = SubResource("GradientTexture1D_j7k24")
+DeathScreen = NodePath("DeathScreen/Control")
+DeathCrack = NodePath("DeathScreen/CrackedScreenEffect")
 
 [node name="TextureRect" type="TextureRect" parent="Node/HUD"]
 layout_mode = 0
@@ -197,7 +378,74 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0)
+
+[node name="DeathScreen" type="CanvasLayer" parent="Node/HUD"]
+process_mode = 3
+
+[node name="CrackedScreenEffect" type="TextureRect" parent="Node/HUD/DeathScreen"]
+visible = false
+material = SubResource("ShaderMaterial_7sbed")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_sun70")
+
+[node name="Control" type="Control" parent="Node/HUD/DeathScreen"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Node/HUD/DeathScreen/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 0.458824)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Node/HUD/DeathScreen/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -160.0
+offset_right = 640.0
+offset_bottom = -33.9999
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 26
+theme_override_fonts/normal_font = SubResource("SystemFont_kcmti")
+theme_override_font_sizes/normal_font_size = 96
+bbcode_enabled = true
+text = "[center]DEAD"
+scroll_active = false
+
+[node name="Button" type="Button" parent="Node/HUD/DeathScreen/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.0
+offset_top = -31.0
+offset_right = 121.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Respawn"
 
 [node name="PAUSE MENU" type="Control" parent="." node_paths=PackedStringArray("NewsText")]
 process_mode = 3
@@ -411,3 +659,5 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_rdw04")
 theme_override_styles/hover = SubResource("StyleBoxFlat_y7i5i")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_y7i5i")
 text = "QUIT"
+
+[connection signal="pressed" from="Node/HUD/DeathScreen/Control/Button" to="Map" method="RestartGame"]
