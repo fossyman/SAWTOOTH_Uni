@@ -4,8 +4,10 @@ extends Node3D
 @export var OtherLights:Array[Light3D]
 
 @export var BlastDoors:Array[BlastDoorManager]
-
+@export var TVs:Array[TVManager]
 var LightTween:Tween
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	DeactivateLights()
@@ -14,15 +16,20 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
+	if Input.is_key_pressed(KEY_0):
+		FinishChallenge()
 	pass
 	
 func ActivateChallenge():
 	ActivateLights()
+	for i in TVs.size():
+		TVs[i].Screen.DisplayIntroMessage()
 	pass
 	
 func FinishChallenge():
 	DeactivateLights()
+	for i in TVs.size():
+		TVs[i].Screen.DisplayOutroMessage()
 	pass
 	
 func ActivateLights():

@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://bt7qta8aysrps"]
+
+[ext_resource type="Shader" path="res://assets/Materials/SHD_Static.gdshader" id="1_wc033"]
+
+[sub_resource type="Gradient" id="Gradient_vqkcs"]
+offsets = PackedFloat32Array(0.30721, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uriyq"]
+noise_type = 0
+frequency = 0.3308
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nkrqn"]
+width = 32
+height = 32
+seamless = true
+color_ramp = SubResource("Gradient_vqkcs")
+noise = SubResource("FastNoiseLite_uriyq")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_wc033")
+shader_parameter/Static = SubResource("NoiseTexture2D_nkrqn")

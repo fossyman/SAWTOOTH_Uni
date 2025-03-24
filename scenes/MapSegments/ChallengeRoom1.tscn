@@ -1,11 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://d1txlh7qdyymg"]
+[gd_scene load_steps=18 format=3 uid="uid://d1txlh7qdyymg"]
 
 [ext_resource type="PackedScene" uid="uid://bf8ridlfgr6u5" path="res://assets/Models/LevelSets/Lockdown Set1/LockdownRoom1.glb" id="1_x2ba7"]
 [ext_resource type="Script" path="res://src/LockdownRoomManager.gd" id="2_2m6ya"]
 [ext_resource type="Material" uid="uid://b7emal116pw25" path="res://assets/Materials/MAT_Water.tres" id="2_bi0fx"]
 [ext_resource type="Shader" path="res://assets/Materials/SHADER_Water.gdshader" id="3_qqtfa"]
 [ext_resource type="Script" path="res://src/WarningLight.gd" id="5_5x5ml"]
+[ext_resource type="PackedScene" uid="uid://mkj5ehb0qi13" path="res://assets/Models/Lockdown lights.glb" id="6_5wwsa"]
 [ext_resource type="PackedScene" uid="uid://ebrpqsd6joox" path="res://scenes/SCN_BlastDoor.tscn" id="6_abxe4"]
+[ext_resource type="PackedScene" uid="uid://bdag6401tsu7i" path="res://scenes/SCN_TV.tscn" id="8_67klc"]
+[ext_resource type="PackedScene" uid="uid://bbg3ghk46xihe" path="res://scenes/SCN_CCTV.tscn" id="9_35pic"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_i8q0a"]
 data = PackedVector3Array(3, 0, -0.7608, 10, 0, -10, 10, 0, -0.7608, 3, 0, -0.7608, 3, 0, -10, 10, 0, -10, -10, 0, -0.7608, -1, 0, -10, -1, 0, -0.7608, -10, 0, -0.7608, -10, 0, -10, -1, 0, -10, -1, 0, -0.7608, 3, 0, -10, 3, 0, -0.7608, -1, 0, -0.7608, -1, 0, -10, 3, 0, -10, -10, 2.3774, -0.7608, -10, 3, -10, -10, 2.3774, -10, -10, 2.3774, -0.7608, -10, 3, -0.7608, -10, 3, -10, -10, 2.3774, -10, -1, 3, -10, -1, 2.3774, -10, -10, 2.3774, -10, -10, 3, -10, -1, 3, -10, 10, 0, 10, 3, 3, 10, 3, 0, 10, 10, 0, 10, 10, 3, 10, 3, 3, 10, 3, 0, -10, 10, 3, -10, 10, 0, -10, 3, 0, -10, 3, 3, -10, 10, 3, -10, -1, 2.3774, 10, -10, 3, 10, -10, 2.3774, 10, -1, 2.3774, 10, -1, 3, 10, -10, 3, 10, 10, 0, 0.7608, 10, 3, 10, 10, 0, 10, 10, 0, 0.7608, 10, 3, 0.7608, 10, 3, 10, 10, 3, 10, 3, 4, 10, 3, 3, 10, 10, 3, 10, 10, 4, 10, 3, 4, 10, -1, 3, 10, -10, 4, 10, -10, 3, 10, -1, 3, 10, -1, 4, 10, -10, 4, 10, 10, 3, 0.7608, 10, 4, 10, 10, 3, 10, 10, 3, 0.7608, 10, 4, 0.7608, 10, 4, 10, -10, 3, -0.7608, -10, 4, -10, -10, 3, -10, -10, 3, -0.7608, -10, 4, -0.7608, -10, 4, -10, 3, 3, -10, 10, 4, -10, 10, 3, -10, 3, 3, -10, 3, 4, -10, 10, 4, -10, -10, 3, -10, -1, 4, -10, -1, 3, -10, -10, 3, -10, -10, 4, -10, -1, 4, -10, 3, 4, -10, -1, 3, -10, -1, 4, -10, 3, 4, -10, 3, 3, -10, -1, 3, -10, 3, 3, 10, -1, 4, 10, -1, 3, 10, 3, 3, 10, 3, 4, 10, -1, 4, 10, -1, 2.3774, 10, -1, 3, 21, -1, 3, 10, -1, 2.3774, 10, -1, 2.3774, 21, -1, 3, 21, 3, 3, 10, 3, 0, 21, 3, 0, 10, 3, 3, 10, 3, 3, 21, 3, 0, 21, 3, 0, 10, -1, 0, 21, -1, 0, 10, 3, 0, 10, 3, 0, 21, -1, 0, 21, 3, 0, -10, 3, 3, -20, 3, 3, -10, 3, 0, -10, 3, 0, -20, 3, 3, -20, -1, 2.3774, -10, -1, 0, -20, -1, 0, -10, -1, 2.3774, -10, -1, 2.3774, -20, -1, 0, -20, -1, 0, -10, 3, 0, -20, 3, 0, -10, -1, 0, -10, -1, 0, -20, 3, 0, -20, -10, 3, 10, -10, 4, 0.7608, -10, 3, 0.7608, -10, 3, 10, -10, 4, 10, -10, 4, 0.7608, -10, 3, 0.7608, -10, 4, -0.7608, -10, 3, -0.7608, -10, 3, 0.7608, -10, 4, 0.7608, -10, 4, -0.7608, 10, 3, -10, 10, 4, -0.7608, 10, 3, -0.7608, 10, 3, -10, 10, 4, -10, 10, 4, -0.7608, 10, 3, -0.7608, 10, 4, 0.7608, 10, 3, 0.7608, 10, 3, -0.7608, 10, 4, -0.7608, 10, 4, 0.7608, 10, 0, -10, 10, 3, -0.7608, 10, 0, -0.7608, 10, 0, -10, 10, 3, -10, 10, 3, -0.7608, 10, 0, -0.7608, 10, 3, 0.7608, 10, 0, 0.7608, 10, 0, -0.7608, 10, 3, -0.7608, 10, 3, 0.7608, -10, 2.3774, 10, -10, 3, 0.7608, -10, 2.3774, 0.7608, -10, 2.3774, 10, -10, 3, 10, -10, 3, 0.7608, -10, 3, 0.7608, -13.3163, 2.3774, 0.7608, -10, 2.3774, 0.7608, -10, 3, 0.7608, -13.3163, 3, 0.7608, -13.3163, 2.3774, 0.7608, -1, 0, 10, 3, 0, 0.7608, 3, 0, 10, -1, 0, 10, -1, 0, 0.7608, 3, 0, 0.7608, -1, 0, 0.7608, 3, 0, -0.7608, 3, 0, 0.7608, -1, 0, 0.7608, -1, 0, -0.7608, 3, 0, -0.7608, -10, 0, 10, -1, 0, 0.7608, -1, 0, 10, -10, 0, 10, -10, 0, 0.7608, -1, 0, 0.7608, -10, 0, 0.7608, -1, 0, -0.7608, -1, 0, 0.7608, -10, 0, 0.7608, -10, 0, -0.7608, -1, 0, -0.7608, 3, 0, 10, 10, 0, 0.7608, 10, 0, 10, 3, 0, 10, 3, 0, 0.7608, 10, 0, 0.7608, 3, 0, 0.7608, 10, 0, -0.7608, 10, 0, 0.7608, 3, 0, 0.7608, 3, 0, -0.7608, 10, 0, -0.7608, -10, 0, 0.7608, -10, 2.3774, -0.7608, -10, 0, -0.7608, -10, 0, 0.7608, -10, 2.3774, 0.7608, -10, 2.3774, -0.7608, -10, 0, 10, -10, 2.3774, 0.7608, -10, 0, 0.7608, -10, 0, 10, -10, 2.3774, 10, -10, 2.3774, 0.7608, -1, 3, -10, -1, 2.3774, -20, -1, 2.3774, -10, -1, 3, -10, -1, 3, -20, -1, 2.3774, -20, -1, 0, 10, -1, 2.3774, 21, -1, 2.3774, 10, -1, 0, 10, -1, 0, 21, -1, 2.3774, 21, -1, 0, 10, -10, 2.3774, 10, -10, 0, 10, -1, 0, 10, -1, 2.3774, 10, -10, 2.3774, 10, -10, 0, -10, -1, 2.3774, -10, -1, 0, -10, -10, 0, -10, -10, 2.3774, -10, -1, 2.3774, -10, -10, 0, -0.7608, -10, 2.3774, -10, -10, 0, -10, -10, 0, -0.7608, -10, 2.3774, -0.7608, -10, 2.3774, -10, -13.3163, 2.3774, 0.7608, -13.3163, 3, -0.7608, -13.3163, 2.3774, -0.7608, -13.3163, 2.3774, 0.7608, -13.3163, 3, 0.7608, -13.3163, 3, -0.7608, -10, 3, -0.7608, -13.3163, 3, 0.7608, -10, 3, 0.7608, -10, 3, -0.7608, -13.3163, 3, -0.7608, -13.3163, 3, 0.7608, -10, 2.3774, 0.7608, -13.3163, 2.3774, -0.7608, -10, 2.3774, -0.7608, -10, 2.3774, 0.7608, -13.3163, 2.3774, 0.7608, -13.3163, 2.3774, -0.7608, -10, 2.3774, -0.7608, -13.3163, 3, -0.7608, -10, 3, -0.7608, -10, 2.3774, -0.7608, -13.3163, 2.3774, -0.7608, -13.3163, 3, -0.7608)
@@ -40,10 +43,11 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_u8alo")
 [sub_resource type="BoxShape3D" id="BoxShape3D_6w7h3"]
 size = Vector3(27.8867, 12.4672, 1)
 
-[node name="LockdownRoom1" node_paths=PackedStringArray("WarningLights", "BlastDoors") instance=ExtResource("1_x2ba7")]
+[node name="LockdownRoom1" node_paths=PackedStringArray("WarningLights", "BlastDoors", "TVs") instance=ExtResource("1_x2ba7")]
 script = ExtResource("2_2m6ya")
-WarningLights = [NodePath("Node3D"), NodePath("Node3D3"), NodePath("Node3D4"), NodePath("Node3D2")]
+WarningLights = [NodePath("Node3D"), NodePath("Node3D2"), NodePath("Node3D3"), NodePath("Node3D4")]
 BlastDoors = [NodePath("BlastDoor3"), NodePath("BlastDoor4")]
+TVs = [NodePath("TV3"), NodePath("TV4")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Plane" index="0"]
 
@@ -65,80 +69,92 @@ transform = Transform3D(-1, 0, -1.19209e-07, 0, 1, 0, 1.19209e-07, 0, -1, 3, 0, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -20)
 
 [node name="Node3D" type="Node3D" parent="." index="5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.62299, 2.50887, -6.48824)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.81478, 3.58832, -6.02303)
 script = ExtResource("5_5x5ml")
 IsActive = true
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Node3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.151258, 0)
 light_color = Color(1, 0, 0, 1)
 spot_range = 5.833
 spot_attenuation = 1e-05
 spot_angle_attenuation = 0.000212537
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Node3D" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, -0.142619, 0)
 light_color = Color(1, 0, 0, 1)
 spot_range = 5.833
 spot_attenuation = 1e-05
 spot_angle_attenuation = 0.000212537
 
+[node name="Lockdown lights3" parent="Node3D" index="2" instance=ExtResource("6_5wwsa")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.188501, 0, 0)
+
 [node name="Node3D2" type="Node3D" parent="." index="6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.62299, 2.50887, 6.51176)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.79046, 3.58832, 6.02765)
 script = ExtResource("5_5x5ml")
 IsActive = true
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Node3D2" index="0"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.0225439, 0.191202, 0)
 light_color = Color(1, 0, 0, 1)
 spot_range = 5.833
 spot_attenuation = 1e-05
 spot_angle_attenuation = 0.000212537
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Node3D2" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, -0.018857, -0.159573, 0)
 light_color = Color(1, 0, 0, 1)
 spot_range = 5.833
 spot_attenuation = 1e-05
 spot_angle_attenuation = 0.000212537
 
+[node name="Lockdown lights2" parent="Node3D2" index="2" instance=ExtResource("6_5wwsa")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.221723, 0, 0)
+
 [node name="Node3D3" type="Node3D" parent="." index="7"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.72585, 2.50887, -6.48824)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.72585, 3.52339, -5.95358)
 script = ExtResource("5_5x5ml")
 IsActive = true
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Node3D3" index="0"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.0769463, 0.131288, 0)
 light_color = Color(1, 0, 0, 1)
 spot_range = 5.833
 spot_attenuation = 1e-05
 spot_angle_attenuation = 0.000212537
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Node3D3" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0.0769463, -0.159446, 0)
 light_color = Color(1, 0, 0, 1)
 spot_range = 5.833
 spot_attenuation = 1e-05
 spot_angle_attenuation = 0.000212537
 
+[node name="Lockdown lights" parent="Node3D3" index="2" instance=ExtResource("6_5wwsa")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.277215, 0, 0)
+
 [node name="Node3D4" type="Node3D" parent="." index="8"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.72585, 2.50887, 6.51176)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.80346, 3.52339, 5.98479)
 script = ExtResource("5_5x5ml")
 IsActive = true
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Node3D4" index="0"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.159883, 0)
 light_color = Color(1, 0, 0, 1)
 spot_range = 5.833
 spot_attenuation = 1e-05
 spot_angle_attenuation = 0.000212537
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Node3D4" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, -0.157525, 0)
 light_color = Color(1, 0, 0, 1)
 spot_range = 5.833
 spot_attenuation = 1e-05
 spot_angle_attenuation = 0.000212537
+
+[node name="Lockdown lights2" parent="Node3D4" index="2" instance=ExtResource("6_5wwsa")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.200941, 0, 0)
 
 [node name="Area3D" type="Area3D" parent="." index="9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.32929)
@@ -153,4 +169,40 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 10.401)
 [node name="BlastDoor4" parent="." index="11" instance=ExtResource("6_abxe4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -10.599)
 
+[node name="SPAWNERS" type="Node3D" parent="." index="12"]
+
+[node name="Node3D" type="Node3D" parent="SPAWNERS" index="0"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.7239, 0, 5.34948)
+
+[node name="Node3D2" type="Node3D" parent="SPAWNERS" index="1"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.7239, 0, -5.38689)
+
+[node name="Node3D3" type="Node3D" parent="SPAWNERS" index="2"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 13.471, 0, 5.34948)
+
+[node name="Node3D4" type="Node3D" parent="SPAWNERS" index="3"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 13.471, 0, -5.38689)
+
+[node name="NAVMESH" parent="." index="13" groups=["NAVMESH"]]
+
+[node name="TV3" parent="." index="14" instance=ExtResource("8_67klc")]
+transform = Transform3D(1, 0, 0, 0, 0.965663, 0.259797, 0, -0.259797, 0.965663, 5.15226, 2.24673, -9.77316)
+
+[node name="TV4" parent="." index="15" instance=ExtResource("8_67klc")]
+transform = Transform3D(1, 0, 0, 0, 0.965663, 0.259797, 0, -0.259797, 0.965663, -2.96226, 2.24673, -9.77316)
+
+[node name="CCTV" parent="." index="16" instance=ExtResource("9_35pic")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 10, 3.15688, 9.98623)
+
+[node name="CCTV2" parent="." index="17" instance=ExtResource("9_35pic")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -10, 3.15688, 9.98623)
+
+[node name="CCTV3" parent="." index="18" instance=ExtResource("9_35pic")]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -10, 3.15688, -10.0138)
+
+[node name="CCTV4" parent="." index="19" instance=ExtResource("9_35pic")]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 10, 3.15688, -10.0138)
+
 [connection signal="body_entered" from="Area3D" to="." method="RoomStartTriggerEntered"]
+
+[editable path="TV3"]

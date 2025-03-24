@@ -16,6 +16,9 @@ size = Vector3(6.71088, 4.4707, 4)
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.21641, -2)
 
+[node name="COLL" parent="." index="7"]
+visible = false
+
 [node name="StaticBody3D" type="StaticBody3D" parent="COLL" index="0"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="COLL/StaticBody3D" index="0"]

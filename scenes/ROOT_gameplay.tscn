@@ -227,6 +227,7 @@ shader_parameter/TransparentNoise = SubResource("NoiseTexture2D_ayri1")
 font_names = PackedStringArray("Arial")
 font_weight = 700
 hinting = 2
+subpixel_positioning = 0
 
 [sub_resource type="Gradient" id="Gradient_q2pvn"]
 offsets = PackedFloat32Array(0, 0.132787, 0.870492, 1)
@@ -335,6 +336,7 @@ script = ExtResource("3_q5vs4")
 ItemDatabase = ExtResource("4_h4vqc")
 
 [node name="HUD" type="Control" parent="Node" node_paths=PackedStringArray("FadeRect", "Healthbar", "DeathScreen", "DeathCrack")]
+z_index = 999
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -344,20 +346,24 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("12_qstf1")
 FadeRect = NodePath("FADEOUT")
-Healthbar = NodePath("TextureRect/TextureProgressBar")
+Healthbar = NodePath("CanvasLayer/TextureRect/TextureProgressBar")
 HealthColours = SubResource("GradientTexture1D_j7k24")
 DeathScreen = NodePath("DeathScreen/Control")
 DeathCrack = NodePath("DeathScreen/CrackedScreenEffect")
 
-[node name="TextureRect" type="TextureRect" parent="Node/HUD"]
-layout_mode = 0
+[node name="CanvasLayer" type="CanvasLayer" parent="Node/HUD"]
+layer = 2
+
+[node name="TextureRect" type="TextureRect" parent="Node/HUD/CanvasLayer"]
+texture_filter = 1
 offset_top = 31.0
 offset_right = 570.0
 offset_bottom = 121.0
 texture = ExtResource("12_150so")
 stretch_mode = 4
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Node/HUD/TextureRect"]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Node/HUD/CanvasLayer/TextureRect"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

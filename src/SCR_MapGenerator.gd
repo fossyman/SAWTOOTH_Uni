@@ -1,5 +1,6 @@
 extends Node
 class_name MapManager
+static var instance:MapManager
 @export var MapContainer:Node3D
 @export var MapTransformer:Node3D
 @export var MapFiles:Array[PackedScene]
@@ -23,6 +24,11 @@ enum FLOORSTYLES{NORMAL=0,CHALLENGE=1}
 
 var MapID:int = 0
 
+func _enter_tree():
+	if !instance:
+		instance = self
+	else:
+		queue_free()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -101,6 +107,7 @@ func GenerateMap(Floortype:FLOORSTYLES = FLOORSTYLES.NORMAL, MinimumRoomCount:in
 						var Transitioner:Node3D = OutroStairs.instantiate()
 						MapContainer.add_child(Transitioner)
 						Transitioner.transform = SpawnedMap.find_child("TRANSITIONERS",true,false).get_child(i).transform
+
 						pass
 				
 			pass
@@ -110,6 +117,7 @@ func GenerateMap(Floortype:FLOORSTYLES = FLOORSTYLES.NORMAL, MinimumRoomCount:in
 			var PossibleRotations = [0,90,180,270]
 			MapTransformer.rotation_degrees.y = PossibleRotations.pick_random()
 			
+			await get_tree().create_timer(0.1).timeout
 			NavRegion.bake_navigation_mesh()
 			
 		FLOORSTYLES.CHALLENGE:
@@ -132,8 +140,8 @@ func GenerateMap(Floortype:FLOORSTYLES = FLOORSTYLES.NORMAL, MinimumRoomCount:in
 						MapContainer.add_child(Transitioner)
 						Transitioner.transform = SpawnedMap.find_child("TRANSITIONERS",true,false).get_child(i).transform
 						pass
-				
-			pass
+			await get_tree().create_timer(0.1).timeout
+			NavRegion.bake_navigation_mesh()
 			
 			pass
 		_:

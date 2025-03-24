@@ -1,0 +1,114 @@
+[gd_scene load_steps=11 format=3 uid="uid://bdag6401tsu7i"]
+
+[ext_resource type="PackedScene" uid="uid://deg33ponnc4c7" path="res://assets/Models/TV.glb" id="1_imgj8"]
+[ext_resource type="Material" uid="uid://c4h0ka2lyds0r" path="res://assets/Materials/MAT_TV.tres" id="2_04qan"]
+[ext_resource type="Script" path="res://src/TVManager.gd" id="2_rstk0"]
+[ext_resource type="Material" uid="uid://bt7qta8aysrps" path="res://assets/Materials/MAT_Static.tres" id="3_dwnfi"]
+[ext_resource type="Material" uid="uid://boxedisxl0doe" path="res://assets/Materials/MAT_TarmacScreen1.tres" id="4_t8n4b"]
+[ext_resource type="Script" path="res://src/TalkingScreenManager.gd" id="5_pp3pb"]
+[ext_resource type="Texture2D" uid="uid://dl618idgdte4h" path="res://assets/Helpers/TarmacSludgeAngryOpen.jpg" id="7_65trx"]
+[ext_resource type="Texture2D" uid="uid://ct7r0ebd2ju7n" path="res://assets/Helpers/TarmacSludgeAngryClosed.jpg" id="8_h6bqg"]
+[ext_resource type="Script" path="res://scenes/3DGuiPlacer.gd" id="8_ki6w8"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_oqqco"]
+material = ExtResource("3_dwnfi")
+size = Vector2(3.25, 1.865)
+
+[node name="TV" node_paths=PackedStringArray("Screen") instance=ExtResource("1_imgj8")]
+script = ExtResource("2_rstk0")
+Screen = NodePath("MeshInstance3D2")
+
+[node name="Cube" parent="." index="0"]
+material_override = ExtResource("2_04qan")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0725322)
+mesh = SubResource("QuadMesh_oqqco")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." index="2" node_paths=PackedStringArray("SpriteChangeTimer", "RandomMessageTimer", "TextRevealer", "TextHider", "MessageText")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0778555)
+material_override = ExtResource("4_t8n4b")
+mesh = SubResource("QuadMesh_oqqco")
+script = ExtResource("5_pp3pb")
+AngryOpenMouth = ExtResource("7_65trx")
+AngryClosedMouth = ExtResource("8_h6bqg")
+ScreenMat = ExtResource("4_t8n4b")
+SpriteChangeTimer = NodePath("../Timer")
+RandomMessageTimer = NodePath("../RandomMessageTimer")
+TextRevealer = NodePath("../TextRevealer")
+TextHider = NodePath("../TextHider")
+MessageText = NodePath("../CanvasLayer/Control/RichTextLabel")
+CurrentMood = 2
+IntroMessages = Array[String](["HAHAHA! No leaving this room [color=red]Holland.[/color] My bots will rip you to shreds!!!"])
+OutroMessages = Array[String](["Mark my words [color=red]Holland..[/color] This will be the last victory in your useless climb... CUT THE CONNECTION!"])
+RandomMessages = Array[String](["[center]WHY WONT YOU JUST DIE!!!", "[center]MORE BOTS!!! MORE COMBAT!! GET THEM OUT MY BUILDING", "[center]THEY CAN NOT MAKE IT PAST THIS ROOM!"])
+IntroMessageLengths = Array[int]([70])
+RandomMessageLengths = Array[int]([24, 5, 5])
+OutroMessageLengths = Array[int]([0])
+
+[node name="SubViewport" type="SubViewport" parent="MeshInstance3D2" index="0"]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="CanvasLayer" type="CanvasLayer" parent="MeshInstance3D2/SubViewport" index="0"]
+
+[node name="Timer" type="Timer" parent="." index="3"]
+wait_time = 0.1
+autostart = true
+
+[node name="RandomMessageTimer" type="Timer" parent="." index="4"]
+wait_time = 10.0
+
+[node name="TextRevealer" type="Timer" parent="." index="5"]
+wait_time = 0.1
+autostart = true
+
+[node name="TextHider" type="Timer" parent="." index="6"]
+wait_time = 5.0
+autostart = true
+
+[node name="Node3D" type="Node3D" parent="." index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.18788, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="8"]
+
+[node name="Control" type="Control" parent="CanvasLayer" index="0" node_paths=PackedStringArray("PlacementNode")]
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1280.0
+offset_bottom = -720.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_ki6w8")
+PlacementNode = NodePath("../../Node3D")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control" index="0"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -95.0
+offset_top = -14.0
+offset_right = 105.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]te [color=purple][shake] £&%*^\"![/shake][/color] DIE!!!"
+fit_content = true
+scroll_active = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/RichTextLabel" index="1"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbg3ghk46xihe"]
+
+[ext_resource type="PackedScene" uid="uid://hyd4j2gkfkrn" path="res://assets/Models/CCTV.glb" id="1_ng5o3"]
+[ext_resource type="Script" path="res://src/PointTowardsObject.gd" id="2_5g2w7"]
+
+[node name="CCTV" instance=ExtResource("1_ng5o3")]
+
+[node name="Cube" parent="." index="0"]
+script = ExtResource("2_5g2w7")

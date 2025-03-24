@@ -21,7 +21,6 @@ func CloseDoor():
 	pass
 func OpenDoor():
 	call_deferred("DisableCollision")
-	Collision.disabled = true
 	if DoorTween:
 		DoorTween.kill()
 	DoorTween = get_tree().create_tween()

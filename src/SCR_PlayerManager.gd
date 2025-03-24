@@ -119,7 +119,6 @@ func CalculateLookDirection():
 	if !Intersection.is_empty():
 		DesiredLookRotation = to_local(Intersection.position)
 	
-	
 
 func AttackManagement():
 	CanAttack = false
@@ -128,13 +127,15 @@ func AttackManagement():
 	GunAnimationTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
 	for i in Globals.Inventory.CurrentWeapon.RayCount:
 		var space_state = get_world_3d().direct_space_state
-		var query = PhysicsRayQueryParameters3D.create(AttackOrigin.global_position, (MeshParent.global_transform.basis.z) * -999)
+		var query = PhysicsRayQueryParameters3D.create(AttackOrigin.global_position, (AttackOrigin.global_transform.basis.z) * -999)
 		query.collide_with_areas = true
 		query.exclude = [self]
 		var result = space_state.intersect_ray(query)
 		if !result.is_empty():
 			if result.values()[4] is COMP_Hurtbox:
 				(result.values()[4] as COMP_Hurtbox).HealthComponent.Damage(Globals.Inventory.CurrentWeapon.Damage)
+			DebugLineMesh.global_position = result.values()[0]
+				
 			MinigunGeoMesh.ARRAY_VERTEX
 	ShellParticle.emitting = true
 	GunTraceParticle.emitting = true
