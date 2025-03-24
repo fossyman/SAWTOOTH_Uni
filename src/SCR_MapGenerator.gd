@@ -169,6 +169,7 @@ func RestartGame():
 		Globals.Player.velocity = Vector3.ZERO
 		Globals.Player.global_position = SpawnPoint.global_position
 		Globals.Player.Respawn()
+		DirectionalLight.light_energy = 1.0
 		get_tree().paused = false
 		
 func ProgressFloor():

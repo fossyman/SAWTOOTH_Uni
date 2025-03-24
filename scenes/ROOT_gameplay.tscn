@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://b8cxecvk7546r"]
+[gd_scene load_steps=43 format=3 uid="uid://b8cxecvk7546r"]
 
 [ext_resource type="PackedScene" uid="uid://cbvykmjuwvs2b" path="res://scenes/SCN_Player.tscn" id="1_gnqm2"]
 [ext_resource type="Script" path="res://src/SCR_MapGenerator.gd" id="1_pnehp"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://dume3lkw0s5vb" path="res://assets/Sprites/Healthbar_Visual.png" id="13_34324"]
 [ext_resource type="Texture2D" uid="uid://bx03si8u6cjip" path="res://icon.svg" id="15_sun70"]
 [ext_resource type="Texture2D" uid="uid://cmywtnenj6380" path="res://assets/RGB.png" id="16_bbg5q"]
+[ext_resource type="PackedScene" uid="uid://dx78aqs5y5uuw" path="res://scenes/UI/joystick.tscn" id="17_konil"]
 
 [sub_resource type="Sky" id="Sky_m2tdj"]
 sky_material = ExtResource("1_vstcw")
@@ -453,7 +454,16 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Respawn"
 
-[node name="PAUSE MENU" type="Control" parent="." node_paths=PackedStringArray("NewsText")]
+[node name="Joystick2" parent="Node/HUD" instance=ExtResource("17_konil")]
+position = Vector2(168, 478)
+
+[node name="Joystick3" parent="Node/HUD" instance=ExtResource("17_konil")]
+position = Vector2(880, 478)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="PAUSE MENU" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("NewsText")]
 process_mode = 3
 visible = false
 texture_filter = 1
@@ -466,7 +476,7 @@ grow_vertical = 2
 script = ExtResource("10_su25v")
 NewsText = NodePath("RichTextLabel4")
 
-[node name="ColorRect4" type="ColorRect" parent="PAUSE MENU"]
+[node name="ColorRect4" type="ColorRect" parent="CanvasLayer/PAUSE MENU"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -475,14 +485,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.308618, 0.625973, 1.92523e-07, 0.364706)
 
-[node name="ColorRect5" type="ColorRect" parent="PAUSE MENU"]
+[node name="ColorRect5" type="ColorRect" parent="CanvasLayer/PAUSE MENU"]
 layout_mode = 1
 offset_top = 125.0
 offset_right = 1280.0
 offset_bottom = 179.0
 color = Color(1, 1, 0, 1)
 
-[node name="RichTextLabel4" type="RichTextLabel" parent="PAUSE MENU"]
+[node name="RichTextLabel4" type="RichTextLabel" parent="CanvasLayer/PAUSE MENU"]
 texture_filter = 1
 layout_mode = 1
 offset_left = 1280.0
@@ -501,7 +511,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="ColorRect7" type="ColorRect" parent="PAUSE MENU"]
+[node name="ColorRect7" type="ColorRect" parent="CanvasLayer/PAUSE MENU"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -512,14 +522,14 @@ offset_bottom = 179.0
 grow_horizontal = 0
 color = Color(0, 0, 0, 1)
 
-[node name="ColorRect6" type="ColorRect" parent="PAUSE MENU/ColorRect7"]
+[node name="ColorRect6" type="ColorRect" parent="CanvasLayer/PAUSE MENU/ColorRect7"]
 layout_mode = 1
 offset_left = -1226.0
 offset_right = -1172.0
 offset_bottom = 54.0
 color = Color(0, 0, 0, 1)
 
-[node name="ColorRect3" type="ColorRect" parent="PAUSE MENU"]
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/PAUSE MENU"]
 material = SubResource("ShaderMaterial_ktx3u")
 layout_mode = 1
 anchors_preset = 15
@@ -530,7 +540,7 @@ offset_bottom = -125.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="PAUSE MENU"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/PAUSE MENU"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -541,7 +551,7 @@ grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
 
-[node name="ColorRect2" type="ColorRect" parent="PAUSE MENU"]
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/PAUSE MENU"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -549,7 +559,7 @@ offset_bottom = 125.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 1)
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PAUSE MENU"]
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/PAUSE MENU"]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 10
@@ -564,7 +574,7 @@ bbcode_enabled = true
 text = "[center][i]PAUSED"
 scroll_active = false
 
-[node name="RichTextLabel3" type="RichTextLabel" parent="PAUSE MENU"]
+[node name="RichTextLabel3" type="RichTextLabel" parent="CanvasLayer/PAUSE MENU"]
 texture_filter = 1
 layout_mode = 1
 offset_right = 399.0
@@ -576,7 +586,7 @@ bbcode_enabled = true
 text = "FLOOR 12"
 scroll_active = false
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="PAUSE MENU"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/PAUSE MENU"]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 10
@@ -591,7 +601,7 @@ bbcode_enabled = true
 text = "[center]..-. .. .- ... -....- .. -. - . .-. .- -.-. - .. ...- . .-.-.- .. - -.-. .... .-.-.- .. ---"
 scroll_active = false
 
-[node name="Button" type="Button" parent="PAUSE MENU"]
+[node name="Button" type="Button" parent="CanvasLayer/PAUSE MENU"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -616,7 +626,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_y7i5i")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_y7i5i")
 text = "PLAY"
 
-[node name="Button2" type="Button" parent="PAUSE MENU"]
+[node name="Button2" type="Button" parent="CanvasLayer/PAUSE MENU"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -641,7 +651,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_y7i5i")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_y7i5i")
 text = "OPTIONS"
 
-[node name="Button3" type="Button" parent="PAUSE MENU"]
+[node name="Button3" type="Button" parent="CanvasLayer/PAUSE MENU"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0

@@ -6,8 +6,8 @@
 [ext_resource type="Material" uid="uid://bt7qta8aysrps" path="res://assets/Materials/MAT_Static.tres" id="3_dwnfi"]
 [ext_resource type="Material" uid="uid://boxedisxl0doe" path="res://assets/Materials/MAT_TarmacScreen1.tres" id="4_t8n4b"]
 [ext_resource type="Script" path="res://src/TalkingScreenManager.gd" id="5_pp3pb"]
-[ext_resource type="Texture2D" uid="uid://dl618idgdte4h" path="res://assets/Helpers/TarmacSludgeAngryOpen.jpg" id="7_65trx"]
-[ext_resource type="Texture2D" uid="uid://ct7r0ebd2ju7n" path="res://assets/Helpers/TarmacSludgeAngryClosed.jpg" id="8_h6bqg"]
+[ext_resource type="Texture2D" uid="uid://cuj6srgvbav7h" path="res://assets/Helpers/TarmacSludgeAngryOpen_LOWPIX.png" id="7_t61ng"]
+[ext_resource type="Texture2D" uid="uid://du1es00tki83x" path="res://assets/Helpers/TarmacSludgeAngryClosed_LOWPIX.png" id="8_f65c6"]
 [ext_resource type="Script" path="res://scenes/3DGuiPlacer.gd" id="8_ki6w8"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_oqqco"]
@@ -30,8 +30,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0778555)
 material_override = ExtResource("4_t8n4b")
 mesh = SubResource("QuadMesh_oqqco")
 script = ExtResource("5_pp3pb")
-AngryOpenMouth = ExtResource("7_65trx")
-AngryClosedMouth = ExtResource("8_h6bqg")
+AngryOpenMouth = ExtResource("7_t61ng")
+AngryClosedMouth = ExtResource("8_f65c6")
 ScreenMat = ExtResource("4_t8n4b")
 SpriteChangeTimer = NodePath("../Timer")
 RandomMessageTimer = NodePath("../RandomMessageTimer")
@@ -39,10 +39,10 @@ TextRevealer = NodePath("../TextRevealer")
 TextHider = NodePath("../TextHider")
 MessageText = NodePath("../CanvasLayer/Control/RichTextLabel")
 CurrentMood = 2
-IntroMessages = Array[String](["HAHAHA! No leaving this room [color=red]Holland.[/color] My bots will rip you to shreds!!!"])
+IntroMessages = Array[String](["No leaving this room [color=red]Holland.[/color] My bots will rip you to shreds!!!"])
 OutroMessages = Array[String](["Mark my words [color=red]Holland..[/color] This will be the last victory in your useless climb... CUT THE CONNECTION!"])
 RandomMessages = Array[String](["[center]WHY WONT YOU JUST DIE!!!", "[center]MORE BOTS!!! MORE COMBAT!! GET THEM OUT MY BUILDING", "[center]THEY CAN NOT MAKE IT PAST THIS ROOM!"])
-IntroMessageLengths = Array[int]([70])
+IntroMessageLengths = Array[int]([62])
 RandomMessageLengths = Array[int]([24, 5, 5])
 OutroMessageLengths = Array[int]([0])
 

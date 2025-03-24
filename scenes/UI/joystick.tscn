@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx78aqs5y5uuw"]
+
+[ext_resource type="Script" path="res://JoystickManager.gd" id="1_51wsn"]
+[ext_resource type="Texture2D" uid="uid://bx03si8u6cjip" path="res://icon.svg" id="2_4a00l"]
+
+[node name="Joystick" type="TouchScreenButton" node_paths=PackedStringArray("Knob")]
+self_modulate = Color(0.344076, 0.344076, 0.344076, 1)
+texture_normal = ExtResource("2_4a00l")
+script = ExtResource("1_51wsn")
+Radius = 50.0
+Knob = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_4a00l")
+
+[connection signal="pressed" from="." to="." method="_pressed"]
+[connection signal="released" from="." to="." method="_on_released"]

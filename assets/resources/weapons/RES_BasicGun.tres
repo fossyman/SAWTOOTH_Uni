@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_h1pax")
-Damage = 5
+Damage = 10
 RayCount = 1
 AttackSpeed = 0.08
 Accuracy = 1.0

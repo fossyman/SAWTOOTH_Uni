@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://d1txlh7qdyymg"]
+[gd_scene load_steps=19 format=3 uid="uid://d1txlh7qdyymg"]
 
 [ext_resource type="PackedScene" uid="uid://bf8ridlfgr6u5" path="res://assets/Models/LevelSets/Lockdown Set1/LockdownRoom1.glb" id="1_x2ba7"]
 [ext_resource type="Script" path="res://src/LockdownRoomManager.gd" id="2_2m6ya"]
 [ext_resource type="Material" uid="uid://b7emal116pw25" path="res://assets/Materials/MAT_Water.tres" id="2_bi0fx"]
 [ext_resource type="Shader" path="res://assets/Materials/SHADER_Water.gdshader" id="3_qqtfa"]
+[ext_resource type="PackedScene" uid="uid://bmkd5n53iosgb" path="res://scenes/Enemy.tscn" id="3_re0h5"]
 [ext_resource type="Script" path="res://src/WarningLight.gd" id="5_5x5ml"]
 [ext_resource type="PackedScene" uid="uid://mkj5ehb0qi13" path="res://assets/Models/Lockdown lights.glb" id="6_5wwsa"]
 [ext_resource type="PackedScene" uid="uid://ebrpqsd6joox" path="res://scenes/SCN_BlastDoor.tscn" id="6_abxe4"]
@@ -43,11 +44,15 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_u8alo")
 [sub_resource type="BoxShape3D" id="BoxShape3D_6w7h3"]
 size = Vector3(27.8867, 12.4672, 1)
 
-[node name="LockdownRoom1" node_paths=PackedStringArray("WarningLights", "BlastDoors", "TVs") instance=ExtResource("1_x2ba7")]
+[node name="LockdownRoom1" node_paths=PackedStringArray("WarningLights", "BlastDoors", "TVs", "EnemySpawnTimer", "EnemyContainer", "EnemySpawners") instance=ExtResource("1_x2ba7")]
 script = ExtResource("2_2m6ya")
 WarningLights = [NodePath("Node3D"), NodePath("Node3D2"), NodePath("Node3D3"), NodePath("Node3D4")]
 BlastDoors = [NodePath("BlastDoor3"), NodePath("BlastDoor4")]
 TVs = [NodePath("TV3"), NodePath("TV4")]
+EnemySpawnTimer = NodePath("EnemySpawnTimer")
+EnemyScene = ExtResource("3_re0h5")
+EnemyContainer = NodePath("EnemyContainer")
+EnemySpawners = [NodePath("SPAWNERS/SPAWNPOS"), NodePath("SPAWNERS/SPAWNPOS2"), NodePath("SPAWNERS/SPAWNPOS3"), NodePath("SPAWNERS/SPAWNPOS4")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Plane" index="0"]
 
@@ -171,16 +176,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -10.599)
 
 [node name="SPAWNERS" type="Node3D" parent="." index="12"]
 
-[node name="Node3D" type="Node3D" parent="SPAWNERS" index="0"]
+[node name="SPAWNPOS" type="Node3D" parent="SPAWNERS" index="0"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.7239, 0, 5.34948)
 
-[node name="Node3D2" type="Node3D" parent="SPAWNERS" index="1"]
+[node name="SPAWNPOS2" type="Node3D" parent="SPAWNERS" index="1"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.7239, 0, -5.38689)
 
-[node name="Node3D3" type="Node3D" parent="SPAWNERS" index="2"]
+[node name="SPAWNPOS3" type="Node3D" parent="SPAWNERS" index="2"]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 13.471, 0, 5.34948)
 
-[node name="Node3D4" type="Node3D" parent="SPAWNERS" index="3"]
+[node name="SPAWNPOS4" type="Node3D" parent="SPAWNERS" index="3"]
 transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 13.471, 0, -5.38689)
 
 [node name="NAVMESH" parent="." index="13" groups=["NAVMESH"]]
@@ -202,6 +207,10 @@ transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107
 
 [node name="CCTV4" parent="." index="19" instance=ExtResource("9_35pic")]
 transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 10, 3.15688, -10.0138)
+
+[node name="EnemySpawnTimer" type="Timer" parent="." index="20"]
+
+[node name="EnemyContainer" type="Node3D" parent="." index="21"]
 
 [connection signal="body_entered" from="Area3D" to="." method="RoomStartTriggerEntered"]
 

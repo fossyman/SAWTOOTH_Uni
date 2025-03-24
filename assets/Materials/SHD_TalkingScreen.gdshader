@@ -20,7 +20,7 @@ void fragment() {
 	else
 	{
 	ALBEDO = face.rgb * static.rgb;
-	EMISSION = face.rgb * face.rgb * static.rgb * 0.3f;
+	EMISSION = face.rgb * face.rgb * static.rgb * 0.7f;
 	}
 }
 
