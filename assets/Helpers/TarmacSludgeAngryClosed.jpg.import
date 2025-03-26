@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ct7r0ebd2ju7n"
 path.s3tc="res://.godot/imported/TarmacSludgeAngryClosed.jpg-ebf31c26033c6a69200c181022231396.s3tc.ctex"
+path.etc2="res://.godot/imported/TarmacSludgeAngryClosed.jpg-ebf31c26033c6a69200c181022231396.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Helpers/TarmacSludgeAngryClosed.jpg"
-dest_files=["res://.godot/imported/TarmacSludgeAngryClosed.jpg-ebf31c26033c6a69200c181022231396.s3tc.ctex"]
+dest_files=["res://.godot/imported/TarmacSludgeAngryClosed.jpg-ebf31c26033c6a69200c181022231396.s3tc.ctex", "res://.godot/imported/TarmacSludgeAngryClosed.jpg-ebf31c26033c6a69200c181022231396.etc2.ctex"]
 
 [params]
 

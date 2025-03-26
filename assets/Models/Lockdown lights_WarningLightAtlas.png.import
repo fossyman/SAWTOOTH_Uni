@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dr8ethgt8cp67"
 path.s3tc="res://.godot/imported/Lockdown lights_WarningLightAtlas.png-9a25b9649102450dfba4fe5bc71bd609.s3tc.ctex"
+path.etc2="res://.godot/imported/Lockdown lights_WarningLightAtlas.png-9a25b9649102450dfba4fe5bc71bd609.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={}
@@ -13,7 +14,7 @@ generator_parameters={}
 [deps]
 
 source_file="res://assets/Models/Lockdown lights_WarningLightAtlas.png"
-dest_files=["res://.godot/imported/Lockdown lights_WarningLightAtlas.png-9a25b9649102450dfba4fe5bc71bd609.s3tc.ctex"]
+dest_files=["res://.godot/imported/Lockdown lights_WarningLightAtlas.png-9a25b9649102450dfba4fe5bc71bd609.s3tc.ctex", "res://.godot/imported/Lockdown lights_WarningLightAtlas.png-9a25b9649102450dfba4fe5bc71bd609.etc2.ctex"]
 
 [params]
 

@@ -336,7 +336,7 @@ unique_name_in_owner = true
 script = ExtResource("3_q5vs4")
 ItemDatabase = ExtResource("4_h4vqc")
 
-[node name="HUD" type="Control" parent="Node" node_paths=PackedStringArray("FadeRect", "Healthbar", "DeathScreen", "DeathCrack")]
+[node name="HUD" type="Control" parent="Node" node_paths=PackedStringArray("FadeRect", "Healthbar", "DeathScreen", "DeathCrack", "MobileSpecificContainer", "MovingJoystick", "AttackingJoystick")]
 z_index = 999
 texture_filter = 1
 layout_mode = 3
@@ -351,6 +351,9 @@ Healthbar = NodePath("CanvasLayer/TextureRect/TextureProgressBar")
 HealthColours = SubResource("GradientTexture1D_j7k24")
 DeathScreen = NodePath("DeathScreen/Control")
 DeathCrack = NodePath("DeathScreen/CrackedScreenEffect")
+MobileSpecificContainer = NodePath("MobileSpecific")
+MovingJoystick = NodePath("MobileSpecific/MoveStick/MoveJoystick")
+AttackingJoystick = NodePath("MobileSpecific/ShootStick/AimJoystick")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Node/HUD"]
 layer = 2
@@ -454,11 +457,41 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Respawn"
 
-[node name="Joystick2" parent="Node/HUD" instance=ExtResource("17_konil")]
-position = Vector2(168, 478)
+[node name="MobileSpecific" type="Control" parent="Node/HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Joystick3" parent="Node/HUD" instance=ExtResource("17_konil")]
-position = Vector2(880, 478)
+[node name="ShootStick" type="Control" parent="Node/HUD/MobileSpecific"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1080.0
+offset_top = 520.0
+offset_right = -200.0
+offset_bottom = -200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AimJoystick" parent="Node/HUD/MobileSpecific/ShootStick" instance=ExtResource("17_konil")]
+
+[node name="MoveStick" type="Control" parent="Node/HUD/MobileSpecific"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 200.0
+offset_top = 520.0
+offset_right = -1080.0
+offset_bottom = -200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MoveJoystick" parent="Node/HUD/MobileSpecific/MoveStick" instance=ExtResource("17_konil")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 128

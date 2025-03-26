@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bpqorv11c8wci"
 path.s3tc="res://.godot/imported/0001.png-adbea2ff5c11be961539e40cdd8b796f.s3tc.ctex"
+path.etc2="res://.godot/imported/0001.png-adbea2ff5c11be961539e40cdd8b796f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Sprites/TNC Screen/0001.png"
-dest_files=["res://.godot/imported/0001.png-adbea2ff5c11be961539e40cdd8b796f.s3tc.ctex"]
+dest_files=["res://.godot/imported/0001.png-adbea2ff5c11be961539e40cdd8b796f.s3tc.ctex", "res://.godot/imported/0001.png-adbea2ff5c11be961539e40cdd8b796f.etc2.ctex"]
 
 [params]
 

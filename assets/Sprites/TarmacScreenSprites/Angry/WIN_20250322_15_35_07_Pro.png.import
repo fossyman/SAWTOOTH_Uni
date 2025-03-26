@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bieiy5kpnss5f"
 path.s3tc="res://.godot/imported/WIN_20250322_15_35_07_Pro.png-8564dc138428bf98088e0ed98f866e17.s3tc.ctex"
+path.etc2="res://.godot/imported/WIN_20250322_15_35_07_Pro.png-8564dc138428bf98088e0ed98f866e17.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/Sprites/TarmacScreenSprites/Angry/WIN_20250322_15_35_07_Pro.png"
-dest_files=["res://.godot/imported/WIN_20250322_15_35_07_Pro.png-8564dc138428bf98088e0ed98f866e17.s3tc.ctex"]
+dest_files=["res://.godot/imported/WIN_20250322_15_35_07_Pro.png-8564dc138428bf98088e0ed98f866e17.s3tc.ctex", "res://.godot/imported/WIN_20250322_15_35_07_Pro.png-8564dc138428bf98088e0ed98f866e17.etc2.ctex"]
 
 [params]
 
