@@ -1,4 +1,4 @@
-extends Node3D
+extends Pickup
 
 @export var HealAmount:int
 @export var InteractComponent:Interactable
