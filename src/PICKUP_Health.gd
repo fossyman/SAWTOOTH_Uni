@@ -1,12 +1,9 @@
-extends Area3D
-class_name Interactable
+extends Node3D
 
-signal _Interact
-@export var CanInteract:bool = true
-@export var OnTouch:bool = false
+@export var HealAmount:int
+@export var InteractComponent:Interactable
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
 	pass # Replace with function body.
 
 
@@ -15,7 +12,6 @@ func _process(delta):
 	pass
 
 
-func Interact():
-	if CanInteract:
-		_Interact.emit()
-	pass
+func _Heal():
+	Globals.Player.Heal(HealAmount)
+	queue_free()

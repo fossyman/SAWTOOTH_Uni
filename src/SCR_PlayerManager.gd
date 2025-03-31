@@ -162,6 +162,11 @@ func Damage(Amt:int):
 	if !HealthComponent.IsDead:
 		HealthComponent.Damage(Amt)
 		HUDManager.instance.Healthbar.value = HealthComponent.CurrentHealth
+		
+func Heal(Amt:int):
+	if !HealthComponent.IsDead:
+		HealthComponent.Heal(Amt)
+		HUDManager.instance.Healthbar.value = HealthComponent.CurrentHealth
 
 
 func Death():
@@ -188,6 +193,8 @@ func _interact_area_entered(area):
 	if area is Interactable:
 		print("area.name")
 		InteractableArea = area as Interactable
+		if InteractableArea.OnTouch:
+			InteractableArea.Interact()
 	pass # Replace with function body.
 
 

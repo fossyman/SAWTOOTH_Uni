@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://un5ka7a0firc"]
+
+[ext_resource type="Script" path="res://src/PICKUP_Health.gd" id="1_llvuw"]
+[ext_resource type="Script" path="res://src/InteractableArea.gd" id="2_vfqjf"]
+[ext_resource type="PackedScene" uid="uid://dkbbcck0no3ll" path="res://scenes/Items/SCN_medpack.tscn" id="3_1ul13"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_27sy4"]
+
+[node name="PickupHealth" type="Node3D" node_paths=PackedStringArray("InteractComponent")]
+script = ExtResource("1_llvuw")
+HealAmount = 15
+InteractComponent = NodePath("Interactable")
+
+[node name="Medpack" parent="." instance=ExtResource("3_1ul13")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="Interactable" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("2_vfqjf")
+OnTouch = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable"]
+shape = SubResource("SphereShape3D_27sy4")
+
+[connection signal="_Interact" from="Interactable" to="." method="_Heal"]
+
+[editable path="Medpack"]

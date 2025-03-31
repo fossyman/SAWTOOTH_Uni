@@ -46,7 +46,7 @@ texture = ExtResource("3_1rlmo")
 curve = SubResource("Curve3D_mod61")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="ItemEjectPath"]
-transform = Transform3D(-4.37112e-08, 0.99997, 4.37117e-08, 0, -4.37101e-08, 1.00001, 0.999996, 4.37101e-08, 1.9107e-15, 0, 0, -4)
+transform = Transform3D(-4.37112e-08, 0.99997, 4.37118e-08, 0, -4.37101e-08, 1.00001, 0.999996, 4.37101e-08, 1.9107e-15, 0, 0, -4)
 progress = 9.31
 
 [node name="ItemPosition" type="Node3D" parent="ItemEjectPath/PathFollow3D"]
