@@ -25,11 +25,23 @@ func _enter_tree():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	MobileSpecificContainer.visible = (Globals.CurrentHardware == Globals.PLAYEDHARDWARE.mobile)
-
+	#MobileSpecificContainer.visible = (Globals.CurrentHardware == Globals.PLAYEDHARDWARE.mobile)
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if Globals.CurrentHardware == Globals.PLAYEDHARDWARE.desktop:
+		var dir:Vector2 = Vector2(Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),Input.get_action_strength("move_back") - Input.get_action_strength("move_forward"))
+		dir = dir.normalized() * MovingJoystick.Radius
+		MovingJoystick.SetJoystickDirection(dir)
+	else:
+		AttackingJoystick.SetJoystickDirection(Vector2.ZERO)
+		
+	if !Globals.Player.CanAttack:
+		var AttackDir = Vector2(Globals.Player.DesiredLookRotation.x,Globals.Player.DesiredLookRotation.z)
+		AttackingJoystick.SetJoystickDirection(AttackDir)
+	else:
+		AttackingJoystick.SetJoystickDirection(Vector2.ZERO)
 	pass
 
 func FadeIn(_t:float = 1.0):

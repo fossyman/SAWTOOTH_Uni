@@ -1,7 +1,6 @@
-[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://boxedisxl0doe"]
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://boxedisxl0doe"]
 
 [ext_resource type="Shader" path="res://assets/Materials/SHD_TalkingScreen.gdshader" id="1_n7hf5"]
-[ext_resource type="Texture2D" uid="uid://qnn5m63kyqsq" path="res://assets/Sprites/TarmacScreenSprites/Angry/WIN_20250322_15_35_04_Pro.png" id="2_8kfqf"]
 [ext_resource type="Texture2D" uid="uid://bmsn45ii7ds84" path="res://assets/TNC_AnimatedTexture.tres" id="2_ghn2n"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_uk1t3"]
@@ -17,6 +16,5 @@ noise = SubResource("FastNoiseLite_uk1t3")
 render_priority = 0
 shader = ExtResource("1_n7hf5")
 shader_parameter/ShowWallpaper = true
-shader_parameter/pic = ExtResource("2_8kfqf")
 shader_parameter/Static = SubResource("NoiseTexture2D_pt3ko")
 shader_parameter/Wallpaper = ExtResource("2_ghn2n")

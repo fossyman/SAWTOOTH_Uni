@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://cem300pkk8x2y"]
+
+[ext_resource type="PackedScene" uid="uid://cpobbtjxv13nk" path="res://assets/Models/Chest.glb" id="1_7benm"]
+[ext_resource type="Script" path="res://src/ChestManager.gd" id="1_btf41"]
+[ext_resource type="Material" uid="uid://bbljnnfljh2vc" path="res://assets/Materials/MAT_Chest.tres" id="2_app4k"]
+[ext_resource type="Resource" uid="uid://bvcr5pohlhdkm" path="res://assets/resources/ITM_HealthPickup.tres" id="2_oju6r"]
+[ext_resource type="Texture2D" uid="uid://bwuab5unl5ac5" path="res://assets/Sprites/ChestBeam.png" id="3_1rlmo"]
+[ext_resource type="Script" path="res://src/InteractableArea.gd" id="6_8jfu8"]
+
+[sub_resource type="Curve3D" id="Curve3D_mod61"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 0, 0, 0, -2.68, 0, 0, -4),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rt8m6"]
+radius = 1.93613
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lvc33"]
+size = Vector3(2.0752, 4.51001, 1.6123)
+
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("ChestMesh", "ChestBeam", "AnimPlayer", "ItemEjectPoint")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("1_btf41")
+ItemDrop = ExtResource("2_oju6r")
+ChestMesh = NodePath("Chest/Armature/Skeleton3D/Cube")
+ChestBeam = NodePath("Sprite3D")
+AnimPlayer = NodePath("Chest/AnimationPlayer")
+ChestMat = ExtResource("2_app4k")
+ItemEjectPoint = NodePath("ItemEjectPath/PathFollow3D")
+
+[node name="Chest" parent="." instance=ExtResource("1_7benm")]
+
+[node name="Skeleton3D" parent="Chest/Armature" index="0"]
+bones/1/position = Vector3(0.4, 1, 0)
+bones/2/position = Vector3(-0.4, 1, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 2.91901, 0, 0, 0, 10, 0, 1.67265, 0)
+offset = Vector2(0, 64)
+billboard = 2
+texture = ExtResource("3_1rlmo")
+
+[node name="ItemEjectPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_mod61")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="ItemEjectPath"]
+transform = Transform3D(-4.37112e-08, 0.99997, 4.37117e-08, 0, -4.37101e-08, 1.00001, 0.999996, 4.37101e-08, 1.9107e-15, 0, 0, -4)
+progress = 9.31
+
+[node name="ItemPosition" type="Node3D" parent="ItemEjectPath/PathFollow3D"]
+transform = Transform3D(1, 4.37103e-08, 4.37103e-08, 4.37103e-08, -4.37114e-08, -1, -4.37103e-08, 1, -4.37114e-08, 0, 0.0310609, 0.0291195)
+
+[node name="Interactable" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("6_8jfu8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.802096, 0)
+shape = SubResource("SphereShape3D_rt8m6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.27072, 0)
+shape = SubResource("BoxShape3D_lvc33")
+
+[connection signal="_Interact" from="Interactable" to="." method="Open"]
+
+[editable path="Chest"]

@@ -22,7 +22,7 @@ var RayEnd
 @export var GunTraceParticle:GPUParticles3D
 @export var ShellParticle:GPUParticles3D
 @export var BulletsParticle:GPUParticles3D
-var LinemeshVerts=[]
+@export var InteractArea:Area3D
 
 var MovementVector:Vector2
 var DesiredMovementVector:Vector2
@@ -32,30 +32,27 @@ var DesiredLookRotation:Vector3
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var CanAttack:bool = true
-var Attacking:bool = false
 
 var CachedRaycaseQuery:PhysicsRayQueryParameters3D
 
 
 @export var HealthComponent:COMP_Health
 
+@export var InteractableArea:Interactable
+
 func _ready():
 	CachedRaycaseQuery = PhysicsRayQueryParameters3D.create(Vector3.ZERO, Vector3.ZERO,8388608)
 	CachedRaycaseQuery.collide_with_areas = true
 	
 	MinigunGeoMesh = (MinigunGeo.mesh as ImmediateMesh)
-	
-		# Begin draw.
-	MinigunGeoMesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
-	LinemeshVerts = [Vector3(0, 0, 0),Vector3(0.1,0, -10),Vector3(-0.1,0, -10)]
-	for i in LinemeshVerts.size():
-		MinigunGeoMesh.surface_add_vertex(LinemeshVerts[i])
-	# End drawing.
-	MinigunGeoMesh.surface_end()
-	
+
 	HealthComponent.Death.connect(Death)
 	
 func _process(delta):
+	if Input.is_action_just_pressed("interact"):
+		if InteractableArea:
+			print(InteractableArea.name)
+			InteractableArea.Interact()
 	if !HealthComponent.IsDead:
 		var direction:Vector3 = CalculateVelocity(delta)
 		MovementRotationCalculator(direction,delta)
@@ -184,3 +181,16 @@ func Respawn():
 	MeshAnimationTree.active = true
 	HUDManager.instance.Healthbar.value = HealthComponent.CurrentHealth
 	HUDManager.instance.Healthbar.tint_progress = Color.WHITE
+
+
+func _interact_area_entered(area):
+	print(area.name)
+	if area is Interactable:
+		print("area.name")
+		InteractableArea = area as Interactable
+	pass # Replace with function body.
+
+
+func _interact_area_exited(area):
+	InteractableArea = null
+	pass # Replace with function body.

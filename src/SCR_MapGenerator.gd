@@ -5,6 +5,7 @@ static var instance:MapManager
 @export var MapTransformer:Node3D
 @export var MapFiles:Array[PackedScene]
 @export var ChallengeMapFiles:Array[PackedScene]
+@export var ChestScene:PackedScene
 @export var IntroStairs:PackedScene
 @export var OutroStairs:PackedScene
 @export var NavRegion:NavigationRegion3D
@@ -49,7 +50,7 @@ func GenerateMap(Floortype:FLOORSTYLES = FLOORSTYLES.NORMAL, MinimumRoomCount:in
 				
 	for i in EnemyContainer.get_children().size():
 		EnemyContainer.get_child(i).queue_free()
-				
+	await MapContainer.get_child_count() == 0 && EnemyContainer.get_child_count() == 0
 	match Floortype:
 		FLOORSTYLES.NORMAL:
 			var MapInstance:PackedScene = MapFiles.pick_random() as PackedScene
@@ -86,13 +87,23 @@ func GenerateMap(Floortype:FLOORSTYLES = FLOORSTYLES.NORMAL, MinimumRoomCount:in
 			
 			for i in ValidRooms.size():
 				var Spawners = ValidRooms[i].find_child("SPAWNERS")
+				var ChestLocations = ValidRooms[i].find_child("CHESTSPAWN")
+				var SpawnChest = true if randi_range(0,100) > 70 else false
 				if is_instance_valid(Spawners):
 					for x in Spawners.get_child_count():
 						var RandomEnemy = randi_range(0,EnemyScenes.size()-1)
 						var Enemy = EnemyScenes[RandomEnemy].instantiate()
 						EnemyContainer.add_child(Enemy)
 						Enemy.global_transform = Spawners.get_child(x).global_transform
+				if is_instance_valid(ChestLocations):
+					if SpawnChest:
+						for x in ChestLocations.get_child_count():
+							var ChestInstance = ChestScene.instantiate()
+							MapContainer.add_child(ChestInstance)
+							ChestInstance.global_position = ChestLocations.get_child(x).global_position
+							ChestInstance.rotation_degrees.y = randf_range(0,360)
 				pass
+			
 			
 			for i in SpawnedMap.find_child("TRANSITIONERS",true,false).get_child_count():
 				match i:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://b8cxecvk7546r"]
+[gd_scene load_steps=46 format=3 uid="uid://b8cxecvk7546r"]
 
 [ext_resource type="PackedScene" uid="uid://cbvykmjuwvs2b" path="res://scenes/SCN_Player.tscn" id="1_gnqm2"]
 [ext_resource type="Script" path="res://src/SCR_MapGenerator.gd" id="1_pnehp"]
@@ -22,6 +22,9 @@
 [ext_resource type="Texture2D" uid="uid://bx03si8u6cjip" path="res://icon.svg" id="15_sun70"]
 [ext_resource type="Texture2D" uid="uid://cmywtnenj6380" path="res://assets/RGB.png" id="16_bbg5q"]
 [ext_resource type="PackedScene" uid="uid://dx78aqs5y5uuw" path="res://scenes/UI/joystick.tscn" id="17_konil"]
+[ext_resource type="Texture2D" uid="uid://bn87abi08ksnc" path="res://assets/Sprites/GunIcon.png" id="18_6e811"]
+[ext_resource type="Texture2D" uid="uid://dekdhlh7pua1l" path="res://assets/Sprites/FootIcon.png" id="19_u6770"]
+[ext_resource type="PackedScene" uid="uid://cem300pkk8x2y" path="res://scenes/SCN_Chest.tscn" id="25_nu688"]
 
 [sub_resource type="Sky" id="Sky_m2tdj"]
 sky_material = ExtResource("1_vstcw")
@@ -270,6 +273,7 @@ MapContainer = NodePath("OVERALL MAP TRANSFORM/NavigationRegion3D/MapContainer")
 MapTransformer = NodePath("OVERALL MAP TRANSFORM")
 MapFiles = Array[PackedScene]([ExtResource("2_fga2f")])
 ChallengeMapFiles = Array[PackedScene]([ExtResource("3_6dn74")])
+ChestScene = ExtResource("25_nu688")
 IntroStairs = ExtResource("3_fjnbm")
 OutroStairs = ExtResource("4_f6c57")
 NavRegion = NodePath("OVERALL MAP TRANSFORM/NavigationRegion3D")
@@ -479,6 +483,12 @@ grow_vertical = 2
 
 [node name="AimJoystick" parent="Node/HUD/MobileSpecific/ShootStick" instance=ExtResource("17_konil")]
 
+[node name="Icon" type="Sprite2D" parent="Node/HUD/MobileSpecific/ShootStick/AimJoystick/Sprite2D" index="0"]
+self_modulate = Color(1, 1, 1, 0.32549)
+rotation = 0.424115
+scale = Vector2(3.85714, 3.85714)
+texture = ExtResource("18_6e811")
+
 [node name="MoveStick" type="Control" parent="Node/HUD/MobileSpecific"]
 layout_mode = 1
 anchors_preset = 15
@@ -492,6 +502,12 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MoveJoystick" parent="Node/HUD/MobileSpecific/MoveStick" instance=ExtResource("17_konil")]
+
+[node name="Icon" type="Sprite2D" parent="Node/HUD/MobileSpecific/MoveStick/MoveJoystick/Sprite2D" index="0"]
+self_modulate = Color(1, 1, 1, 0.32549)
+rotation = 0.424115
+scale = Vector2(4.49999, 4.49999)
+texture = ExtResource("19_u6770")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 128
@@ -710,3 +726,6 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_y7i5i")
 text = "QUIT"
 
 [connection signal="pressed" from="Node/HUD/DeathScreen/Control/Button" to="Map" method="RestartGame"]
+
+[editable path="Node/HUD/MobileSpecific/ShootStick/AimJoystick"]
+[editable path="Node/HUD/MobileSpecific/MoveStick/MoveJoystick"]

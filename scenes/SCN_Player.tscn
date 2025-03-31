@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://cbvykmjuwvs2b"]
+[gd_scene load_steps=63 format=3 uid="uid://cbvykmjuwvs2b"]
 
 [ext_resource type="Script" path="res://src/SCR_PlayerManager.gd" id="1_7064w"]
 [ext_resource type="PackedScene" uid="uid://p4qr4n7m8yg0" path="res://assets/Models/Holland.glb" id="2_0tq5b"]
@@ -284,6 +284,9 @@ size = Vector3(100, 0.1, 100)
 
 [sub_resource type="BoxMesh" id="BoxMesh_if1ai"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_pyr48"]
+radius = 1.0
+
 [node name="PlayerCharacter" type="CharacterBody3D" node_paths=PackedStringArray("MeshParent", "AttackOrigin", "DebugLineMesh", "MeshAnimationTree", "GunAnimationTree", "MinigunGeo", "GunTraceParticle", "ShellParticle", "BulletsParticle", "HealthComponent")]
 wall_min_slide_angle = 0.0
 floor_constant_speed = true
@@ -332,16 +335,16 @@ target_position = Vector3(0, 0, -999)
 
 [node name="Skeleton3D" parent="Mesh/Holland/Armature" index="0"]
 bones/0/rotation = Quaternion(0, 0.707107, 0.707107, 0)
-bones/1/position = Vector3(-0.000490848, -0.00155221, 0.05)
+bones/1/position = Vector3(-1.66417e-06, -5.26277e-06, 0.05)
 bones/1/rotation = Quaternion(0.5, 0.5, 0.5, 0.5)
 bones/2/rotation = Quaternion(0.5, 0.5, 0.5, -0.5)
 bones/3/rotation = Quaternion(1.86542e-15, -0.52507, 3.02357e-15, 0.851059)
 bones/5/rotation = Quaternion(-0.00335439, 0.528448, -2.05691e-10, 0.848959)
 bones/6/rotation = Quaternion(0.415316, 0.596247, 0.596247, -0.34131)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(0.00924009, -0.471214, 0.758221, 0.450526)
-bones/8/rotation = Quaternion(0.460023, 0.0350154, 0.521492, 0.717773)
-bones/9/rotation = Quaternion(-0.00935002, 0.60058, -0.440559, 0.667176)
+bones/7/rotation = Quaternion(0.00911883, -0.471569, 0.758426, 0.44981)
+bones/8/rotation = Quaternion(0.460548, 0.0349779, 0.522087, 0.717006)
+bones/9/rotation = Quaternion(-0.00804738, 0.599946, -0.442325, 0.666595)
 bones/10/position = Vector3(-0.0219696, 0.076446, -0.00230959)
 bones/10/rotation = Quaternion(-0.373475, -0.214044, 0.217393, 0.876037)
 bones/10/scale = Vector3(1, 1, 1)
@@ -349,7 +352,7 @@ bones/11/rotation = Quaternion(-0.165903, 0.0938016, -0.457845, 0.868364)
 bones/12/rotation = Quaternion(0.0294261, 0.061059, -0.406398, 0.911179)
 bones/12/scale = Vector3(1, 1, 1)
 bones/13/rotation = Quaternion(-0.676673, -0.032076, 0.0348293, 0.734759)
-bones/14/rotation = Quaternion(-0.676795, 0.0293861, -0.0319087, 0.734892)
+bones/14/rotation = Quaternion(-0.676795, 0.0293862, -0.0319087, 0.734892)
 bones/15/rotation = Quaternion(-0.677432, -0.000948338, 0.00102979, 0.735584)
 bones/16/rotation = Quaternion(-0.677058, -0.0225338, 0.0244681, 0.735178)
 bones/16/scale = Vector3(1, 1, 1)
@@ -365,9 +368,9 @@ bones/23/scale = Vector3(1, 1, 1)
 bones/24/rotation = Quaternion(-0.677386, 0.0079666, -0.0086504, 0.735534)
 bones/25/rotation = Quaternion(-0.415316, 0.596247, 0.596247, 0.34131)
 bones/25/scale = Vector3(1, 1, 1)
-bones/26/rotation = Quaternion(-0.320195, 0.360708, -0.410996, 0.773594)
-bones/27/rotation = Quaternion(0.363726, -0.0406993, -0.412328, 0.834286)
-bones/28/rotation = Quaternion(0.145205, -0.00351028, 0.426504, 0.892747)
+bones/26/rotation = Quaternion(-0.319625, 0.360441, -0.411136, 0.773879)
+bones/27/rotation = Quaternion(0.363097, -0.0407298, -0.411615, 0.83491)
+bones/28/rotation = Quaternion(0.144974, -0.00401312, 0.42524, 0.893385)
 bones/29/rotation = Quaternion(-0.27861, -0.0678377, -0.121277, 0.950298)
 bones/29/scale = Vector3(1, 1, 1)
 bones/30/rotation = Quaternion(0.0804791, -0.116145, 0.356838, 0.923418)
@@ -389,20 +392,20 @@ bones/42/rotation = Quaternion(-0.69908, 0.0318277, -0.0324886, 0.713595)
 bones/42/scale = Vector3(1, 1, 1)
 bones/43/rotation = Quaternion(-0.699756, -0.00822965, 0.00840045, 0.714285)
 bones/44/rotation = Quaternion(0.568244, 0.0769754, 0.568244, 0.590146)
-bones/45/rotation = Quaternion(-0.249185, -0.301655, 0.303673, 0.868731)
+bones/45/rotation = Quaternion(-0.255591, -0.303476, 0.303636, 0.866245)
 bones/45/scale = Vector3(1, 1, 1)
-bones/46/rotation = Quaternion(-0.148446, -0.0496422, 0.0461026, 0.986597)
+bones/46/rotation = Quaternion(-0.134872, -0.0497494, 0.0418869, 0.988727)
 bones/46/scale = Vector3(1, 1, 1)
-bones/47/rotation = Quaternion(0.0840027, 0.0159951, 0.00249438, 0.996334)
+bones/47/rotation = Quaternion(0.0770364, 0.0166904, 0.00453719, 0.996878)
 bones/48/rotation = Quaternion(0.298771, 0.0023218, -0.0023218, 0.954319)
 bones/48/scale = Vector3(1, 1, 1)
 bones/49/scale = Vector3(1, 1, 1)
 bones/50/rotation = Quaternion(-0.568244, 0.590146, -0.568244, 0.0769754)
 bones/50/scale = Vector3(1, 1, 1)
-bones/51/rotation = Quaternion(-0.249027, 0.301956, -0.304541, 0.868368)
+bones/51/rotation = Quaternion(-0.255592, 0.303478, -0.303639, 0.866243)
 bones/51/scale = Vector3(1, 1, 1)
-bones/52/rotation = Quaternion(-0.148919, 0.0496383, -0.0462496, 0.986519)
-bones/53/rotation = Quaternion(0.0842751, -0.0167776, -0.0017621, 0.9963)
+bones/52/rotation = Quaternion(-0.134869, 0.0497494, -0.041886, 0.988727)
+bones/53/rotation = Quaternion(0.0770349, -0.016693, -0.00453554, 0.996878)
 bones/54/rotation = Quaternion(0.298771, -0.0023218, 0.0023218, 0.954319)
 bones/54/scale = Vector3(1, 1, 1)
 bones/55/scale = Vector3(1, 1, 1)
@@ -436,7 +439,7 @@ libraries = {
 }
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Mesh/Holland"]
-transform = Transform3D(-0.19093, 0.363869, 0.911672, -0.820743, -0.568637, 0.0550695, 0.538449, -0.737733, 0.407213, 0.285673, 0.306656, 0.0272027)
+transform = Transform3D(-0.191894, 0.365013, 0.911012, -0.820647, -0.56878, 0.0550324, 0.538253, -0.737058, 0.408692, 0.285237, 1.30829, 0.0270836)
 bone_name = "Hand.R"
 bone_idx = 9
 use_external_skeleton = true
@@ -505,6 +508,17 @@ shape = SubResource("BoxShape3D_6vbb3")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 mesh = SubResource("BoxMesh_if1ai")
+
+[node name="InteractArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00141, 0)
+shape = SubResource("SphereShape3D_pyr48")
+
+[connection signal="area_entered" from="InteractArea" to="." method="_interact_area_entered"]
+[connection signal="area_exited" from="InteractArea" to="." method="_interact_area_exited"]
 
 [editable path="Mesh/Holland"]
 [editable path="Mesh/Holland/BoneAttachment3D/Minigun"]

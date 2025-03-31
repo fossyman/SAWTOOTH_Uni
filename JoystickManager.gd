@@ -32,3 +32,8 @@ func GetJoystickDirection() -> Vector2:
 	var dir = Knob.position - StickCenter
 	return dir.normalized()
 	pass
+	
+func SetJoystickDirection(dir:Vector2):
+	dir = dir.normalized()
+	Knob.position = StickCenter + (dir * Radius)
+	pass

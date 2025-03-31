@@ -44,7 +44,6 @@ func _process(delta):
 
 
 func _TargetReached():
-	print("TARGET REACHED")
 	match CurrentState:
 		TARGETSTATES.WANDERING:
 			rotate_y(deg_to_rad(90))

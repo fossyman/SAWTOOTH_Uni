@@ -2,14 +2,13 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhksirh0eshjv"
+uid="uid://dtaqwr4m8tnfn"
 path.s3tc="res://.godot/imported/CCTV_CameraAtlas.png-d2354eb67190357b5e36bb1261284ceb.s3tc.ctex"
 path.etc2="res://.godot/imported/CCTV_CameraAtlas.png-d2354eb67190357b5e36bb1261284ceb.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
-generator_parameters={}
 
 [deps]
 

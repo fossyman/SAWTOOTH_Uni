@@ -118,3 +118,13 @@ func SwitchToWallpaper():
 	ScreenMat["shader_parameter/ShowWallpaper"] = true
 	visible = true
 	pass
+
+
+func Reset():
+	SwitchToWallpaper()
+	HideMessage()
+	ChangeFace()
+	RandomMessageTimer.stop()
+	TextRevealer.stop()
+	TextHider.stop()
+	pass

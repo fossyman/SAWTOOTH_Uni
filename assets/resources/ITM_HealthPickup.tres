@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://bvcr5pohlhdkm"]
+
+[ext_resource type="Script" path="res://src/Resources/SCR_ItemResource.gd" id="1_3i3rg"]
+[ext_resource type="PackedScene" uid="uid://dkbbcck0no3ll" path="res://scenes/Items/SCN_medpack.tscn" id="1_mjjqk"]
+
+[resource]
+script = ExtResource("1_3i3rg")
+ItemName = ""
+ItemDescription = ""
+ItemRepresentation = ExtResource("1_mjjqk")
