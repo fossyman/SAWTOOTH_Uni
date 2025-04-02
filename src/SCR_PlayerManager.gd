@@ -23,6 +23,7 @@ var RayEnd
 @export var ShellParticle:GPUParticles3D
 @export var BulletsParticle:GPUParticles3D
 @export var InteractArea:Area3D
+@export var AttackSounds:Array[AudioStream]
 
 var MovementVector:Vector2
 var DesiredMovementVector:Vector2
@@ -106,7 +107,7 @@ func MovementRotationCalculator(direction:Vector3,delta):
 	MeshAnimationTree["parameters/MovementBlend/blend_position"] = MovementVector
 
 func CalculateLookDirection():
-	if Globals.CurrentHardware != Globals.PLAYEDHARDWARE.mobile:
+	if Globals.CurrentHardware != Globals.PLAYEDHARDWARE.mobile && is_instance_valid(Globals.MainCamera):
 		var SpaceState = get_world_3d().direct_space_state
 		var MousePos = get_viewport().get_mouse_position()
 		RayOrigin = Globals.MainCamera.project_ray_origin(MousePos)
@@ -143,8 +144,7 @@ func AttackManagement():
 			if result.values()[4] is COMP_Hurtbox:
 				(result.values()[4] as COMP_Hurtbox).HealthComponent.Damage(Globals.Inventory.CurrentWeapon.Damage)
 			DebugLineMesh.global_position = result.values()[0]
-				
-			MinigunGeoMesh.ARRAY_VERTEX
+	Globals.SFXPlayer.PlaySFX(AttackSounds.pick_random())
 	ShellParticle.emitting = true
 	GunTraceParticle.emitting = true
 	BulletsParticle.emitting = true

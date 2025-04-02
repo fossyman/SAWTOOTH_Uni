@@ -122,9 +122,6 @@ func GenerateMap(Floortype:FLOORSTYLES = FLOORSTYLES.NORMAL, MinimumRoomCount:in
 						pass
 				
 			pass
-			
-			
-			
 			var PossibleRotations = [0,90,180,270]
 			MapTransformer.rotation_degrees.y = PossibleRotations.pick_random()
 			
@@ -187,8 +184,8 @@ func RestartGame():
 func ProgressFloor():
 		MapID+=1
 		if MapID == 1:
-			GenerateMap(FLOORSTYLES.NORMAL,3,5)
-		else:
 			GenerateMap(FLOORSTYLES.CHALLENGE,3,5)
+		else:
+			GenerateMap(FLOORSTYLES.NORMAL,3,5)
 		HUDManager.instance.FadeIn(1)
 		get_tree().paused = false

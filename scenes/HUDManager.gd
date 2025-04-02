@@ -38,7 +38,7 @@ func _process(delta):
 	else:
 		AttackingJoystick.SetJoystickDirection(Vector2.ZERO)
 		
-	if !Globals.Player.CanAttack:
+	if is_instance_valid(Globals.Player) && !Globals.Player.CanAttack:
 		var AttackDir = Vector2(Globals.Player.DesiredLookRotation.x,Globals.Player.DesiredLookRotation.z)
 		AttackingJoystick.SetJoystickDirection(AttackDir)
 	else:

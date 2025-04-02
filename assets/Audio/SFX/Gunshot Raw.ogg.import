@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bm3tlumyhl4ea"
+path="res://.godot/imported/Gunshot Raw.ogg-5bc714ad873997f14916ee0376555901.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Audio/SFX/Gunshot Raw.ogg"
+dest_files=["res://.godot/imported/Gunshot Raw.ogg-5bc714ad873997f14916ee0376555901.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bdag6401tsu7i"]
+[gd_scene load_steps=12 format=3 uid="uid://bdag6401tsu7i"]
 
 [ext_resource type="PackedScene" uid="uid://deg33ponnc4c7" path="res://assets/Models/TV.glb" id="1_imgj8"]
 [ext_resource type="Material" uid="uid://c4h0ka2lyds0r" path="res://assets/Materials/MAT_TV.tres" id="2_04qan"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cuj6srgvbav7h" path="res://assets/Helpers/TarmacSludgeAngryOpen_LOWPIX.png" id="7_t61ng"]
 [ext_resource type="Texture2D" uid="uid://du1es00tki83x" path="res://assets/Helpers/TarmacSludgeAngryClosed_LOWPIX.png" id="8_f65c6"]
 [ext_resource type="Script" path="res://scenes/3DGuiPlacer.gd" id="8_ki6w8"]
+[ext_resource type="AudioStream" uid="uid://c8f46o8jw8eil" path="res://assets/Audio/SFX/TarmacTalk.ogg" id="10_lowuj"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_oqqco"]
 material = ExtResource("3_dwnfi")
@@ -25,7 +26,7 @@ material_override = ExtResource("2_04qan")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0725322)
 mesh = SubResource("QuadMesh_oqqco")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." index="2" node_paths=PackedStringArray("SpriteChangeTimer", "RandomMessageTimer", "TextRevealer", "TextHider", "MessageText")]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." index="2" node_paths=PackedStringArray("SpriteChangeTimer", "RandomMessageTimer", "TextRevealer", "TextHider", "MessageText", "VoiceClipPlayer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0778555)
 material_override = ExtResource("4_t8n4b")
 mesh = SubResource("QuadMesh_oqqco")
@@ -39,12 +40,13 @@ TextRevealer = NodePath("../TextRevealer")
 TextHider = NodePath("../TextHider")
 MessageText = NodePath("../CanvasLayer/Control/RichTextLabel")
 CurrentMood = 2
+VoiceClipPlayer = NodePath("../AudioStreamPlayer3D")
 IntroMessages = Array[String](["No leaving this room [color=red]Holland.[/color] My bots will rip you to shreds!!!"])
 OutroMessages = Array[String](["Mark my words [color=red]Holland..[/color] This will be the last victory in your useless climb... CUT THE CONNECTION!"])
 RandomMessages = Array[String](["[center]WHY WONT YOU JUST DIE!!!", "[center]MORE BOTS!!! MORE COMBAT!! GET THEM OUT MY BUILDING", "[center]THEY CAN NOT MAKE IT PAST THIS ROOM!"])
 IntroMessageLengths = Array[int]([62])
-RandomMessageLengths = Array[int]([24, 5, 5])
-OutroMessageLengths = Array[int]([0])
+RandomMessageLengths = Array[int]([24, 51, 36])
+OutroMessageLengths = Array[int]([97])
 
 [node name="SubViewport" type="SubViewport" parent="MeshInstance3D2" index="0"]
 handle_input_locally = false
@@ -60,7 +62,7 @@ autostart = true
 wait_time = 10.0
 
 [node name="TextRevealer" type="Timer" parent="." index="5"]
-wait_time = 0.1
+wait_time = 0.05
 autostart = true
 
 [node name="TextHider" type="Timer" parent="." index="6"]
@@ -112,3 +114,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer" parent="." index="9"]
+stream = ExtResource("10_lowuj")
+volume_db = -2.0
+bus = &"SFX"

@@ -128,16 +128,11 @@ func InitAI():
 	
 func Attack():
 	if CanAttack:
-		CanAttack=false
-		AnimTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
-		AttackTimer.start()
-		
-		var space = get_world_3d().direct_space_state
-		var Playerquery = PhysicsRayQueryParameters3D.create(WallHit.global_position, Globals.Player.global_position * 1)
-		var Collision = space.intersect_ray(Playerquery)
-		if Collision:
-			if Collision.values()[4] == Globals.Player:
-				Globals.Player.Damage(AttackDamage)
+		if global_position.distance_to(Globals.Player.global_position) < 2:
+			CanAttack=false
+			AnimTree["parameters/Attack/request"] = AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE
+			AttackTimer.start()
+			Globals.Player.Damage(AttackDamage)
 		
 func SetCanAttack():
 	CanAttack = true

@@ -10,8 +10,11 @@ extends Node3D
 @export var EnemyContainer:Node3D
 @export var EnemySpawners:Array[Node3D]
 var LightTween:Tween
-
-
+@export var Song:AudioStream
+@export var SongLoop:AudioStream
+@export var ExitSong:AudioStream
+@export var ExitSongLoop:AudioStream
+@export var ChallengeActivator:Area3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,21 +25,31 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_key_pressed(KEY_0):
-		FinishChallenge()
 	pass
 	
 func ActivateChallenge():
-	ActivateLights()
-	EnemySpawnTimer.start()
+	ChallengeActivator.queue_free()
+	for i in BlastDoors.size():
+		BlastDoors[i].CloseDoor()
 	for i in TVs.size():
 		TVs[i].Screen.DisplayIntroMessage()
+		(Globals.MusicPlayer as MusicManager).ChangeSong(Song,SongLoop)
+	await get_tree().create_timer(1).timeout
+	ActivateLights()
+	EnemySpawnTimer.start()
+	
+	await get_tree().create_timer(60).timeout
+	FinishChallenge()
 	pass
 	
 func FinishChallenge():
 	DeactivateLights()
 	for i in TVs.size():
 		TVs[i].Screen.DisplayOutroMessage()
+	for i in BlastDoors.size():
+		BlastDoors[i].OpenDoor()
+	(Globals.MusicPlayer as MusicManager).ChangeSong(ExitSong,ExitSongLoop)
+	EnemySpawnTimer.stop()
 	pass
 	
 func ActivateLights():
@@ -44,12 +57,11 @@ func ActivateLights():
 		WarningLights[i].SetActive(true)
 	for i in OtherLights.size():
 		OtherLights[i].visible = true
-	for i in BlastDoors.size():
-		BlastDoors[i].CloseDoor()
 	if LightTween:
 		LightTween.kill()
 	LightTween = get_tree().create_tween()
 	LightTween.tween_property((Globals.CurrentRoot.get_child(0) as MapManager).DirectionalLight,"light_energy",0,0.5)
+	
 	pass
 	
 func DeactivateLights():

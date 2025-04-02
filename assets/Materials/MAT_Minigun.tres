@@ -55,5 +55,7 @@ next_pass = SubResource("ShaderMaterial_qn6b1")
 diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("1_qbvk7")
+metallic_specular = 0.0
 emission_enabled = true
+emission_energy_multiplier = 0.01
 emission_texture = ExtResource("1_qbvk7")

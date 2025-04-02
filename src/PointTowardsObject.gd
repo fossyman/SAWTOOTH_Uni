@@ -10,5 +10,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	look_at(Target.global_position)
+	if is_instance_valid(Target):
+		look_at(Target.global_position)
 	pass

@@ -1,9 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://fibx451nieul"]
+[gd_scene load_steps=6 format=3 uid="uid://fibx451nieul"]
 
-[ext_resource type="PackedScene" uid="uid://b8cxecvk7546r" path="res://scenes/ROOT_gameplay.tscn" id="1_fg2w8"]
+[ext_resource type="PackedScene" uid="uid://8ckqhjn8s4vx" path="res://scenes/ROOT_MainMenu.tscn" id="1_8vubf"]
+[ext_resource type="AudioStream" uid="uid://ktud74h05hfw" path="res://assets/Audio/Music/DNB1.wav" id="2_1ud5o"]
+[ext_resource type="AudioStream" uid="uid://b6swgsljmvaw6" path="res://assets/Audio/Music/DNB1Loop.wav" id="2_xotsn"]
+[ext_resource type="Script" path="res://scenes/MusicManager.gd" id="3_h3gbl"]
+[ext_resource type="Script" path="res://src/SCR_AudioManager.gd" id="5_ta7dg"]
 
 [node name="main" type="Node"]
 
 [node name="ROOT" type="Node" parent="."]
 
-[node name="ROOT_Gameplay" parent="ROOT" instance=ExtResource("1_fg2w8")]
+[node name="ROOT_MainMenu" parent="ROOT" instance=ExtResource("1_8vubf")]
+
+[node name="MUSICPLAYER" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+stream = ExtResource("2_1ud5o")
+bus = &"Music"
+script = ExtResource("3_h3gbl")
+CurrentSong = ExtResource("2_1ud5o")
+SongLoop = ExtResource("2_xotsn")
+
+[node name="SFXMANAGER" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_ta7dg")
+
+[connection signal="finished" from="MUSICPLAYER" to="MUSICPLAYER" method="ChangeFinishedSong"]

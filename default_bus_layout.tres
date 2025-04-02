@@ -1,0 +1,27 @@
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://dgxb46btt2lnt"]
+
+[sub_resource type="AudioEffectHighPassFilter" id="AudioEffectHighPassFilter_sxpds"]
+resource_name = "HighPassFilter"
+cutoff_hz = 1000.0
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_2twhd"]
+resource_name = "Reverb"
+room_size = 0.46
+
+[resource]
+bus/1/name = &"Music"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectHighPassFilter_sxpds")
+bus/1/effect/0/enabled = false
+bus/1/effect/1/effect = SubResource("AudioEffectReverb_2twhd")
+bus/1/effect/1/enabled = false
+bus/2/name = &"SFX"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"

@@ -17,12 +17,15 @@ var IsTalking:bool = false
 enum MOODS{sad,neutral,angry}
 @export var CurrentMood:MOODS
 
+@export var VoiceClipPlayer:AudioStreamPlayer
 @export_multiline var IntroMessages:Array[String]
 @export_multiline var OutroMessages:Array[String]
 @export_multiline var RandomMessages:Array[String]
 @export var IntroMessageLengths:Array[int]
 @export var RandomMessageLengths:Array[int]
 @export var OutroMessageLengths:Array[int]
+
+var CurrentMessageLength:int
 var TextIDX:int = -1
 
 # Called when the node enters the scene tree for the first time.
@@ -37,7 +40,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	MessageText.visible_ratio = move_toward(MessageText.visible_ratio,1,1*delta)
+	#MessageText.visible_ratio = move_toward(MessageText.visible_ratio,1,1*delta)
 	pass
 
 func ChangeFace():
@@ -66,6 +69,7 @@ func DisplayRandomMessage():
 	var Message:String = RandomMessages[TextIDX]
 	MessageText.text = Message
 	MessageText.visible_ratio = 0
+	CurrentMessageLength = RandomMessageLengths[TextIDX]
 	TextRevealer.start()
 	TextHider.start(5)
 	
@@ -77,7 +81,7 @@ func DisplayIntroMessage():
 	IsTalking = true
 	MessageText.text = Message
 	MessageText.visible_ratio = 0
-	TextRevealer.stop()
+	CurrentMessageLength = IntroMessageLengths[IDX]
 	TextRevealer.start()
 	RandomMessageTimer.start()
 	TextHider.start(5)
@@ -89,6 +93,7 @@ func DisplayOutroMessage():
 	IsTalking = true
 	MessageText.text = Message
 	MessageText.visible_ratio = 0
+	CurrentMessageLength = OutroMessageLengths[IDX]
 	TextRevealer.stop()
 	RandomMessageTimer.stop()
 	TextRevealer.start()
@@ -102,8 +107,10 @@ func HideMessage():
 	IsTalking = false
 
 func RevealNextLetter():
-	if (MessageText.visible_characters < RandomMessageLengths[TextIDX] - 1):
+	if (MessageText.visible_characters < CurrentMessageLength):
 		MessageText.visible_characters += 1
+		VoiceClipPlayer.pitch_scale = randf_range(0.5,1.3)
+		VoiceClipPlayer.play()
 	else:
 		TextRevealer.stop()
 		

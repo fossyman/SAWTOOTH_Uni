@@ -57,5 +57,6 @@ specular_mode = 1
 albedo_texture = ExtResource("1_nxcqd")
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.08
 emission_operator = 1
 emission_texture = ExtResource("1_nxcqd")
