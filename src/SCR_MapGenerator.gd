@@ -186,6 +186,12 @@ func ProgressFloor():
 		if MapID == 1:
 			GenerateMap(FLOORSTYLES.CHALLENGE,3,5)
 		else:
-			GenerateMap(FLOORSTYLES.NORMAL,3,5)
+			var RNG = randi_range(0,100)
+			
+			print(RNG)
+			if RNG < 70:
+				GenerateMap(FLOORSTYLES.NORMAL,3,5)
+			else:
+				GenerateMap(FLOORSTYLES.CHALLENGE,3,5)
 		HUDManager.instance.FadeIn(1)
 		get_tree().paused = false
