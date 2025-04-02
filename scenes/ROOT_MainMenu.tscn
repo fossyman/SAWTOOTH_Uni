@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://8ckqhjn8s4vx"]
+[gd_scene load_steps=73 format=3 uid="uid://8ckqhjn8s4vx"]
 
 [ext_resource type="FontFile" uid="uid://c08fa1fm2ngp4" path="res://assets/Fonts/tektur/Tektur-Black.ttf" id="1_0d0is"]
 [ext_resource type="Material" uid="uid://20e6na8no1fe" path="res://assets/Materials/MAT_SKYBox.tres" id="1_kpkps"]
@@ -17,6 +17,8 @@
 [ext_resource type="Material" uid="uid://cluqaxl6fqxvm" path="res://assets/Materials/MAT_Cutter.tres" id="10_kgxsy"]
 [ext_resource type="PackedScene" uid="uid://byhaiysu0fqvk" path="res://assets/Models/Minigun.glb" id="11_m0tfu"]
 [ext_resource type="Texture2D" uid="uid://dwiqv1uhmw4sw" path="res://assets/Textures/Z.png" id="15_jfh3t"]
+[ext_resource type="AudioStream" uid="uid://c80yncgkjkfin" path="res://assets/Audio/Music/MMDNB3.wav" id="18_nri6n"]
+[ext_resource type="AudioStream" uid="uid://cb7aackfmc2yl" path="res://assets/Audio/SFX/ENGINE SFX.ogg" id="19_hkncf"]
 
 [sub_resource type="Sky" id="Sky_lfiss"]
 sky_material = ExtResource("1_kpkps")
@@ -2240,7 +2242,6 @@ script = ExtResource("1_ytx5x")
 environment = SubResource("Environment_fpaya")
 
 [node name="Control" type="Control" parent="."]
-texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -2249,6 +2250,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+clip_contents = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -2262,8 +2264,12 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 40
 theme_override_fonts/normal_font = ExtResource("1_0d0is")
 theme_override_font_sizes/normal_font_size = 80
+theme_override_font_sizes/bold_font_size = 80
+theme_override_font_sizes/italics_font_size = 80
+theme_override_font_sizes/bold_italics_font_size = 80
+theme_override_font_sizes/mono_font_size = 80
 bbcode_enabled = true
-text = "[center]SAWTOOTH"
+text = "[center][i][b]SAWTOOTH"
 scroll_active = false
 
 [node name="Button" type="Button" parent="Control"]
@@ -2302,7 +2308,7 @@ theme_override_font_sizes/font_size = 61
 theme_override_styles/normal = SubResource("StyleBoxEmpty_wv4lf")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jida2")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_wv4lf")
-text = "Options"
+text = "OPTIONS"
 
 [node name="Button3" type="Button" parent="Control"]
 layout_mode = 1
@@ -2321,7 +2327,7 @@ theme_override_font_sizes/font_size = 61
 theme_override_styles/normal = SubResource("StyleBoxEmpty_wv4lf")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jida2")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_wv4lf")
-text = "Quit"
+text = "QUIT"
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.795262, 0.606266, 0, -0.606266, -0.795262, -6.61845, 3.19169, -2.68578)
@@ -3729,7 +3735,7 @@ shadow_enabled = true
 spot_range = 21.9779
 
 [node name="Buildings" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31686, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Buildings"]
 transform = Transform3D(4.08277, 0, 0, 0, 19.3119, 0, 0, 0, 4.08277, 4.43798, 0, -9.49874)
@@ -3779,5 +3785,17 @@ libraries = {
 }
 autoplay = "MM"
 speed_scale = -1.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_nri6n")
+volume_db = -10.0
+autoplay = true
+bus = &"Music"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_hkncf")
+volume_db = -10.0
+autoplay = true
+bus = &"MMRADIO"
 
 [connection signal="pressed" from="Control/Button" to="." method="PlayGame"]

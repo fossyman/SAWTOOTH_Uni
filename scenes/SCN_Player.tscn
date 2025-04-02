@@ -439,7 +439,7 @@ libraries = {
 }
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Mesh/Holland"]
-transform = Transform3D(-0.191876, 0.36499, 0.911025, -0.820648, -0.568778, 0.0550324, 0.538257, -0.737071, 0.408663, 0.269, 1.25689, 0.0270859)
+transform = Transform3D(-0.191877, 0.364992, 0.911024, -0.820647, -0.568779, 0.0550331, 0.538258, -0.73707, 0.408665, 0.269001, 0.256887, 0.027086)
 bone_name = "Hand.R"
 bone_idx = 9
 use_external_skeleton = true

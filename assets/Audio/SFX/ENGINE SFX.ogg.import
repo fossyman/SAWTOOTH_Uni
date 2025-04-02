@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cb7aackfmc2yl"
+path="res://.godot/imported/ENGINE SFX.ogg-ef785c96b3cdef29d4b6c53d0d8c563e.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/Audio/SFX/ENGINE SFX.ogg"
+dest_files=["res://.godot/imported/ENGINE SFX.ogg-ef785c96b3cdef29d4b6c53d0d8c563e.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4
